@@ -121,7 +121,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import java.util.zip.GZIPInputStream;
 import java.util.zip.GZIPOutputStream;
-import org.jspecify.nullness.Nullable;
+import org.jspecify.annotations.Nullable;
 
 /**
  * Compiler (and the other classes in this package) does the following:
@@ -679,6 +679,10 @@ public class Compiler extends AbstractCompiler implements ErrorHandler, SourceFi
     this.colorRegistry = astData.getColorRegistry().orNull();
     this.setTypeCheckingHasRun(deserializeTypes);
 
+    for (String library : astData.getRuntimeLibraries()) {
+      this.ensureLibraryInjected(library, false);
+    }
+
     this.getSynthesizedExternsInput(); // Force lazy creation.
 
     runInCompilerThread(
@@ -861,9 +865,10 @@ public class Compiler extends AbstractCompiler implements ErrorHandler, SourceFi
         report(JSError.make(DUPLICATE_EXTERN_INPUT, input.getName()));
       }
     }
+
     boolean hasZone = false;
     for (CompilerInput input : chunkGraph.getAllInputs()) {
-      if (input.getName().endsWith("packages/zone.js/lib/zone.closure.js")) {
+      if (isZoneInput(input)) {
         hasZone = true;
       }
       CompilerInput previous = putCompilerInput(input);
@@ -871,13 +876,32 @@ public class Compiler extends AbstractCompiler implements ErrorHandler, SourceFi
         report(JSError.make(DUPLICATE_INPUT, input.getName()));
       }
     }
+
     if (hasZone
-        && !options.allowsZoneJsWithAsyncFunctionsInOutput()
+        && isZoneEnabled(options)
         && options.getOutputFeatureSet().contains(Feature.ASYNC_FUNCTIONS)) {
       throw new UnsupportedOperationException(
           "ZoneJS is incompatible with language level ES2017 or higher (See go/ngissue/31730)\n"
               + "Please set `--language_out=ECMASCRIPT_2016` (or older) in your flags.");
     }
+  }
+
+  /**
+   * Returns whether or not the given file is the Zone.js entry point. By default, we assume no
+   * files are Zone.js and this method can be overridden to identify which input is Zone.js.
+   */
+  boolean isZoneInput(CompilerInput input) {
+    return false;
+  }
+
+  /**
+   * Returns whether or not Zone.js is enabled (not tree-shaken) for this compilation. By default,
+   * we assume Zone.js is always enabled when it is included and this method can be overridden to
+   * optionally disable and tree-shake Zone.js when it is known not to be needed based on compiler
+   * flags.
+   */
+  boolean isZoneEnabled(CompilerOptions options) {
+    return true;
   }
 
   /** Sets up the skeleton of the AST (the externs and root). */
@@ -2001,6 +2025,7 @@ public class Compiler extends AbstractCompiler implements ErrorHandler, SourceFi
       }
 
       orderInputs();
+      markClosureUnawareCode();
 
       // If in IDE mode, we ignore the error and keep going.
       if (hasErrors()) {
@@ -2278,6 +2303,20 @@ public class Compiler extends AbstractCompiler implements ErrorHandler, SourceFi
       return true;
     }
     return false;
+  }
+
+  /**
+   * Marks source files annotated with `@closureUnaware` with the closureUnawareCode bit on
+   * SourceFile.
+   */
+  private void markClosureUnawareCode() {
+    for (CompilerInput input : chunkGraph.getAllInputs()) {
+      Node root = input.getAstRoot(this);
+      JSDocInfo info = root.getJSDocInfo();
+      if (info != null && info.isClosureUnawareCode()) {
+        input.getSourceFile().markAsClosureUnawareCode();
+      }
+    }
   }
 
   /**
@@ -3024,6 +3063,15 @@ public class Compiler extends AbstractCompiler implements ErrorHandler, SourceFi
 
   private @Nullable CompilerInput syntheticExternsInput; // matches SYNTHETIC_EXTERNS_FILE
 
+  /**
+   * Non-static because this file represents different content for every Compiler (and TSAN
+   * complains if one instance is shared by all threads).
+   */
+  private final SourceFile syntheticTypeSummaryFile =
+      SourceFile.fromCode(SYNTHETIC_FILE_NAME_PREFIX + "typeSummary] ", "", SourceKind.EXTERN);
+
+  private @Nullable CompilerInput syntheticTypeSummaryInput; // matches syntheticTypeSummaryFile
+
   protected final RecentChange recentChange = new RecentChange();
   private final List<CodeChangeHandler> codeChangeHandlers = new ArrayList<>();
   private final Map<Class<?>, IndexProvider<?>> indexProvidersByType = new LinkedHashMap<>();
@@ -3741,6 +3789,26 @@ public class Compiler extends AbstractCompiler implements ErrorHandler, SourceFi
   }
 
   @Override
+  CompilerInput getSynthesizedTypeSummaryInput() {
+    if (syntheticTypeSummaryInput != null) {
+      return syntheticTypeSummaryInput;
+    }
+
+    CompilerInput input = new CompilerInput(syntheticTypeSummaryFile, /* isExtern= */ true);
+    Node root = checkNotNull(input.getAstRoot(this));
+    putCompilerInput(input);
+    this.syntheticTypeSummaryInput = input;
+    externsRoot.addChildToFront(root);
+    externs.add(0, input);
+    scriptNodeByFilename.put(input.getSourceFile().getName(), root);
+    JSDocInfo.Builder builder = JSDocInfo.builder();
+    builder.recordTypeSummary();
+    root.setJSDocInfo(builder.build());
+
+    return input;
+  }
+
+  @Override
   InputId getSyntheticCodeInputId() {
     return SYNTHETIC_CODE_INPUT_ID;
   }
@@ -3909,7 +3977,17 @@ public class Compiler extends AbstractCompiler implements ErrorHandler, SourceFi
       // Handle require-only libraries.
       return lastInjectedLibrary;
     }
-    Node parent = getNodeForCodeInsertion(null);
+
+    // For stage 2 optimizing builds, insert runtime libraries as actual code in the AST.
+    // For library builds that outputs a TypedAST, the runtime libraries are injected to a synthetic
+    // @typeSummary (.i.js) node so that the types are available.
+    Node parent;
+    if (options.getTypedAstOutputFile() == null) {
+      parent = getNodeForCodeInsertion(null);
+    } else {
+      parent = getSynthesizedTypeSummaryInput().getAstRoot(this);
+    }
+
     if (lastInjectedLibrary == null) {
       parent.addChildrenToFront(firstChild);
     } else {
@@ -3920,6 +3998,11 @@ public class Compiler extends AbstractCompiler implements ErrorHandler, SourceFi
 
     reportChangeToEnclosingScope(parent);
     return lastChild;
+  }
+
+  @Override
+  ImmutableList<String> getInjectedLibraries() {
+    return ImmutableList.copyOf(injectedLibraries);
   }
 
   @Override
@@ -4093,9 +4176,10 @@ public class Compiler extends AbstractCompiler implements ErrorHandler, SourceFi
           SerializeTypedAstPass.createFromOutputStream(
                   this,
                   gzipStream,
-                  this.getOptions().shouldSerializeExtraDebugInfo()
-                      ? SerializationOptions.INCLUDE_DEBUG_INFO
-                      : SerializationOptions.SKIP_DEBUG_INFO)
+                  SerializationOptions.builder()
+                      .setRuntimeLibraries(ImmutableList.of())
+                      .setIncludeDebugInfo(this.getOptions().shouldSerializeExtraDebugInfo())
+                      .build())
               .process(externsRoot, jsRoot);
           stopTracer(tracer, "serializeTypedAst");
           // Finish will flush all zip buffers and write out zip trailing bytes but it will not
@@ -4221,6 +4305,10 @@ public class Compiler extends AbstractCompiler implements ErrorHandler, SourceFi
         putCompilerInput(input); // overwrite the old input
         deserializedModule.add(input);
       }
+    }
+
+    for (String library : deserializedAst.getRuntimeLibraries()) {
+      this.ensureLibraryInjected(library, false);
     }
 
     this.typedAstFilesystem = null; // allow garbage collection

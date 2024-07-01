@@ -85,7 +85,7 @@ import java.util.logging.Level;
 import java.util.zip.GZIPInputStream;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
-import org.jspecify.nullness.Nullable;
+import org.jspecify.annotations.Nullable;
 
 /**
  * Implementations of AbstractCommandLineRunner translate flags into Java API calls on the Compiler.
@@ -383,10 +383,6 @@ public abstract class AbstractCommandLineRunner<A extends Compiler, B extends Co
       } catch (IllegalStateException e) {
         throw new FlagUsageException(e.getMessage());
       }
-    }
-
-    if (config.emitAsyncFunctionsWithZonejs) {
-      options.setAllowZoneJsWithAsyncFunctionsInOutput(true);
     }
 
     createDefineReplacements(define, options);
@@ -3001,15 +2997,6 @@ public abstract class AbstractCommandLineRunner<A extends Compiler, B extends Co
     @CanIgnoreReturnValue
     public CommandLineConfig setBrowserFeaturesetYear(Integer browserFeaturesetYear) {
       this.browserFeaturesetYear = browserFeaturesetYear;
-      return this;
-    }
-
-    private boolean emitAsyncFunctionsWithZonejs = false;
-
-    /** Relax the restriction on disallowing --language_out=ES_2017 together with Zone.js */
-    @CanIgnoreReturnValue
-    public CommandLineConfig setEmitAsyncFunctionsWithZonejs(boolean emitAsyncFunctionsWithZonejs) {
-      this.emitAsyncFunctionsWithZonejs = emitAsyncFunctionsWithZonejs;
       return this;
     }
 

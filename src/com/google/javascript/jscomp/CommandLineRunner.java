@@ -80,7 +80,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import org.jspecify.nullness.Nullable;
+import org.jspecify.annotations.Nullable;
 import org.kohsuke.args4j.Argument;
 import org.kohsuke.args4j.CmdLineException;
 import org.kohsuke.args4j.CmdLineParser;
@@ -159,12 +159,6 @@ public class CommandLineRunner extends AbstractCommandLineRunner<Compiler, Compi
                 + "goog.FEATURESET_YEAR=YYYY."
                 + " The minimum valid value of the browser year is 2012")
     private Integer browserFeaturesetYear = 0;
-
-    @Option(
-        name = "--emit_async_functions_with_zonejs",
-        handler = BooleanOptionHandler.class,
-        usage = "Relax the restriction on disallowing --language_out=ES_2017 together with Zone.js")
-    private boolean emitAsyncFunctionsWithZonejs = false;
 
     @Option(
         name = "--help",
@@ -639,9 +633,8 @@ public class CommandLineRunner extends AbstractCommandLineRunner<Compiler, Compi
 
     @Option(
         name = "--polymer_export_policy",
-        usage =
-            "How to handle exports/externs for Polymer properties and methods. "
-                + "Values: LEGACY, EXPORT_ALL.")
+        usage = "Deprecated, has no effect and usages should be removed.")
+    @SuppressWarnings("unused")
     private String polymerExportPolicy = PolymerExportPolicy.LEGACY.name();
 
     @Option(
@@ -1172,7 +1165,6 @@ public class CommandLineRunner extends AbstractCommandLineRunner<Compiler, Compi
                 });
             stringWriter.flush();
             String rawOptionUsage = stringWriter.toString();
-            Matcher optionNameMatches = Pattern.compile(" *--([a-z0-9_]+)").matcher(rawOptionUsage);
             int delimiterIndex = rawOptionUsage.indexOf(" : ");
             if (delimiterIndex > 0) {
               outputStream.write(
@@ -1640,6 +1632,7 @@ public class CommandLineRunner extends AbstractCommandLineRunner<Compiler, Compi
     }
   }
 
+  @Override
   protected final String getVersionText() {
     return String.join(
         "\n", //
@@ -1791,7 +1784,6 @@ public class CommandLineRunner extends AbstractCommandLineRunner<Compiler, Compi
           .setWarningGuards(Flags.guardLevels)
           .setDefine(flags.define)
           .setBrowserFeaturesetYear(flags.browserFeaturesetYear)
-          .setEmitAsyncFunctionsWithZonejs(flags.emitAsyncFunctionsWithZonejs)
           .setCharset(flags.charset)
           .setDependencyOptions(dependencyOptions)
           .setOutputManifest(ImmutableList.of(flags.outputManifest))
@@ -1812,7 +1804,8 @@ public class CommandLineRunner extends AbstractCommandLineRunner<Compiler, Compi
         stage1RestoreFile = flags.continueSavedCompilationFile;
       }
       if (stage1RestoreFile != null) {
-        config.setContinueSavedCompilationFileName(stage1RestoreFile, /* stage= */ 1);
+        config.setContinueSavedCompilationFileName(
+            stage1RestoreFile, /* restoredCompilationStage= */ 1);
       }
       String stage2RestoreFile = flags.restoreStage2FromFile;
       if (stage1RestoreFile != null) {
@@ -1867,7 +1860,11 @@ public class CommandLineRunner extends AbstractCommandLineRunner<Compiler, Compi
       if (languageMode != null) {
         options.setLanguageIn(languageMode);
       } else {
-        throw new FlagUsageException("Unknown language `" + flags.languageIn + "' specified.");
+        throw new FlagUsageException(
+            "Unknown language `"
+                + flags.languageIn
+                + "' specified. Expected one of: "
+                + LanguageMode.validCommandLineNames());
       }
     }
 
@@ -1879,8 +1876,13 @@ public class CommandLineRunner extends AbstractCommandLineRunner<Compiler, Compi
     if (languageMode != null) {
       options.setLanguageOut(languageMode);
     } else {
-      throw new FlagUsageException("Unknown language `" + flags.languageOut + "' specified.");
+      throw new FlagUsageException(
+          "Unknown language `"
+              + flags.languageOut
+              + "' specified. Expected one of: "
+              + LanguageMode.validCommandLineNames());
     }
+
 
     options.setCodingConvention(new ClosureCodingConvention());
 
@@ -1935,14 +1937,7 @@ public class CommandLineRunner extends AbstractCommandLineRunner<Compiler, Compi
 
     options.angularPass = flags.angularPass;
 
-    options.polymerVersion = flags.polymerVersion;
-    try {
-      options.polymerExportPolicy =
-          PolymerExportPolicy.valueOf(Ascii.toUpperCase(flags.polymerExportPolicy));
-    } catch (IllegalArgumentException ex) {
-      throw new FlagUsageException(
-          "Unknown PolymerExportPolicy `" + flags.polymerExportPolicy + "' specified.");
-    }
+    options.setPolymerVersion(flags.polymerVersion);
 
     options.setChromePass(flags.chromePass);
 

@@ -27,10 +27,10 @@ import com.google.javascript.jscomp.CodingConvention.SubclassRelationship;
 import com.google.javascript.jscomp.ReferenceCollector.Behavior;
 import com.google.javascript.rhino.JSDocInfo;
 import com.google.javascript.rhino.Node;
-import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.List;
-import org.jspecify.nullness.Nullable;
+import org.jspecify.annotations.Nullable;
 
 /**
  * Using the infrastructure provided by {@link ReferenceCollector}, identify variables that are used
@@ -212,7 +212,8 @@ class InlineVariables implements CompilerPass {
      * <p>This is necessary in order for aliases of those variables to determine whether they may be
      * inlined.
      */
-    final HashMap<Var, InlineVarAnalysis> currentScopeHandledVarAnalysesMap = new HashMap<>();
+    final LinkedHashMap<Var, InlineVarAnalysis> currentScopeHandledVarAnalysesMap =
+        new LinkedHashMap<>();
 
     /**
      * Records alias variables that are waiting for the original variables to be handled.

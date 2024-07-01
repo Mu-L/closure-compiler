@@ -25,7 +25,7 @@ import com.google.javascript.rhino.JSTypeExpression;
 import com.google.javascript.rhino.Node;
 import com.google.javascript.rhino.Token;
 import java.util.TreeSet;
-import org.jspecify.nullness.Nullable;
+import org.jspecify.annotations.Nullable;
 
 /** Utilities for serializing and deserializing JSDoc necessary for optimzations. */
 public final class JSDocSerializer {
@@ -73,6 +73,11 @@ public final class JSDocSerializer {
     if (jsdoc.isNoInline()) {
       builder.addKind(JsdocTag.JSDOC_NO_INLINE);
     }
+
+    if (jsdoc.isRequireInlining()) {
+      builder.addKind(JsdocTag.JSDOC_REQUIRE_INLINING);
+    }
+
     if (jsdoc.isNoCollapse()) {
       builder.addKind(JsdocTag.JSDOC_NO_COLLAPSE);
     }
@@ -251,6 +256,9 @@ public final class JSDocSerializer {
           continue;
         case JSDOC_NO_INLINE:
           builder.recordNoInline();
+          continue;
+        case JSDOC_REQUIRE_INLINING:
+          builder.recordRequireInlining();
           continue;
         case JSDOC_PROVIDE_GOOG:
           builder.recordProvideGoog();

@@ -65,7 +65,7 @@ import java.util.NoSuchElementException;
 import java.util.Objects;
 import java.util.function.Consumer;
 import java.util.function.Function;
-import org.jspecify.nullness.Nullable;
+import org.jspecify.annotations.Nullable;
 
 /**
  * This class implements the root of the intermediate representation.
@@ -1666,6 +1666,18 @@ public class Node {
   public final boolean isFromExterns() {
     StaticSourceFile file = getStaticSourceFile();
     return file == null ? false : file.isExtern();
+  }
+
+  /**
+   * Indicates that this node is for source that was written without any understanding of the
+   * compiler's various type-checking or optimization limitations, and should be optimized very
+   * cautiously by the compiler.
+   *
+   * <p>This attribute is per source file, not per node / subset of an source file's AST.
+   */
+  public final boolean isClosureUnawareCode() {
+    StaticSourceFile file = getStaticSourceFile();
+    return file != null && file.isClosureUnawareCode();
   }
 
   public final int getLength() {

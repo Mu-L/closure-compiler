@@ -16,7 +16,6 @@
 package com.google.javascript.jscomp;
 
 import static com.google.common.base.MoreObjects.toStringHelper;
-import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.javascript.jscomp.PolymerPassErrors.POLYMER_INVALID_EXTENDS;
 import static com.google.javascript.jscomp.PolymerPassErrors.POLYMER_MISSING_EXTERNS;
 
@@ -32,7 +31,7 @@ import com.google.javascript.rhino.Node;
 import com.google.javascript.rhino.Token;
 import java.util.LinkedHashSet;
 import java.util.Set;
-import org.jspecify.nullness.Nullable;
+import org.jspecify.annotations.Nullable;
 
 /**
  * Rewrites "Polymer({})" calls into a form that is suitable for type checking and dead code
@@ -47,9 +46,6 @@ final class PolymerPass extends ExternsSkippingCallback implements CompilerPass 
 
   private final AbstractCompiler compiler;
   private final ImmutableMap<String, String> tagNameMap;
-  private final int polymerVersion;
-  private final PolymerExportPolicy polymerExportPolicy;
-  private final boolean propertyRenamingEnabled;
 
   private Node polymerElementExterns;
   private final Set<String> nativeExternsAdded;
@@ -59,22 +55,10 @@ final class PolymerPass extends ExternsSkippingCallback implements CompilerPass 
   private boolean warnedPolymer1ExternsMissing = false;
   private boolean propertySinkExternInjected = false;
 
-  PolymerPass(
-      AbstractCompiler compiler,
-      Integer polymerVersion,
-      PolymerExportPolicy polymerExportPolicy,
-      boolean propertyRenamingEnabled) {
-    checkArgument(
-        polymerVersion == null || polymerVersion == 1 || polymerVersion == 2,
-        "Invalid Polymer version: (%s)",
-        polymerVersion);
+  PolymerPass(AbstractCompiler compiler) {
     this.compiler = compiler;
     tagNameMap = TagNameToType.getMap();
     nativeExternsAdded = new LinkedHashSet<>();
-    this.polymerVersion = polymerVersion == null ? 1 : polymerVersion;
-    this.polymerExportPolicy =
-        polymerExportPolicy == null ? PolymerExportPolicy.LEGACY : polymerExportPolicy;
-    this.propertyRenamingEnabled = propertyRenamingEnabled;
   }
 
   @Override
@@ -83,16 +67,6 @@ final class PolymerPass extends ExternsSkippingCallback implements CompilerPass 
     NodeTraversal.traverse(compiler, externs, externsCallback);
     polymerElementExterns = externsCallback.getPolymerElementExterns();
     polymerElementProps = externsCallback.getPolymerElementProps();
-
-    if (polymerVersion == 1 && polymerElementExterns == null) {
-      this.warnedPolymer1ExternsMissing = true;
-      compiler.report(JSError.make(POLYMER_MISSING_EXTERNS));
-      return;
-    }
-
-    if (polymerVersion > 1 && propertyRenamingEnabled) {
-      compiler.ensureLibraryInjected("util/reflectobject", false);
-    }
 
     globalNames = new GlobalNamespace(compiler, externs, root);
     behaviorExtractor =
@@ -159,9 +133,7 @@ final class PolymerPass extends ExternsSkippingCallback implements CompilerPass 
       if (def.nativeBaseElement != null) {
         appendPolymerElementExterns(def);
       }
-      PolymerClassRewriter rewriter =
-          new PolymerClassRewriter(
-              compiler, polymerVersion, polymerExportPolicy, this.propertyRenamingEnabled);
+      PolymerClassRewriter rewriter = new PolymerClassRewriter(compiler);
       rewriter.rewritePolymerCall(def, traversal);
     }
   }
@@ -170,9 +142,7 @@ final class PolymerPass extends ExternsSkippingCallback implements CompilerPass 
   private void rewritePolymer2ClassDefinition(Node node, NodeTraversal traversal) {
     PolymerClassDefinition def = PolymerClassDefinition.extractFromClassNode(node, compiler);
     if (def != null) {
-      PolymerClassRewriter rewriter =
-          new PolymerClassRewriter(
-              compiler, polymerVersion, polymerExportPolicy, this.propertyRenamingEnabled);
+      PolymerClassRewriter rewriter = new PolymerClassRewriter(compiler);
       rewriter.propertySinkExternInjected = propertySinkExternInjected;
       rewriter.rewritePolymerClassDeclaration(node, traversal, def);
       propertySinkExternInjected = rewriter.propertySinkExternInjected;

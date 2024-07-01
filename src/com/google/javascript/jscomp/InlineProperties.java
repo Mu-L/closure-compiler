@@ -25,10 +25,10 @@ import com.google.javascript.jscomp.colors.ColorRegistry;
 import com.google.javascript.jscomp.colors.StandardColors;
 import com.google.javascript.rhino.IR;
 import com.google.javascript.rhino.Node;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.Map;
-import org.jspecify.nullness.Nullable;
+import org.jspecify.annotations.Nullable;
 
 /**
  * InlineProperties attempts to find references to properties that are known to be constants and
@@ -58,7 +58,7 @@ final class InlineProperties implements CompilerPass {
 
   private static final PropertyInfo INVALIDATED = new PropertyInfo(null, null);
 
-  private final Map<String, PropertyInfo> props = new HashMap<>();
+  private final Map<String, PropertyInfo> props = new LinkedHashMap<>();
 
   InlineProperties(AbstractCompiler compiler) {
     this.compiler = compiler;
@@ -128,7 +128,7 @@ final class InlineProperties implements CompilerPass {
         invalidatingPropRef = true;
       } else if (n.isMemberFieldDef()) {
         propName = n.getString();
-        if (n.getFirstChild() != null) {
+        if (n.hasChildren()) {
           // class field with initialization
           invalidatingPropRef = !maybeRecordCandidateClassFieldDefinition(n);
         } else {
@@ -145,7 +145,9 @@ final class InlineProperties implements CompilerPass {
       }
     }
 
-    /** @return Whether this is a valid definition for a candidate class field. */
+    /**
+     * @return Whether this is a valid definition for a candidate class field.
+     */
     private boolean maybeRecordCandidateClassFieldDefinition(Node n) {
       checkState(n.isMemberFieldDef(), n);
       Node value = n.getFirstChild();
@@ -166,7 +168,9 @@ final class InlineProperties implements CompilerPass {
       return maybeStoreCandidateValue(c, propName, value);
     }
 
-    /** @return Whether this is a valid definition for a candidate property. */
+    /**
+     * @return Whether this is a valid definition for a candidate property.
+     */
     private boolean maybeRecordCandidateGetpropDefinition(NodeTraversal t, Node n, Node parent) {
       checkState(n.isGetProp() && parent.isAssign(), n);
       Node src = n.getFirstChild();

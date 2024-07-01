@@ -33,12 +33,11 @@ import com.google.javascript.jscomp.graph.DiGraph.DiGraphEdge;
 import com.google.javascript.jscomp.graph.DiGraph.DiGraphNode;
 import com.google.javascript.rhino.Node;
 import com.google.javascript.rhino.Token;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Set;
-import org.jspecify.nullness.Nullable;
+import org.jspecify.annotations.Nullable;
 
 /**
  * Inline variables when possible. Using the information from {@link MaybeReachingVariableUse} and
@@ -185,7 +184,7 @@ class FlowSensitiveInlineVariables implements CompilerPass, ScopedCallback {
             .setIncludeEdgeAnnotations(true)
             .computeCfg();
 
-    HashSet<Var> escaped = new HashSet<>();
+    LinkedHashSet<Var> escaped = new LinkedHashSet<>();
     Scope scope = t.getScope();
     AllVarsDeclaredInFunction allVarsDeclaredInFunction =
         NodeUtil.getAllVarsDeclaredInFunction(compiler, scopeCreator, scope.getParent());
@@ -405,7 +404,7 @@ class FlowSensitiveInlineVariables implements CompilerPass, ScopedCallback {
         return false;
       }
 
-      Set<String> namesToCheck = new HashSet<>();
+      Set<String> namesToCheck = new LinkedHashSet<>();
       if (defMetadata.depends != null) {
         for (Var var : defMetadata.depends) {
           namesToCheck.add(var.getName());
