@@ -16,6 +16,7 @@
 
 package com.google.javascript.jscomp;
 
+import static com.google.common.base.Preconditions.checkState;
 import static java.lang.Math.min;
 
 import com.google.javascript.jscomp.CompilerOptions.AliasStringsMode;
@@ -92,6 +93,7 @@ class AliasStrings implements CompilerPass, NodeTraversal.Callback {
     this.compiler = compiler;
     this.chunkGraph = chunkGraph;
     this.outputStringUsage = outputStringUsage;
+    checkState(aliasStringsMode != AliasStringsMode.NONE);
     this.aliasStringsMode = aliasStringsMode;
   }
 
@@ -116,8 +118,6 @@ class AliasStrings implements CompilerPass, NodeTraversal.Callback {
   @Override
   public boolean shouldTraverse(NodeTraversal nodeTraversal, Node n, Node parent) {
     switch (n.getToken()) {
-      case REGEXP: // string nodes that are children of REGEXP literals can not be aliased
-      case GETPROP: // string nodes that are children of GETPROP nodes can not be aliased
       case TEMPLATELIT:
       case TAGGED_TEMPLATELIT:
       case TEMPLATELIT_SUB: // technically redundant, since it must be a child of the others
@@ -133,7 +133,7 @@ class AliasStrings implements CompilerPass, NodeTraversal.Callback {
 
   @Override
   public void visit(NodeTraversal t, Node n, Node parent) {
-    if (n.isStringLit()) {
+    if (n.isStringLit() && !parent.isRegExp()) {
       String str = n.getString();
 
       // "undefined" is special-cased, since it needs to be used when JS code
@@ -226,7 +226,12 @@ class AliasStrings implements CompilerPass, NodeTraversal.Callback {
    * @param str The string literal
    * @param info Accumulated information about a string
    */
-  private static boolean shouldReplaceWithAlias(String str, StringInfo info) {
+  private boolean shouldReplaceWithAlias(String str, StringInfo info) {
+    // Always alias strings if the mode is ALL_AGGRESSIVE.
+    if (aliasStringsMode == AliasStringsMode.ALL_AGGRESSIVE) {
+      return true;
+    }
+
     // Optimize for code size.  Are aliases smaller than strings?
     //
     // This logic optimizes for the size of uncompressed code, but it tends to
