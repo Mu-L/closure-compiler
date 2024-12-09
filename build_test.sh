@@ -22,4 +22,6 @@ unset ANDROID_HOME
 
 bazel build :all
 
-# TODO: Run other tests needed for open source verification
+bazel test :compiler_unshaded_content_test --test_output=errors
+
+./license_check/third_party_license_test.sh

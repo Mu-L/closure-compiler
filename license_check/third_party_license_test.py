@@ -14,6 +14,7 @@ import requests
 # Constants
 GITHUB_PREFIX = 'https://github.com/'
 RAW_FILE_PREFIX = 'https://raw.githubusercontent.com/'
+VERSION_TAG_SEPARATOR = '@/'
 
 POM_FILE_SUFFIX = '.xml'
 GRADLE_FILE_SUFFIX = '.gradle'
@@ -28,20 +29,14 @@ SPACER = """
 
 
 def get_file_from_github(github_url):
-  raw_file_url_with_blob = github_url.replace(GITHUB_PREFIX, RAW_FILE_PREFIX)
+  raw_file_url = (
+      github_url
+      .replace(GITHUB_PREFIX, RAW_FILE_PREFIX)
+      .replace(VERSION_TAG_SEPARATOR, '/')
+      .replace('/blob/', '/refs/tags/')
+  )
 
-  raw_file_url = ''
-  branch_roots = ['master/', 'main/']
-
-  for br in branch_roots:
-    if br in raw_file_url_with_blob:
-      split_url = raw_file_url_with_blob.split(br)
-      raw_file_url = split_url[0][:-5] + br + split_url[1]
-      break
-
-  if not raw_file_url:
-    return None
-
+  print('Requesting: ', raw_file_url)
   response = requests.get(raw_file_url)
 
   if response.status_code != 200:
@@ -85,29 +80,9 @@ def get_gradle_artifact_name(url):
   return '%s:%s' % (group_id, artifact_id)
 
 
-def get_github_root_url(url):
-  branch_roots = ['master/', 'main/']
-  github_root = ''
-
-  for br in branch_roots:
-    if br in url:
-      split_url = url.split(br)
-      github_root = split_url[0] + br
-
-  if not github_root:
-    print(
-        'Cannot find the main branch root directory for the pom/gradle ',
-        'file: ',
-        url,
-    )
-    sys.exit(1)
-
-  return github_root
-
-
 def get_license_from_pom(url):
-  github_branch_root = get_github_root_url(url)
-  license_filenames = ['LICENSE', 'COPYING']
+  github_branch_root = url.split(VERSION_TAG_SEPARATOR)[0]
+  license_filenames = ['/LICENSE', '/COPYING']
 
   license_content = None
   license_url = ''
@@ -131,14 +106,6 @@ def main():
       description='Checks if the third party licenses are up to date',
       epilog='',
   )
-
-  parser.add_argument(
-      'maven_artifacts_file',
-      help='path to the bzl file with the list of maven artifacts.',
-  )
-  parser.add_argument(
-      'third_party_notices_file', help='path to the THIRD_PARTY_NOTICES file.'
-  )
   parser.add_argument(
       '-u',
       '--update',
@@ -147,8 +114,11 @@ def main():
   )
   args = parser.parse_args()
 
+  maven_artifacts_file = 'maven_artifacts.bzl'
+  third_party_notices_file = 'THIRD_PARTY_NOTICES'
+
   # Read maven_artifacts.bzl
-  bzl_file_contents = open(args.maven_artifacts_file).read()
+  bzl_file_contents = open(maven_artifacts_file).read()
 
   # Work around a python3 bug with exec and local variables
   ldict = {}
@@ -161,7 +131,7 @@ def main():
     print(
         'artifact list length and pom/gradle file list length is not equal. ',
         'Please check the file :',
-        args.maven_artifacts_file,
+        maven_artifacts_file,
     )
     sys.exit(1)
 
@@ -220,22 +190,19 @@ def main():
 
   # Compare or Write out THIRD_PARTY_NOTICES file
   if args.update:
-    fh = open(args.third_party_notices_file, 'w')
+    fh = open(third_party_notices_file, 'w')
     fh.write(third_party_notices_content)
     fh.close()
     sys.exit()
 
   else:
-    old_third_party_notices_content = open(args.third_party_notices_file).read()
+    old_third_party_notices_content = open(third_party_notices_file).read()
     if old_third_party_notices_content == third_party_notices_content:
+      print('Success: THIRD_PARTY_NOTICES file is up-to-date.')
       sys.exit()
     else:
       print('Changes detected in THIRD_PARTY_NOTICES file!')
-      print('Please run the following command to update the license file: \n')
-      print(' python3 \\')
-      print('     third_party/third_party_license_test.py \\')
-      print('     third_party/maven_artifacts.bzl \\')
-      print('     third_party/THIRD_PARTY_NOTICES --update')
+      print('Please run with --update flag to update the license file.')
       sys.exit(1)
 
 
