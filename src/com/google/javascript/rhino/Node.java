@@ -49,6 +49,8 @@ import com.google.common.annotations.GwtIncompatible;
 import com.google.common.annotations.VisibleForTesting;
 import com.google.common.base.Ascii;
 import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.ImmutableSet;
+import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import com.google.errorprone.annotations.CheckReturnValue;
 import com.google.errorprone.annotations.DoNotCall;
 import com.google.javascript.jscomp.colors.Color;
@@ -58,7 +60,6 @@ import com.google.javascript.rhino.jstype.JSType;
 import java.io.IOException;
 import java.math.BigInteger;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.EnumSet;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
@@ -206,7 +207,7 @@ public class Node {
   }
 
   // Avoid cloning "values" repeatedly in hot code, we save it off now.
-  private static final Prop[] PROP_VALUES = Prop.values();
+  private static final Prop[] propValues = Prop.values();
 
   /**
    * Get the NonJSDoc comment string attached to this node.
@@ -236,11 +237,13 @@ public class Node {
   }
 
   /** Sets the NonJSDoc comment attached to this node. */
+  @CanIgnoreReturnValue
   public final Node setNonJSDocComment(NonJSDocComment comment) {
     putProp(Prop.NON_JSDOC_COMMENT, comment);
     return this;
   }
 
+  @CanIgnoreReturnValue
   public final Node setTrailingNonJSDocComment(NonJSDocComment comment) {
     putProp(Prop.TRAILING_NON_JSDOC_COMMENT, comment);
     return this;
@@ -356,6 +359,11 @@ public class Node {
       setString(str);
     }
 
+    StringNode(Token token, RhinoStringPool.LazyInternedStringList stringPool, int offset) {
+      super(token);
+      setStringFromStringPool(stringPool, offset);
+    }
+
     @Override
     public boolean isEquivalentTo(
         Node node, boolean compareType, boolean recur, boolean jsDoc, boolean sideEffect) {
@@ -390,6 +398,16 @@ public class Node {
       // RhinoStringPool is null-hostile.
       this.cooked = (cooked == null) ? null : RhinoStringPool.addOrGet(cooked);
       this.raw = RhinoStringPool.addOrGet(raw);
+    }
+
+    private TemplateLiteralSubstringNode(
+        RhinoStringPool.LazyInternedStringList stringPool,
+        int cookedOffsetOrNegativeOne,
+        int rawOffset) {
+      super(Token.TEMPLATELIT_STRING);
+      this.cooked =
+          (cookedOffsetOrNegativeOne == -1) ? null : stringPool.get(cookedOffsetOrNegativeOne);
+      this.raw = stringPool.get(rawOffset);
     }
 
     @Override
@@ -554,8 +572,20 @@ public class Node {
     return new StringNode(token, str);
   }
 
+  public static Node newString(
+      Token token, RhinoStringPool.LazyInternedStringList stringPool, int offset) {
+    return new StringNode(token, stringPool, offset);
+  }
+
   public static Node newTemplateLitString(String cooked, String raw) {
     return new TemplateLiteralSubstringNode(cooked, raw);
+  }
+
+  public static Node newTemplateLitString(
+      RhinoStringPool.LazyInternedStringList stringPool,
+      int cookedOffsetOrNegativeOne,
+      int rawOffset) {
+    return new TemplateLiteralSubstringNode(stringPool, cookedOffsetOrNegativeOne, rawOffset);
   }
 
   public final Token getToken() {
@@ -854,6 +884,7 @@ public class Node {
   }
 
   /** Removes this node from its parent, but retains its subtree. */
+  @CanIgnoreReturnValue
   public final Node detach() {
     this.checkAttached();
 
@@ -936,6 +967,7 @@ public class Node {
   }
 
   @VisibleForTesting
+  @SuppressWarnings("EnumOrdinal") // performance tuning
   final @Nullable PropListItem lookupProperty(Prop prop) {
     byte propType = (byte) prop.ordinal();
     PropListItem x = propListHead;
@@ -952,6 +984,7 @@ public class Node {
    * @param other The node to clone properties from.
    * @return this node.
    */
+  @CanIgnoreReturnValue
   public final Node clonePropsFrom(Node other) {
     checkState(this.propListHead == null, "Node has existing properties.");
     this.propListHead = other.propListHead;
@@ -965,6 +998,7 @@ public class Node {
    * <p>We use a `Consumer` to avoid the cost of building a usually-empty list every time this
    * method is called.
    */
+  @SuppressWarnings("EnumOrdinal") // performance tuning
   public void validateProperties(Consumer<String> violationMessageConsumer) {
     if (propListHead == null) {
       // TODO(bradfordcsmith): Fix the bugs that prevent enabling this validation.
@@ -994,7 +1028,7 @@ public class Node {
     for (PropListItem propListItem = propListHead;
         propListItem != null;
         propListItem = propListItem.next) {
-      final Prop prop = PROP_VALUES[propListItem.propType];
+      final Prop prop = propValues[propListItem.propType];
       // Catch it if the definition of Prop ever changes so that the ordinals don't line up.
       checkState(prop.ordinal() == propListItem.propType, "ordinal doesn't match: %s", prop);
 
@@ -1073,6 +1107,7 @@ public class Node {
    * @param prop The property to look for
    * @return The replacement list if the property was removed, or 'item' otherwise.
    */
+  @SuppressWarnings("EnumOrdinal") // performance tuning
   private static @Nullable PropListItem rebuildListWithoutProp(
       @Nullable PropListItem item, Prop prop) {
     if (item == null) {
@@ -1106,6 +1141,7 @@ public class Node {
     return item.getIntValue();
   }
 
+  @SuppressWarnings("EnumOrdinal") // performance tuning
   public final void putProp(Prop prop, @Nullable Object value) {
     this.propListHead = rebuildListWithoutProp(this.propListHead, prop);
     if (value != null) {
@@ -1117,6 +1153,7 @@ public class Node {
     putIntProp(propType, value ? 1 : 0);
   }
 
+  @SuppressWarnings("EnumOrdinal") // performance tuning
   public final void putIntProp(Prop prop, int value) {
     this.propListHead = rebuildListWithoutProp(this.propListHead, prop);
     if (value != 0) {
@@ -1149,7 +1186,7 @@ public class Node {
     for (PropListItem propListItem = this.propListHead;
         propListItem != null;
         propListItem = propListItem.next) {
-      Prop prop = PROP_VALUES[propListItem.propType];
+      Prop prop = propValues[propListItem.propType];
 
       switch (prop) {
         case TYPE_BEFORE_CAST:
@@ -1212,6 +1249,7 @@ public class Node {
     return propSet;
   }
 
+  @SuppressWarnings("EnumOrdinal") // performance tuning
   public final void deserializeProperties(long propSet) {
     if (this.isRoot()) {
       checkState(this.propListHead == null, this.propListHead);
@@ -1373,6 +1411,14 @@ public class Node {
     ((StringNode) this).str = RhinoStringPool.addOrGet(str); // RhinoStringPool is null-hostile.
   }
 
+  final void setStringFromStringPool(
+      RhinoStringPool.LazyInternedStringList stringPool, int offset) {
+    // RhinoStringPool.LazyInternedStringList guarantees that the result of calling get(offset) is
+    // interned. In some cases this is more performance than RhinoStringPool.addOrGet because the
+    // LazyInternedStringList caches interning results.
+    ((StringNode) this).str = stringPool.get(offset);
+  }
+
   public final String getRawString() {
     return ((TemplateLiteralSubstringNode) this).raw;
   }
@@ -1431,7 +1477,7 @@ public class Node {
     if (printAnnotations) {
       byte[] keys = getSortedPropTypes();
       for (int i = 0; i < keys.length; i++) {
-        Prop type = PROP_VALUES[keys[i]];
+        Prop type = propValues[keys[i]];
         if (type == Prop.CLOSURE_UNAWARE_SHADOW) {
           sb.append(" [is_shadow_host]");
           continue;
@@ -1511,7 +1557,7 @@ public class Node {
       sb.append(",");
       sb.append("\"props\":{");
       for (int i = 0; i < keys.length; i++) {
-        Prop type = PROP_VALUES[keys[i]];
+        Prop type = propValues[keys[i]];
         PropListItem x = lookupProperty(type);
         sb.append(
             createJsonPair(
@@ -1557,7 +1603,7 @@ public class Node {
       appendStringTree(s);
       return s.toString();
     } catch (IOException e) {
-      throw new RuntimeException("Should not happen\n" + e);
+      throw new IllegalStateException("Should not happen\n" + e);
     }
   }
 
@@ -1620,6 +1666,7 @@ public class Node {
   // ==========================================================================
   // Source position management
 
+  @SuppressWarnings("EnumOrdinal") // performance tuning
   public final void setStaticSourceFileFrom(Node other) {
     // Make sure source file prop nodes are not duplicated.
     if (other.propListHead != null
@@ -1639,6 +1686,7 @@ public class Node {
     setStaticSourceFile(other.getStaticSourceFile());
   }
 
+  @CanIgnoreReturnValue
   public final Node setStaticSourceFile(@Nullable StaticSourceFile file) {
     this.putProp(Prop.SOURCE_FILE, file);
     return this;
@@ -1688,6 +1736,13 @@ public class Node {
 
   public final void setOriginalName(String s) {
     this.originalName = (s == null) ? null : RhinoStringPool.addOrGet(s);
+  }
+
+  public final void setOriginalNameFromStringPool(
+      RhinoStringPool.LazyInternedStringList stringPool, int offset) {
+    // RhinoStringPool.LazyInternedStringList guarantees that the result of calling get(offset) is
+    // interned, and sometimes caches results.
+    this.originalName = stringPool.get(offset);
   }
 
   // Copy the original
@@ -1794,6 +1849,7 @@ public class Node {
    * <p>The charno takes the first 12 bits and the line number takes the rest. If the charno is
    * greater than (2^12)-1 it is adjusted to (2^12)-1
    */
+  @CanIgnoreReturnValue
   public final Node setLinenoCharno(int lineno, int charno) {
     if (lineno < 0 || charno < 0) {
       this.linenoCharno = -1;
@@ -1827,7 +1883,7 @@ public class Node {
   @Deprecated
   public final Iterable<Node> children() {
     if (first == null) {
-      return Collections.emptySet();
+      return ImmutableSet.of();
     } else {
       return new SiblingNodeIterable(first);
     }
@@ -2081,23 +2137,25 @@ public class Node {
   }
 
   /**
+   * Returns whether this node is equivalent semantically to the provided node.
+   *
    * @param compareType Whether to compare the JSTypes of the nodes.
    * @param recurse Whether to compare the children of the current node. If not, only the count of
    *     the children are compared.
    * @param jsDoc Whether to check that the JsDoc of the nodes are equivalent.
-   * @return Whether this node is equivalent semantically to the provided node.
    */
   final boolean isEquivalentTo(Node node, boolean compareType, boolean recurse, boolean jsDoc) {
     return isEquivalentTo(node, compareType, recurse, jsDoc, false);
   }
 
   /**
+   * Returns whether this node is equivalent semantically to the provided node.
+   *
    * @param compareType Whether to compare the JSTypes of the nodes.
    * @param recurse Whether to compare the children of the current node. If not, only the count of
    *     the children are compared.
    * @param jsDoc Whether to check that the JsDoc of the nodes are equivalent.
    * @param sideEffect Whether to check that the side-effect flags of the nodes are equivalent.
-   * @return Whether this node is equivalent semantically to the provided node.
    */
   public boolean isEquivalentTo(
       Node node, boolean compareType, boolean recurse, boolean jsDoc, boolean sideEffect) {
@@ -2129,18 +2187,18 @@ public class Node {
     for (PropListItem propListItem = this.propListHead;
         propListItem != null;
         propListItem = propListItem.next) {
-      Prop prop = PROP_VALUES[propListItem.propType];
+      Prop prop = propValues[propListItem.propType];
       propSet.add(prop);
     }
     for (PropListItem propListItem = node.propListHead;
         propListItem != null;
         propListItem = propListItem.next) {
-      Prop prop = PROP_VALUES[propListItem.propType];
+      Prop prop = propValues[propListItem.propType];
       propSet.add(prop);
     }
 
     for (Prop prop : propSet) {
-      if (PROP_MAP_FOR_EQUALITY_KEYS.contains(prop)) {
+      if (propMapForEqualityKeys.contains(prop)) {
         Function<Node, Object> getter = PROP_MAP_FOR_EQUALITY.get(prop);
         if (!Objects.equals(getter.apply(this), getter.apply(node))) {
           return false;
@@ -2199,7 +2257,7 @@ public class Node {
           .buildOrThrow();
 
   /** Used for faster Map.containsKey() lookups in PROP_MAP_FOR_EQUALITY */
-  private static final EnumSet<Prop> PROP_MAP_FOR_EQUALITY_KEYS =
+  private static final EnumSet<Prop> propMapForEqualityKeys =
       EnumSet.copyOf(PROP_MAP_FOR_EQUALITY.keySet());
 
   /**
@@ -2368,9 +2426,9 @@ public class Node {
         String name = getString();
         return start == 0 && !name.isEmpty() && name.length() == endIndex && qname.startsWith(name);
       case THIS:
-        return start == 0 && 4 == endIndex && qname.startsWith("this");
+        return start == 0 && endIndex == 4 && qname.startsWith("this");
       case SUPER:
-        return start == 0 && 5 == endIndex && qname.startsWith("super");
+        return start == 0 && endIndex == 5 && qname.startsWith("super");
       case GETPROP:
         String prop = this.getString();
         return start > 1
@@ -2514,6 +2572,7 @@ public class Node {
   }
 
   /** Copy the source info from `other` onto `this`. */
+  @CanIgnoreReturnValue
   public final Node srcref(Node other) {
     setStaticSourceFileFrom(other);
     this.originalName = other.originalName;
@@ -2523,6 +2582,7 @@ public class Node {
   }
 
   /** For all Nodes in the subtree of `this`, copy the source info from `other`. */
+  @CanIgnoreReturnValue
   public final Node srcrefTree(Node other) {
     this.srcref(other);
     for (Node child = first; child != null; child = child.next) {
@@ -2532,6 +2592,7 @@ public class Node {
   }
 
   /** Iff source info is not set on `this`, copy the source info from `other`. */
+  @CanIgnoreReturnValue
   public final Node srcrefIfMissing(Node other) {
     if (getStaticSourceFile() == null) {
       setStaticSourceFileFrom(other);
@@ -2553,6 +2614,7 @@ public class Node {
    * For all Nodes in the subtree of `this`, iff source info is not set, copy the source info from
    * `other`.
    */
+  @CanIgnoreReturnValue
   public final Node srcrefTreeIfMissing(Node other) {
     this.srcrefIfMissing(other);
     for (Node child = first; child != null; child = child.next) {
@@ -2577,6 +2639,7 @@ public class Node {
     return checkNotNull(this.getJSType(), "no jstypeOrColor: %s", this);
   }
 
+  @CanIgnoreReturnValue
   public final Node setJSType(@Nullable JSType x) {
     checkState(this.jstypeOrColor == null || this.jstypeOrColor instanceof JSType, this);
     this.jstypeOrColor = x;
@@ -2591,6 +2654,7 @@ public class Node {
     return (this.jstypeOrColor instanceof Color) ? (Color) this.jstypeOrColor : null;
   }
 
+  @CanIgnoreReturnValue
   public final Node setColor(@Nullable Color x) {
     checkState(this.jstypeOrColor == null || this.jstypeOrColor instanceof Color, this);
     this.jstypeOrColor = x;
@@ -2598,6 +2662,7 @@ public class Node {
   }
 
   /** Copies a nodes JSType or Color (if present) */
+  @CanIgnoreReturnValue
   public final Node copyTypeFrom(Node other) {
     this.jstypeOrColor = other.jstypeOrColor;
     return this;
@@ -2613,6 +2678,7 @@ public class Node {
   }
 
   /** Sets the {@link JSDocInfo} attached to this node. */
+  @CanIgnoreReturnValue
   public final Node setJSDocInfo(JSDocInfo info) {
     putProp(Prop.JSDOC_INFO, info);
     return this;
@@ -2932,33 +2998,39 @@ public class Node {
     }
 
     /** All side-effect occur and the returned results are non-local. */
+    @CanIgnoreReturnValue
     public SideEffectFlags setAllFlags() {
       value = ALL_SIDE_EFFECTS;
       return this;
     }
 
     /** No side-effects occur */
+    @CanIgnoreReturnValue
     public SideEffectFlags clearAllFlags() {
       value = NO_SIDE_EFFECTS;
       return this;
     }
 
+    @CanIgnoreReturnValue
     public SideEffectFlags setMutatesGlobalState() {
       // Modify global means everything must be assumed to be modified.
       value |= MUTATES_GLOBAL_STATE | MUTATES_ARGUMENTS | MUTATES_THIS;
       return this;
     }
 
+    @CanIgnoreReturnValue
     public SideEffectFlags setThrows() {
       value |= THROWS;
       return this;
     }
 
+    @CanIgnoreReturnValue
     public SideEffectFlags setMutatesThis() {
       value |= MUTATES_THIS;
       return this;
     }
 
+    @CanIgnoreReturnValue
     public SideEffectFlags setMutatesArguments() {
       value |= MUTATES_ARGUMENTS;
       return this;
