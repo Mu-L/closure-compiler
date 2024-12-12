@@ -163,7 +163,6 @@ public class DiagnosticGroups {
           + "underscore, "
           + "unknownDefines, "
           + "unusedLocalVariables, "
-          + "unusedPrivateMembers, "
           + "uselessCode, "
           + "untranspilableFeatures,"
           + "visibility";
@@ -174,9 +173,6 @@ public class DiagnosticGroups {
   public static final DiagnosticGroup UNSTRANSPILABLE_FEATURES =
       DiagnosticGroups.registerGroup(
           "untranspilableFeatures", ReportUntranspilableFeatures.UNTRANSPILABLE_FEATURE_PRESENT);
-
-  public static final DiagnosticGroup FEATURES_NOT_SUPPORTED_BY_PASS =
-      DiagnosticGroups.registerDeprecatedGroup("featuresNotSupportedByPass");
 
   public static final DiagnosticGroup MODULE_LOAD =
       DiagnosticGroups.registerGroup(
@@ -424,11 +420,7 @@ public class DiagnosticGroups {
           CheckMissingRequires.MISSING_REQUIRE,
           CheckMissingRequires.MISSING_REQUIRE_IN_PROVIDES_FILE,
           CheckMissingRequires.MISSING_REQUIRE_TYPE,
-          CheckMissingRequires.MISSING_REQUIRE_TYPE_IN_PROVIDES_FILE);
-
-  public static final DiagnosticGroup STRICT_MISSING_REQUIRE =
-      DiagnosticGroups.registerGroup(
-          "strictMissingRequire",
+          CheckMissingRequires.MISSING_REQUIRE_TYPE_IN_PROVIDES_FILE,
           CheckMissingRequires.INCORRECT_NAMESPACE_ALIAS_REQUIRE,
           CheckMissingRequires.INCORRECT_NAMESPACE_ALIAS_REQUIRE_TYPE,
           CheckMissingRequires.INDIRECT_NAMESPACE_REF_REQUIRE,
@@ -522,23 +514,9 @@ public class DiagnosticGroups {
   public static final DiagnosticGroup DEPRECATED_ANNOTATIONS =
       DiagnosticGroups.registerGroup("deprecatedAnnotations", CheckJSDoc.ANNOTATION_DEPRECATED);
 
-  /**
-   * @deprecated this check has been moved into the "lintChecks" group
-   */
-  @Deprecated
-  public static final DiagnosticGroup UNUSED_PRIVATE_PROPERTY =
-      DiagnosticGroups.registerDeprecatedGroup("unusedPrivateMembers");
-
   public static final DiagnosticGroup UNUSED_LOCAL_VARIABLE =
       DiagnosticGroups.registerGroup(
           "unusedLocalVariables", VariableReferenceCheck.UNUSED_LOCAL_ASSIGNMENT);
-
-  /**
-   * @deprecated this check has been moved into the "lintChecks" group
-   */
-  @Deprecated
-  public static final DiagnosticGroup MISSING_CONST_PROPERTY =
-      DiagnosticGroups.registerDeprecatedGroup("jsdocMissingConst");
 
   public static final DiagnosticGroup JSDOC_MISSING_TYPE =
       DiagnosticGroups.registerGroup(
@@ -743,12 +721,6 @@ public class DiagnosticGroups {
 
     DiagnosticGroups.registerGroup(
         "invalidProvide", ProcessClosurePrimitives.INVALID_PROVIDE_ERROR);
-
-    DiagnosticGroups.registerDeprecatedGroup("es6Typed");
-
-    DiagnosticGroups.registerDeprecatedGroup("duplicateZipContents");
-
-    DiagnosticGroups.registerDeprecatedGroup("unnecessaryEscape");
 
     DiagnosticGroups.registerGroup("conflictingIjsFile", IjsErrors.CONFLICTING_IJS_FILE);
 
