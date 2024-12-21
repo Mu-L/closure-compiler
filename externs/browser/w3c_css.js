@@ -1295,6 +1295,12 @@ CSSProperties.prototype.color;
 
 /**
  * @type {string}
+ * @see https://drafts.csswg.org/css-color-adjust/#color-scheme-prop
+ */
+CSSProperties.prototype.colorScheme;
+
+/**
+ * @type {string}
  * @see http://www.w3.org/TR/css-contain-2/#contain-property
  */
 CSSProperties.prototype.contain;
@@ -1432,6 +1438,12 @@ CSSProperties.prototype.fontVariant;
  * @see http://www.w3.org/TR/DOM-Level-2-Style/css.html#CSS-CSSProperties-fontWeight
  */
 CSSProperties.prototype.fontWeight;
+
+/**
+ * @type {string}
+ * @see https://www.w3.org/TR/css-align-3/#propdef-gap
+ */
+CSSProperties.prototype.gap;
 
 /**
  * @type {string}
@@ -2178,6 +2190,26 @@ CSSProperties.prototype.transitionTimingFunction;
  * @see http://www.w3.org/TR/SVG11/interact.html#PointerEventsProperty
  */
 CSSProperties.prototype.pointerEvents;
+
+// CSS Compositing 1
+
+/**
+ * @type {string}
+ * @see https://www.w3.org/TR/compositing-1/#mix-blend-mode
+ */
+CSSProperties.prototype.mixBlendMode;
+
+/**
+ * @type {string}
+ * @see https://www.w3.org/TR/compositing-1/#isolation
+ */
+CSSProperties.prototype.isolation;
+
+/**
+ * @type {string}
+ * @see https://www.w3.org/TR/compositing-1/#background-blend-mode
+ */
+CSSProperties.prototype.backgroundBlendMode;
 
 
 // CSS Flexbox 1

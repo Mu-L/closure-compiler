@@ -20,7 +20,6 @@ import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkNotNull;
 import static com.google.common.base.Preconditions.checkState;
 
-import com.google.common.annotations.GwtIncompatible;
 import com.google.common.annotations.VisibleForTesting;
 import com.google.common.base.Ascii;
 import com.google.common.base.MoreObjects;
@@ -184,6 +183,7 @@ public class CompilerOptions implements Serializable {
       options.languageOutIsDefaultStrict = Optional.of(true);
       options.setDefineToNumberLiteral("goog.FEATURESET_YEAR", year);
       options.setDefineToBooleanLiteral("$jscomp.ASSUME_ES5", year > 2012);
+      options.setDefineToBooleanLiteral("$jscomp.ASSUME_ES6", year > 2018);
     }
 
     FeatureSet getFeatureSet() {
@@ -2664,7 +2664,6 @@ public class CompilerOptions implements Serializable {
    *
    * @deprecated See go/binary-level-conformance-deprecated.
    */
-  @GwtIncompatible("Conformance")
   @Deprecated // See go/binary-level-conformance-deprecated.
   public void setConformanceConfig(ConformanceConfig conformanceConfig) {
     setConformanceConfigs(ImmutableList.of(conformanceConfig));
@@ -2675,7 +2674,6 @@ public class CompilerOptions implements Serializable {
    *
    * @deprecated See go/binary-level-conformance-deprecated.
    */
-  @GwtIncompatible("Conformance")
   @Deprecated // See go/binary-level-conformance-deprecated.
   public void setConformanceConfigs(List<ConformanceConfig> configs) {
     this.conformanceConfigs = ImmutableList.copyOf(configs);
@@ -2748,13 +2746,11 @@ public class CompilerOptions implements Serializable {
   }
 
   /** Serializes compiler options to a stream. */
-  @GwtIncompatible("ObjectOutputStream")
   public void serialize(OutputStream objectOutputStream) throws IOException {
     new ObjectOutputStream(objectOutputStream).writeObject(this);
   }
 
   /** Deserializes compiler options from a stream. */
-  @GwtIncompatible("ObjectInputStream")
   public static CompilerOptions deserialize(InputStream objectInputStream)
       throws IOException, ClassNotFoundException {
     return (CompilerOptions) new ObjectInputStream(objectInputStream).readObject();
@@ -3183,7 +3179,8 @@ public class CompilerOptions implements Serializable {
   public static enum AliasStringsMode {
     NONE, // Do not alias string literals.
     LARGE, // Alias all string literals with a length greater than 100 characters.
-    ALL // Alias all string literals.
+    ALL, // Alias all string literals where it may improve code size
+    ALL_AGGRESSIVE // Alias all string regardless of code size
   }
 
   /**
@@ -3337,13 +3334,11 @@ public class CompilerOptions implements Serializable {
     return reservedChars;
   }
 
-  @GwtIncompatible("ObjectOutputStream")
   private void writeObject(ObjectOutputStream out) throws IOException {
     out.defaultWriteObject();
     out.writeObject(outputCharset == null ? null : outputCharset.name());
   }
 
-  @GwtIncompatible("ObjectInputStream")
   private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
     in.defaultReadObject();
     String outputCharsetName = (String) in.readObject();
