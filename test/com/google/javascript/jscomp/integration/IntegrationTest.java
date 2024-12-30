@@ -22,7 +22,6 @@ import static com.google.javascript.jscomp.base.JSCompStrings.lines;
 import static com.google.javascript.rhino.testing.NodeSubject.assertNode;
 import static org.junit.Assert.assertThrows;
 
-import com.google.common.annotations.GwtIncompatible;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
@@ -4294,7 +4293,6 @@ public final class IntegrationTest extends IntegrationTestCase {
   }
 
   @Test
-  @GwtIncompatible("AbstractCommandLineRunner.getBuiltinExterns()")
   public void testEs6ModuleEntryPoint() throws Exception {
     ImmutableList<SourceFile> inputs =
         ImmutableList.of(
@@ -4320,7 +4318,6 @@ public final class IntegrationTest extends IntegrationTestCase {
   }
 
   @Test
-  @GwtIncompatible("AbstractCommandLineRunner.getBuiltinExterns()")
   public void testEs6ModuleEntryPointWithSquareBracketsInFilename() throws Exception {
     ImmutableList<SourceFile> inputs =
         ImmutableList.of(
@@ -4590,6 +4587,39 @@ public final class IntegrationTest extends IntegrationTestCase {
         lines(
             "var $jscomp$scope$98447280$0$fn = function(a, b) {};",
             "$jscomp$scope$98447280$0$fn[\"$inject\"] = [\"a\", \"b\"];"));
+  }
+
+  @Test
+  public void testRewriteCallerCodeLocation() {
+    // This unit test tests the following:
+    // (1) RewriteCallerCodeLocation pass adds the code location to the call-site of functions
+    // that have goog.callerLocation as a default parameter.
+    // (2) ReplaceIdGenerators pass replaces the code location with an obfuscated string.
+    CompilerOptions options = createCompilerOptions();
+
+    options.setReplaceIdGenerators(true);
+
+    test(
+        options,
+        lines(
+            "/** @idGenerator {consistent} */",
+            "goog.callerLocationIdInternalDoNotCallOrElse = function(id) {",
+            "  return /** @type {!goog.CodeLocation} */ (id);",
+            "};",
+            "function signal(here = goog.callerLocation()) {}",
+            "const mySignal = signal();",
+            "const mySignal2 = signal();",
+            "const mySignal3 = signal();"),
+        lines(
+            "goog.callerLocationIdInternalDoNotCallOrElse = function(id) {",
+            "  return id;",
+            "};",
+            "function signal(here) {",
+            "  here = here === void 0 ? goog.callerLocation() : here;",
+            "}",
+            "var mySignal = signal('a');",
+            "var mySignal2 = signal('b');",
+            "var mySignal3 = signal('c');"));
   }
 
   @Test
