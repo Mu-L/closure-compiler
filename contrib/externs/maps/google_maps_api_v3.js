@@ -76,6 +76,73 @@ google.maps.AddressDescriptor.prototype.areas;
 google.maps.AddressDescriptor.prototype.landmarks;
 
 /**
+ * Available only in the v=beta channel: https://goo.gle/3oAthT3.
+ *
+ * @record
+ */
+google.maps.AddressValidationLibrary = function() {};
+
+/**
+ * Available only in the v=beta channel: https://goo.gle/3oAthT3.
+ * @type {typeof google.maps.addressValidation.Address}
+ */
+google.maps.AddressValidationLibrary.prototype.Address;
+
+/**
+ * Available only in the v=beta channel: https://goo.gle/3oAthT3.
+ * @type {typeof google.maps.addressValidation.AddressComponent}
+ */
+google.maps.AddressValidationLibrary.prototype.AddressComponent;
+
+/**
+ * Available only in the v=beta channel: https://goo.gle/3oAthT3.
+ * @type {typeof google.maps.addressValidation.AddressMetadata}
+ */
+google.maps.AddressValidationLibrary.prototype.AddressMetadata;
+
+/**
+ * Available only in the v=beta channel: https://goo.gle/3oAthT3.
+ * @type {typeof google.maps.addressValidation.AddressValidation}
+ */
+google.maps.AddressValidationLibrary.prototype.AddressValidation;
+
+/**
+ * Available only in the v=beta channel: https://goo.gle/3oAthT3.
+ * @type {typeof google.maps.addressValidation.ConfirmationLevel}
+ */
+google.maps.AddressValidationLibrary.prototype.ConfirmationLevel;
+
+/**
+ * Available only in the v=beta channel: https://goo.gle/3oAthT3.
+ * @type {typeof google.maps.addressValidation.Geocode}
+ */
+google.maps.AddressValidationLibrary.prototype.Geocode;
+
+/**
+ * Available only in the v=beta channel: https://goo.gle/3oAthT3.
+ * @type {typeof google.maps.addressValidation.Granularity}
+ */
+google.maps.AddressValidationLibrary.prototype.Granularity;
+
+/**
+ * Available only in the v=beta channel: https://goo.gle/3oAthT3.
+ * @type {typeof google.maps.addressValidation.USPSAddress}
+ */
+google.maps.AddressValidationLibrary.prototype.USPSAddress;
+
+/**
+ * Available only in the v=beta channel: https://goo.gle/3oAthT3.
+ * @type {typeof google.maps.addressValidation.USPSData}
+ */
+google.maps.AddressValidationLibrary.prototype.USPSData;
+
+/**
+ * Available only in the v=beta channel: https://goo.gle/3oAthT3.
+ * @type {typeof google.maps.addressValidation.Verdict}
+ */
+google.maps.AddressValidationLibrary.prototype.Verdict;
+
+/**
  * @record
  */
 google.maps.AirQualityLibrary = function() {};
@@ -1986,7 +2053,7 @@ google.maps.DirectionsLeg.prototype.via_waypoints;
 
 /**
  * Information about traffic speed along the leg.
- * @type {!Array<?>}
+ * @type {!Array<*>}
  * @deprecated This array will always be empty.
  */
 google.maps.DirectionsLeg.prototype.traffic_speed_entry;
@@ -2633,16 +2700,16 @@ google.maps.DirectionsStep.prototype.lat_lngs;
 google.maps.DirectionsStep.prototype.polyline;
 
 /**
- * @enum {string}
- * @deprecated Deprecated as of 2011. Use {@link google.maps.TravelMode}
- *     instead.
+ * @enum {?}
+ * @deprecated Deprecated as of 2011. Use {\@link
+ *     mapsapi.directions.service.directionsConstants.TravelMode} instead.
  */
 google.maps.DirectionsTravelMode = {};
 
 /**
- * @enum {string}
- * @deprecated Deprecated as of 2011. Use {@link google.maps.UnitSystem}
- *     instead.
+ * @enum {?}
+ * @deprecated Deprecated as of 2011. Use {\@link
+ *     mapsapi.directions.service.directionsConstants.UnitSystem} instead.
  */
 google.maps.DirectionsUnitSystem = {};
 
@@ -4778,19 +4845,19 @@ google.maps.KmlMouseEvent = function() {};
 /**
  * A <code>KmlFeatureData</code> object, containing information about the
  * clicked feature.
- * @type {google.maps.KmlFeatureData}
+ * @type {!google.maps.KmlFeatureData}
  */
 google.maps.KmlMouseEvent.prototype.featureData;
 
 /**
  * The position at which to anchor an infowindow on the clicked feature.
- * @type {google.maps.LatLng}
+ * @type {!google.maps.LatLng}
  */
 google.maps.KmlMouseEvent.prototype.latLng;
 
 /**
  * The offset to apply to an infowindow anchored on the clicked feature.
- * @type {google.maps.Size}
+ * @type {!google.maps.Size}
  */
 google.maps.KmlMouseEvent.prototype.pixelOffset;
 
@@ -5875,8 +5942,6 @@ google.maps.MapCapabilities.prototype.isDataDrivenStylingAvailable;
 google.maps.MapCapabilities.prototype.isWebGLOverlayViewAvailable;
 
 /**
- * Available only in the v=beta channel: https://goo.gle/3oAthT3.
- *
  * MapElement is an <code>HTMLElement</code> subclass for rendering maps. After
  * loading the <code>maps</code> library, a map can be created in HTML. For
  * example: <pre><code>&lt;gmp-map center=&quot;37.4220656,-122.0840897&quot;
@@ -5884,8 +5949,8 @@ google.maps.MapCapabilities.prototype.isWebGLOverlayViewAvailable;
  * map-id=&quot;DEMO_MAP_ID&quot;&gt;<br>&nbsp;&nbsp;&lt;button
  * slot=&quot;control-block-start-inline-end&quot;&gt;Custom
  * Control&lt;/button&gt;<br>&lt;/gmp-map&gt;</code></pre> <br> Internally, it
- * uses {@link google.maps.Map}, which can be accessed with the
- * <code>innerMap</code> property.
+ * uses {@link google.maps.Map}, which can be accessed with the {@link
+ * google.maps.MapElement.innerMap} property.
  *
  * Access by calling `const {MapElement} = await
  * google.maps.importLibrary("maps")`. See
@@ -6517,7 +6582,7 @@ google.maps.MapType = function() {};
 /**
  * Alt text to display when this MapType&#39;s button is hovered over in the
  * MapTypeControl. Optional.
- * @type {?string}
+ * @type {string|null}
  */
 google.maps.MapType.prototype.alt;
 
@@ -6537,13 +6602,13 @@ google.maps.MapType.prototype.minZoom;
 
 /**
  * Name to display in the MapTypeControl. Optional.
- * @type {?string}
+ * @type {string|null}
  */
 google.maps.MapType.prototype.name;
 
 /**
  * The Projection used to render this MapType. Optional; defaults to Mercator.
- * @type {?google.maps.Projection}
+ * @type {!google.maps.Projection|null}
  */
 google.maps.MapType.prototype.projection;
 
@@ -6556,7 +6621,7 @@ google.maps.MapType.prototype.radius;
 
 /**
  * The dimensions of each tile. Required.
- * @type {google.maps.Size}
+ * @type {!google.maps.Size|null}
  */
 google.maps.MapType.prototype.tileSize;
 
@@ -6567,7 +6632,7 @@ google.maps.MapType.prototype.tileSize;
  * @param {google.maps.Point} tileCoord Tile coordinates.
  * @param {number} zoom Tile zoom.
  * @param {Document} ownerDocument The document which owns this tile.
- * @return {?Element} Resulting tile.
+ * @return {Element|null} Resulting tile.
  */
 google.maps.MapType.prototype.getTile = function(
     tileCoord, zoom, ownerDocument) {};
@@ -6575,7 +6640,7 @@ google.maps.MapType.prototype.getTile = function(
 /**
  * Releases the given tile, performing any necessary cleanup. The provided tile
  * will have already been removed from the document. Optional.
- * @param {?Element} tile Tile to release.
+ * @param {Element|null} tile Tile to release.
  * @return {undefined}
  */
 google.maps.MapType.prototype.releaseTile = function(tile) {};
@@ -6726,7 +6791,7 @@ google.maps.MapTypeStyle.prototype.featureType;
 google.maps.MapTypeStyle.prototype.stylers;
 
 /**
- * Available only in the v=alpha channel: https://goo.gle/js-alpha-channel.
+ * Available only in the v=beta channel: https://goo.gle/3oAthT3.
  *
  * @record
  */
@@ -6748,6 +6813,11 @@ google.maps.Maps3DLibrary.prototype.LocationClickEvent;
 google.maps.Maps3DLibrary.prototype.Map3DElement;
 
 /**
+ * @type {typeof google.maps.maps3d.MapMode}
+ */
+google.maps.Maps3DLibrary.prototype.MapMode;
+
+/**
  * @type {typeof google.maps.maps3d.Marker3DElement}
  */
 google.maps.Maps3DLibrary.prototype.Marker3DElement;
@@ -6763,6 +6833,11 @@ google.maps.Maps3DLibrary.prototype.Marker3DInteractiveElement;
 google.maps.Maps3DLibrary.prototype.Model3DElement;
 
 /**
+ * @type {typeof google.maps.maps3d.Model3DInteractiveElement}
+ */
+google.maps.Maps3DLibrary.prototype.Model3DInteractiveElement;
+
+/**
  * @type {typeof google.maps.maps3d.PlaceClickEvent}
  */
 google.maps.Maps3DLibrary.prototype.PlaceClickEvent;
@@ -6773,9 +6848,24 @@ google.maps.Maps3DLibrary.prototype.PlaceClickEvent;
 google.maps.Maps3DLibrary.prototype.Polygon3DElement;
 
 /**
+ * @type {typeof google.maps.maps3d.Polygon3DInteractiveElement}
+ */
+google.maps.Maps3DLibrary.prototype.Polygon3DInteractiveElement;
+
+/**
  * @type {typeof google.maps.maps3d.Polyline3DElement}
  */
 google.maps.Maps3DLibrary.prototype.Polyline3DElement;
+
+/**
+ * @type {typeof google.maps.maps3d.Polyline3DInteractiveElement}
+ */
+google.maps.Maps3DLibrary.prototype.Polyline3DInteractiveElement;
+
+/**
+ * @type {typeof google.maps.maps3d.PopoverElement}
+ */
+google.maps.Maps3DLibrary.prototype.PopoverElement;
 
 /**
  * @type {typeof google.maps.maps3d.SteadyChangeEvent}
@@ -6858,6 +6948,11 @@ google.maps.MapsLibrary.prototype.KmlLayerStatus;
 google.maps.MapsLibrary.prototype.Map;
 
 /**
+ * @type {typeof google.maps.MapElement}
+ */
+google.maps.MapsLibrary.prototype.MapElement;
+
+/**
  * @type {typeof google.maps.MapTypeControlStyle}
  */
 google.maps.MapsLibrary.prototype.MapTypeControlStyle;
@@ -6933,7 +7028,6 @@ google.maps.MapsLibrary.prototype.TransitLayer;
 google.maps.MapsLibrary.prototype.WebGLOverlayView;
 
 /**
- * Available only in the v=beta channel: https://goo.gle/3oAthT3.
  * @type {typeof google.maps.ZoomChangeEvent}
  */
 google.maps.MapsLibrary.prototype.ZoomChangeEvent;
@@ -7679,7 +7773,7 @@ google.maps.MotionTrackingControlOptions = function() {};
 google.maps.MotionTrackingControlOptions.prototype.position;
 
 /**
- * Available only in the v=alpha channel: https://goo.gle/js-alpha-channel.
+ * Available only in the v=beta channel: https://goo.gle/3oAthT3.
  *
  * A <code>Orientation3D</code> is a three-dimensional vector used for standard
  * mathematical rotation transformations along heading, tilt, and roll.<br> <ul>
@@ -7745,7 +7839,7 @@ google.maps.Orientation3D.prototype.equals = function(other) {};
 google.maps.Orientation3D.prototype.toJSON = function() {};
 
 /**
- * Available only in the v=alpha channel: https://goo.gle/js-alpha-channel.
+ * Available only in the v=beta channel: https://goo.gle/3oAthT3.
  *
  * Object literals are accepted in place of <code>Orientation3D</code> objects,
  * as a convenience, in many places. These are converted to
@@ -8173,6 +8267,21 @@ google.maps.PlacesLibrary.prototype.Photo;
 google.maps.PlacesLibrary.prototype.Place;
 
 /**
+ * @type {typeof google.maps.places.PlaceContextualElement}
+ */
+google.maps.PlacesLibrary.prototype.PlaceContextualElement;
+
+/**
+ * @type {typeof google.maps.places.PlaceContextualListConfigElement}
+ */
+google.maps.PlacesLibrary.prototype.PlaceContextualListConfigElement;
+
+/**
+ * @type {typeof google.maps.places.PlaceContextualListLayout}
+ */
+google.maps.PlacesLibrary.prototype.PlaceContextualListLayout;
+
+/**
  * @type {typeof google.maps.places.PlacePrediction}
  */
 google.maps.PlacesLibrary.prototype.PlacePrediction;
@@ -8193,9 +8302,19 @@ google.maps.PlacesLibrary.prototype.PlacesServiceStatus;
 google.maps.PlacesLibrary.prototype.PlusCode;
 
 /**
+ * @type {typeof google.maps.places.PostalAddress}
+ */
+google.maps.PlacesLibrary.prototype.PostalAddress;
+
+/**
  * @type {typeof google.maps.places.PriceLevel}
  */
 google.maps.PlacesLibrary.prototype.PriceLevel;
+
+/**
+ * @type {typeof google.maps.places.PriceRange}
+ */
+google.maps.PlacesLibrary.prototype.PriceRange;
 
 /**
  * @type {typeof google.maps.places.RankBy}
@@ -8310,7 +8429,7 @@ google.maps.PolyMouseEvent.prototype.vertex;
  * Access by calling `const {Polygon} = await
  * google.maps.importLibrary("maps")`. See
  * https://developers.google.com/maps/documentation/javascript/libraries.
- * @param {?google.maps.PolygonOptions=} opts
+ * @param {(!google.maps.PolygonOptions|null)=} opts
  * @extends {google.maps.MVCObject}
  * @constructor
  */
@@ -8330,7 +8449,7 @@ google.maps.Polygon.prototype.getEditable = function() {};
 
 /**
  * Returns the map on which this shape is attached.
- * @return {?google.maps.Map}
+ * @return {!google.maps.Map|null}
  */
 google.maps.Polygon.prototype.getMap = function() {};
 
@@ -8371,13 +8490,13 @@ google.maps.Polygon.prototype.setEditable = function(editable) {};
 /**
  * Renders this shape on the specified map. If map is set to <code>null</code>,
  * the shape will be removed.
- * @param {?google.maps.Map} map
+ * @param {!google.maps.Map|null} map
  * @return {undefined}
  */
 google.maps.Polygon.prototype.setMap = function(map) {};
 
 /**
- * @param {?google.maps.PolygonOptions} options
+ * @param {!google.maps.PolygonOptions|null} options
  * @return {undefined}
  */
 google.maps.Polygon.prototype.setOptions = function(options) {};
@@ -8546,7 +8665,7 @@ google.maps.Polyline.prototype.getEditable = function() {};
 
 /**
  * Returns the map on which this shape is attached.
- * @return {?google.maps.Map}
+ * @return {!google.maps.Map|null}
  */
 google.maps.Polyline.prototype.getMap = function() {};
 
@@ -8581,7 +8700,7 @@ google.maps.Polyline.prototype.setEditable = function(editable) {};
 /**
  * Renders this shape on the specified map. If map is set to <code>null</code>,
  * the shape will be removed.
- * @param {?google.maps.Map} map
+ * @param {!google.maps.Map|null} map
  * @return {undefined}
  */
 google.maps.Polyline.prototype.setMap = function(map) {};
@@ -9059,9 +9178,8 @@ google.maps.Settings = function() {};
 google.maps.Settings.prototype.experienceIds;
 
 /**
- * Returns a promise that resolves to a Firebase App Check token result. The
- * token is attached to gRPC requests as a &quot;X-Firebase-AppCheck&quot; HTTP
- * header. If the token is empty, the header is not attached.
+ * Set this property to a function that returns a promise which resolves to a
+ * Firebase App Check token result.
  * @type {function(): !Promise<!google.maps.MapsAppCheckTokenResult>}
  */
 google.maps.Settings.prototype.fetchAppCheckToken;
@@ -10283,7 +10401,7 @@ google.maps.TrafficLayerOptions.prototype.autoRefresh;
 
 /**
  * Map on which to display the traffic layer.
- * @type {google.maps.Map|null|undefined}
+ * @type {!google.maps.Map|null|undefined}
  */
 google.maps.TrafficLayerOptions.prototype.map;
 
@@ -10559,7 +10677,7 @@ google.maps.TransitOptions = function() {};
  * The desired arrival time for the route, specified as a Date object. The Date
  * object measures time in milliseconds since 1 January 1970. If arrival time is
  * specified, departure time is ignored.
- * @type {Date|null|undefined}
+ * @type {!Date|null|undefined}
  */
 google.maps.TransitOptions.prototype.arrivalTime;
 
@@ -10568,21 +10686,21 @@ google.maps.TransitOptions.prototype.arrivalTime;
  * Date object measures time in milliseconds since 1 January 1970. If neither
  * departure time nor arrival time is specified, the time is assumed to be
  * &quot;now&quot;.
- * @type {Date|null|undefined}
+ * @type {!Date|null|undefined}
  */
 google.maps.TransitOptions.prototype.departureTime;
 
 /**
  * One or more preferred modes of transit, such as bus or train. If no
  * preference is given, the API returns the default best route.
- * @type {Array<!google.maps.TransitMode>|null|undefined}
+ * @type {!Array<!google.maps.TransitMode>|null|undefined}
  */
 google.maps.TransitOptions.prototype.modes;
 
 /**
  * A preference that can bias the choice of transit route, such as less walking.
  * If no preference is given, the API returns the default best route.
- * @type {google.maps.TransitRoutePreference|null|undefined}
+ * @type {!google.maps.TransitRoutePreference|null|undefined}
  */
 google.maps.TransitOptions.prototype.routingPreference;
 
@@ -10714,7 +10832,7 @@ google.maps.UnitSystem = {
 };
 
 /**
- * Available only in the v=alpha channel: https://goo.gle/js-alpha-channel.
+ * Available only in the v=beta channel: https://goo.gle/3oAthT3.
  *
  * A <code>Vector3D</code> is a three-dimensional vector used for standard
  * mathematical operations such as scaling the bounds of three-dimensional
@@ -10765,7 +10883,7 @@ google.maps.Vector3D.prototype.equals = function(other) {};
 google.maps.Vector3D.prototype.toJSON = function() {};
 
 /**
- * Available only in the v=alpha channel: https://goo.gle/js-alpha-channel.
+ * Available only in the v=beta channel: https://goo.gle/3oAthT3.
  *
  * Object literals are accepted in place of <code>Vector3D</code> objects, as a
  * convenience, in many places. These are converted to <code>Vector3D</code>
@@ -11062,8 +11180,6 @@ google.maps.WebGLStateOptions = function() {};
 google.maps.WebGLStateOptions.prototype.gl;
 
 /**
- * Available only in the v=beta channel: https://goo.gle/3oAthT3.
- *
  * This event is created from monitoring zoom change.
  *
  * Access by calling `const {ZoomChangeEvent} = await
@@ -11192,6 +11308,917 @@ google.maps.event.addDomListener = function(
  */
 google.maps.event.addDomListenerOnce = function(
     instance, eventName, handler, capture) {};
+
+/**
+ * @const
+ */
+google.maps.addressValidation = {};
+
+/**
+ * Available only in the v=beta channel: https://goo.gle/3oAthT3.
+ *
+ * Details of the post-processed address. Post-processing includes correcting
+ * misspelled parts of the address, replacing incorrect parts, and inferring
+ * missing parts.
+ *
+ * Access by calling `const {Address} = await
+ * google.maps.importLibrary("addressValidation")`. See
+ * https://developers.google.com/maps/documentation/javascript/libraries.
+ * @constructor
+ */
+google.maps.addressValidation.Address = function() {};
+
+/**
+ * Available only in the v=beta channel: https://goo.gle/3oAthT3.
+ * The individual address components of the formatted and corrected address,
+ * along with validation information. This provides information on the
+ * validation status of the individual components.
+ * @type {!Array<!google.maps.addressValidation.AddressComponent>}
+ */
+google.maps.addressValidation.Address.prototype.components;
+
+/**
+ * Available only in the v=beta channel: https://goo.gle/3oAthT3.
+ * The post-processed address, formatted as a single-line address following the
+ * address-formatting rules of the region where the address is located.
+ * @type {string|null}
+ */
+google.maps.addressValidation.Address.prototype.formattedAddress;
+
+/**
+ * Available only in the v=beta channel: https://goo.gle/3oAthT3.
+ * The types of components that were expected to be present in a correctly
+ * formatted mailing address but were not found in the input AND could not be
+ * inferred. Components of this type are not present in
+ * <code>formatted_address</code>, <code>postal_address</code>, or
+ * <code>address_components</code>. An example might be
+ * <code>[&#39;street_number&#39;, &#39;route&#39;]</code> for an input like
+ * &quot;Boulder, Colorado, 80301, USA&quot;. The list of possible types can be
+ * found <a
+ * href="https://developers.google.com/maps/documentation/geocoding/requests-geocoding#Types">here</a>.
+ * @type {!Array<string>}
+ */
+google.maps.addressValidation.Address.prototype.missingComponentTypes;
+
+/**
+ * Available only in the v=beta channel: https://goo.gle/3oAthT3.
+ * The post-processed address represented as a postal address.
+ * @type {!google.maps.places.PostalAddress|null}
+ */
+google.maps.addressValidation.Address.prototype.postalAddress;
+
+/**
+ * Available only in the v=beta channel: https://goo.gle/3oAthT3.
+ * The types of the components that are present in the
+ * <code>address_components</code> but could not be confirmed to be correct.
+ * This field is provided for the sake of convenience: its contents are
+ * equivalent to iterating through the <code>address_components</code> to find
+ * the types of all the components where the {@link
+ * google.maps.addressValidation.AddressComponent.confirmationLevel} is
+ * not {@link google.maps.addressValidation.ConfirmationLevel.CONFIRMED} or
+ * the {@link google.maps.addressValidation.AddressComponent.inferred} flag is
+ * not set to <code>true</code>. The list of possible types can be found <a
+ * href="https://developers.google.com/maps/documentation/geocoding/requests-geocoding#Types">here</a>.
+ * @type {!Array<string>}
+ */
+google.maps.addressValidation.Address.prototype.unconfirmedComponentTypes;
+
+/**
+ * Available only in the v=beta channel: https://goo.gle/3oAthT3.
+ * Any tokens in the input that could not be resolved. This might be an input
+ * that was not recognized as a valid part of an address (for example in an
+ * input like &quot;123235253253 Main St, San Francisco, CA, 94105&quot;, the
+ * unresolved tokens may look like <code>[&quot;123235253253&quot;]</code> since
+ * that does not look like a valid street number.
+ * @type {!Array<string>}
+ */
+google.maps.addressValidation.Address.prototype.unresolvedTokens;
+
+/**
+ * Available only in the v=beta channel: https://goo.gle/3oAthT3.
+ *
+ * Represents a single component of an address (ex. street name, city).
+ *
+ * Access by calling `const {AddressComponent} = await
+ * google.maps.importLibrary("addressValidation")`. See
+ * https://developers.google.com/maps/documentation/javascript/libraries.
+ * @constructor
+ */
+google.maps.addressValidation.AddressComponent = function() {};
+
+/**
+ * Available only in the v=beta channel: https://goo.gle/3oAthT3.
+ * The component name text. For example, &quot;5th Avenue&quot; for a street
+ * name or &quot;1253&quot; for a street number,
+ * @type {string|null}
+ */
+google.maps.addressValidation.AddressComponent.prototype.componentName;
+
+/**
+ * Available only in the v=beta channel: https://goo.gle/3oAthT3.
+ * The BCP-47 language code. This will not be present if the component name is
+ * not associated with a language, such as a street number.
+ * @type {string|null}
+ */
+google.maps.addressValidation.AddressComponent.prototype
+    .componentNameLanguageCode;
+
+/**
+ * Available only in the v=beta channel: https://goo.gle/3oAthT3.
+ * The type of the address component. See <a
+ * href="https://developers.google.com/places/web-service/supported_types#table2">Table
+ * 2: Additional types returned by the Places service</a> for a list of possible
+ * types.
+ * @type {string|null}
+ */
+google.maps.addressValidation.AddressComponent.prototype.componentType;
+
+/**
+ * Available only in the v=beta channel: https://goo.gle/3oAthT3.
+ * Indicates the level of certainty that the component is correct.
+ * @type {!google.maps.addressValidation.ConfirmationLevel|null}
+ */
+google.maps.addressValidation.AddressComponent.prototype.confirmationLevel;
+
+/**
+ * Available only in the v=beta channel: https://goo.gle/3oAthT3.
+ * If true, this component was not part of the input, but was inferred for the
+ * address location. Including this component is recommended for a complete
+ * address.
+ * @type {boolean}
+ */
+google.maps.addressValidation.AddressComponent.prototype.inferred;
+
+/**
+ * Available only in the v=beta channel: https://goo.gle/3oAthT3.
+ * Indicates the name of the component was replaced with a completely different
+ * one. For example, replacing a wrong postal code being with one that is
+ * correct for the address. This is not a cosmetic change; the input component
+ * has been changed to a different one.
+ * @type {boolean}
+ */
+google.maps.addressValidation.AddressComponent.prototype.replaced;
+
+/**
+ * Available only in the v=beta channel: https://goo.gle/3oAthT3.
+ * Indicates a correction to a misspelling in the component name. The API does
+ * not always flag changes from one spelling variant to another, such as
+ * &quot;centre&quot; to &quot;center&quot;.
+ * @type {boolean}
+ */
+google.maps.addressValidation.AddressComponent.prototype.spellCorrected;
+
+/**
+ * Available only in the v=beta channel: https://goo.gle/3oAthT3.
+ * If true, this component is not expected to be present in a postal address for
+ * the given region. It has been retained only because it was part of the input.
+ * @type {boolean}
+ */
+google.maps.addressValidation.AddressComponent.prototype.unexpected;
+
+/**
+ * Available only in the v=beta channel: https://goo.gle/3oAthT3.
+ *
+ * The metadata for the address. AddressMetadata is not guaranteed to be fully
+ * populated for every address sent to the Address Validation API.
+ *
+ * Access by calling `const {AddressMetadata} = await
+ * google.maps.importLibrary("addressValidation")`. See
+ * https://developers.google.com/maps/documentation/javascript/libraries.
+ * @constructor
+ */
+google.maps.addressValidation.AddressMetadata = function() {};
+
+/**
+ * Available only in the v=beta channel: https://goo.gle/3oAthT3.
+ * @type {boolean}
+ */
+google.maps.addressValidation.AddressMetadata.prototype.business;
+
+/**
+ * Available only in the v=beta channel: https://goo.gle/3oAthT3.
+ * @type {boolean}
+ */
+google.maps.addressValidation.AddressMetadata.prototype.poBox;
+
+/**
+ * Available only in the v=beta channel: https://goo.gle/3oAthT3.
+ * @type {boolean}
+ */
+google.maps.addressValidation.AddressMetadata.prototype.residential;
+
+/**
+ * Available only in the v=beta channel: https://goo.gle/3oAthT3.
+ *
+ * Static class for accessing the AddressValidation APIs.
+ *
+ * Access by calling `const {AddressValidation} = await
+ * google.maps.importLibrary("addressValidation")`. See
+ * https://developers.google.com/maps/documentation/javascript/libraries.
+ * @constructor
+ */
+google.maps.addressValidation.AddressValidation = function() {};
+
+/**
+ * Available only in the v=beta channel: https://goo.gle/3oAthT3.
+ * Information about the address itself as opposed to the geocode.
+ * @type {!google.maps.addressValidation.Address|null}
+ */
+google.maps.addressValidation.AddressValidation.prototype.address;
+
+/**
+ * Available only in the v=beta channel: https://goo.gle/3oAthT3.
+ * Information about the location and place that the address geocoded to.
+ * @type {!google.maps.addressValidation.Geocode|null}
+ */
+google.maps.addressValidation.AddressValidation.prototype.geocode;
+
+/**
+ * Available only in the v=beta channel: https://goo.gle/3oAthT3.
+ * Other information relevant to deliverability. <code>metadata</code> is not
+ * guaranteed to be fully populated for every address sent to the Address
+ * Validation API.
+ * @type {!google.maps.addressValidation.AddressMetadata|null}
+ */
+google.maps.addressValidation.AddressValidation.prototype.metadata;
+
+/**
+ * Available only in the v=beta channel: https://goo.gle/3oAthT3.
+ * The UUID that identifies this response. If the address needs to be
+ * re-validated, this UUID <em>must</em> accompany the new request.
+ * @type {string|null}
+ */
+google.maps.addressValidation.AddressValidation.prototype.responseId;
+
+/**
+ * Available only in the v=beta channel: https://goo.gle/3oAthT3.
+ * Extra deliverability flags provided by USPS. Only provided in region
+ * <code>US</code> and <code>PR</code>.
+ * @type {!google.maps.addressValidation.USPSData|null}
+ */
+google.maps.addressValidation.AddressValidation.prototype.uspsData;
+
+/**
+ * Available only in the v=beta channel: https://goo.gle/3oAthT3.
+ * Overall verdict flags
+ * @type {!google.maps.addressValidation.Verdict|null}
+ */
+google.maps.addressValidation.AddressValidation.prototype.verdict;
+
+/**
+ * Available only in the v=beta channel: https://goo.gle/3oAthT3.
+ * Validates an address. See <a
+ * href="https://developers.google.com/maps/documentation/javascript/address-validation/validate-address">https://developers.google.com/maps/documentation/javascript/address-validation/validate-address</a>.
+ * @param {!google.maps.addressValidation.AddressValidationRequest} request
+ * @return {!Promise<!google.maps.addressValidation.AddressValidation>}
+ */
+google.maps.addressValidation.AddressValidation.fetchAddressValidation =
+    function(request) {};
+
+/**
+ * Available only in the v=beta channel: https://goo.gle/3oAthT3.
+ * Converts the AddressValidation class to a JSON object with the same
+ * properties.
+ * @return {Object}
+ */
+google.maps.addressValidation.AddressValidation.prototype.toJSON =
+    function() {};
+
+/**
+ * Available only in the v=beta channel: https://goo.gle/3oAthT3.
+ *
+ * Request interface for {@link
+ * google.maps.addressValidation.AddressValidation.fetchAddressValidation}.
+ * @record
+ */
+google.maps.addressValidation.AddressValidationRequest = function() {};
+
+/**
+ * Available only in the v=beta channel: https://goo.gle/3oAthT3.
+ * The address being validated. Unformatted addresses should be submitted
+ * via {@link google.maps.places.PostalAddress.addressLines}.
+ * @type {!google.maps.places.PostalAddressLiteral}
+ */
+google.maps.addressValidation.AddressValidationRequest.prototype.address;
+
+/**
+ * Available only in the v=beta channel: https://goo.gle/3oAthT3.
+ * This field must not be set for the first address validation request. If more
+ * requests are necessary to fully validate a single address (for example if the
+ * changes the user makes after the initial validation need to be re-validated),
+ * then each followup request must populate this field with the {@link
+ * google.maps.addressValidation.AddressValidation.responseId} from the very
+ * first response in the validation sequence.
+ * @type {string|undefined}
+ */
+google.maps.addressValidation.AddressValidationRequest.prototype
+    .previousResponseId;
+
+/**
+ * Available only in the v=beta channel: https://goo.gle/3oAthT3.
+ * Enables USPS CASS compatible mode. This affects <em>only</em> the {@link
+ * google.maps.addressValidation.AddressValidation.uspsData} field of {@link
+ * google.maps.addressValidation.AddressValidation}. Note: for USPS CASS enabled
+ * requests for addresses in Puerto Rico, a {@link
+ * google.maps.places.PostalAddress.regionCode} of the <code>address</code> must
+ * be provided as &quot;PR&quot;, or an {@link
+ * google.maps.places.PostalAddress.administrativeArea} of the
+ * <code>address</code> must be provided as &quot;Puerto Rico&quot;
+ * (case-insensitive) or &quot;PR&quot;.
+ * @type {boolean|undefined}
+ */
+google.maps.addressValidation.AddressValidationRequest.prototype
+    .uspsCASSEnabled;
+
+/**
+ * Available only in the v=beta channel: https://goo.gle/3oAthT3.
+ *
+ * The different possible values indicating the level of certainty that the
+ * component is correct.
+ *
+ * Access by calling `const {ConfirmationLevel} = await
+ * google.maps.importLibrary("addressValidation")`. See
+ * https://developers.google.com/maps/documentation/javascript/libraries.
+ * @enum {string}
+ */
+google.maps.addressValidation.ConfirmationLevel = {
+  CONFIRMED: 'CONFIRMED',
+  UNCONFIRMED_AND_SUSPICIOUS: 'UNCONFIRMED_AND_SUSPICIOUS',
+  UNCONFIRMED_BUT_PLAUSIBLE: 'UNCONFIRMED_BUT_PLAUSIBLE',
+};
+
+/**
+ * Available only in the v=beta channel: https://goo.gle/3oAthT3.
+ *
+ * Contains information about the place the input was geocoded to.
+ *
+ * Access by calling `const {Geocode} = await
+ * google.maps.importLibrary("addressValidation")`. See
+ * https://developers.google.com/maps/documentation/javascript/libraries.
+ * @constructor
+ */
+google.maps.addressValidation.Geocode = function() {};
+
+/**
+ * Available only in the v=beta channel: https://goo.gle/3oAthT3.
+ * The bounds of the geocoded place.
+ * @type {!google.maps.LatLngBounds|null}
+ */
+google.maps.addressValidation.Geocode.prototype.bounds;
+
+/**
+ * Available only in the v=beta channel: https://goo.gle/3oAthT3.
+ * The size of the geocoded place, in meters. This is another measure of the
+ * coarseness of the geocoded location, but in physical size rather than in
+ * semantic meaning.
+ * @type {number|null}
+ */
+google.maps.addressValidation.Geocode.prototype.featureSizeMeters;
+
+/**
+ * Available only in the v=beta channel: https://goo.gle/3oAthT3.
+ * The geocoded location of the input.
+ * @type {!google.maps.LatLngAltitude|null}
+ */
+google.maps.addressValidation.Geocode.prototype.location;
+
+/**
+ * Available only in the v=beta channel: https://goo.gle/3oAthT3.
+ * The Place ID of the geocoded place. Using Place is preferred over using
+ * addresses, latitude/longitude coordinates, or plus codes. Using coordinates
+ * for routing or calculating driving directions will always result in the point
+ * being snapped to the road nearest to those coordinates. This may not be a
+ * road that will quickly or safely lead to the destination and may not be near
+ * an access point to the property. Additionally, when a location is reverse
+ * geocoded, there is no guarantee that the returned address will match the
+ * original.
+ * @type {string|null}
+ */
+google.maps.addressValidation.Geocode.prototype.placeId;
+
+/**
+ * Available only in the v=beta channel: https://goo.gle/3oAthT3.
+ * The type(s) of place that the input geocoded to. For example,
+ * <code>[&#39;locality&#39;, &#39;political&#39;]</code>. The full list of
+ * types can be found in the <a
+ * href="https://developers.google.com/maps/documentation/geocoding/requests-geocoding#Types">Geocoding
+ * API documentation</a>.
+ * @type {!Array<string>}
+ */
+google.maps.addressValidation.Geocode.prototype.placeTypes;
+
+/**
+ * Available only in the v=beta channel: https://goo.gle/3oAthT3.
+ * The plus code corresponding to the <code>location</code>.
+ * @type {!google.maps.places.PlusCode|null}
+ */
+google.maps.addressValidation.Geocode.prototype.plusCode;
+
+/**
+ * Available only in the v=beta channel: https://goo.gle/3oAthT3.
+ * Returns a Place representation of this Geocode. To get full place details, a
+ * call to place.fetchFields() should be made.
+ * @return {undefined}
+ */
+google.maps.addressValidation.Geocode.prototype.fetchPlace = function() {};
+
+/**
+ * Available only in the v=beta channel: https://goo.gle/3oAthT3.
+ *
+ * The various granularities that an address or a geocode can have. When used to
+ * indicate granularity for an <em>address</em>, these values indicate with how
+ * fine a granularity the address identifies a mailing destination. For example,
+ * an address such as &quot;123 Main Street, Redwood City, CA, 94061&quot;
+ * identifies a <code>PREMISE</code> while something like &quot;Redwood City,
+ * CA, 94061&quot; identifies a <code>LOCALITY</code>. However, if we are unable
+ * to find a geocode for &quot;123 Main Street&quot; in Redwood City, the
+ * geocode returned might be of <code>LOCALITY</code> granularity even though
+ * the address is more granular.
+ *
+ * Access by calling `const {Granularity} = await
+ * google.maps.importLibrary("addressValidation")`. See
+ * https://developers.google.com/maps/documentation/javascript/libraries.
+ * @enum {string}
+ */
+google.maps.addressValidation.Granularity = {
+  /**
+   * The address or geocode indicates a block. Only used in regions which have
+   * block-level addressing, such as Japan.
+   */
+  BLOCK: 'BLOCK',
+  /**
+   * All other granularities, which are bucketed together since they are not
+   * deliverable.
+   */
+  OTHER: 'OTHER',
+  /**
+   * Building-level result.
+   */
+  PREMISE: 'PREMISE',
+  /**
+   * A geocode that approximates the building-level location of the address.
+   */
+  PREMISE_PROXIMITY: 'PREMISE_PROXIMITY',
+  /**
+   * The geocode or address is granular to route, such as a street, road, or
+   * highway.
+   */
+  ROUTE: 'ROUTE',
+  /**
+   * Below-building level result, such as an apartment.
+   */
+  SUB_PREMISE: 'SUB_PREMISE',
+};
+
+/**
+ * Available only in the v=beta channel: https://goo.gle/3oAthT3.
+ *
+ * USPS representation of a US address.
+ *
+ * Access by calling `const {USPSAddress} = await
+ * google.maps.importLibrary("addressValidation")`. See
+ * https://developers.google.com/maps/documentation/javascript/libraries.
+ * @constructor
+ */
+google.maps.addressValidation.USPSAddress = function() {};
+
+/**
+ * Available only in the v=beta channel: https://goo.gle/3oAthT3.
+ * The city name.
+ * @type {string|null}
+ */
+google.maps.addressValidation.USPSAddress.prototype.city;
+
+/**
+ * Available only in the v=beta channel: https://goo.gle/3oAthT3.
+ * The address line containing the city, state, and zip code.
+ * @type {string|null}
+ */
+google.maps.addressValidation.USPSAddress.prototype.cityStateZipAddressLine;
+
+/**
+ * Available only in the v=beta channel: https://goo.gle/3oAthT3.
+ * The name of the firm.
+ * @type {string|null}
+ */
+google.maps.addressValidation.USPSAddress.prototype.firm;
+
+/**
+ * Available only in the v=beta channel: https://goo.gle/3oAthT3.
+ * The first line of the address.
+ * @type {string|null}
+ */
+google.maps.addressValidation.USPSAddress.prototype.firstAddressLine;
+
+/**
+ * Available only in the v=beta channel: https://goo.gle/3oAthT3.
+ * The second line of the address.
+ * @type {string|null}
+ */
+google.maps.addressValidation.USPSAddress.prototype.secondAddressLine;
+
+/**
+ * Available only in the v=beta channel: https://goo.gle/3oAthT3.
+ * The 2-letter state code.
+ * @type {string|null}
+ */
+google.maps.addressValidation.USPSAddress.prototype.state;
+
+/**
+ * Available only in the v=beta channel: https://goo.gle/3oAthT3.
+ * The Puerto Rican urbanization name.
+ * @type {string|null}
+ */
+google.maps.addressValidation.USPSAddress.prototype.urbanization;
+
+/**
+ * Available only in the v=beta channel: https://goo.gle/3oAthT3.
+ * The Postal code, e.g. &quot;10009&quot;.
+ * @type {string|null}
+ */
+google.maps.addressValidation.USPSAddress.prototype.zipCode;
+
+/**
+ * Available only in the v=beta channel: https://goo.gle/3oAthT3.
+ * The 4-digit postal code extension, e.g. &quot;5023&quot;.
+ * @type {string|null}
+ */
+google.maps.addressValidation.USPSAddress.prototype.zipCodeExtension;
+
+/**
+ * Available only in the v=beta channel: https://goo.gle/3oAthT3.
+ *
+ * The USPS data for the address. USPSData is not guaranteed to be fully
+ * populated for every US or PR address sent to the Address Validation API.
+ * It&#39;s recommended to integrate the backup address fields in the response
+ * if you utilize uspsData as the primary part of the response.
+ *
+ * Access by calling `const {USPSData} = await
+ * google.maps.importLibrary("addressValidation")`. See
+ * https://developers.google.com/maps/documentation/javascript/libraries.
+ * @constructor
+ */
+google.maps.addressValidation.USPSData = function() {};
+
+/**
+ * Available only in the v=beta channel: https://goo.gle/3oAthT3.
+ * Abbreviated city.
+ * @type {string|null}
+ */
+google.maps.addressValidation.USPSData.prototype.abbreviatedCity;
+
+/**
+ * Available only in the v=beta channel: https://goo.gle/3oAthT3.
+ * Type of the address record that matches the input address.
+ * @type {string|null}
+ */
+google.maps.addressValidation.USPSData.prototype.addressRecordType;
+
+/**
+ * Available only in the v=beta channel: https://goo.gle/3oAthT3.
+ * The carrier route code. A four character code consisting of a one letter
+ * prefix and a three digit route designator.
+ * @type {string|null}
+ */
+google.maps.addressValidation.USPSData.prototype.carrierRoute;
+
+/**
+ * Available only in the v=beta channel: https://goo.gle/3oAthT3.
+ * Carrier route rate sort indicator.
+ * @type {string|null}
+ */
+google.maps.addressValidation.USPSData.prototype.carrierRouteIndicator;
+
+/**
+ * Available only in the v=beta channel: https://goo.gle/3oAthT3.
+ * Indicator that the request has been CASS processed.
+ * @type {boolean}
+ */
+google.maps.addressValidation.USPSData.prototype.cassProcessed;
+
+/**
+ * Available only in the v=beta channel: https://goo.gle/3oAthT3.
+ * County name.
+ * @type {string|null}
+ */
+google.maps.addressValidation.USPSData.prototype.county;
+
+/**
+ * Available only in the v=beta channel: https://goo.gle/3oAthT3.
+ * The delivery point check digit. This number is added to the end of the
+ * delivery_point_barcode for mechanically scanned mail. Adding all the digits
+ * of the delivery_point_barcode, delivery_point_check_digit, postal code, and
+ * ZIP+4 together should yield a number divisible by 10.
+ * @type {string|null}
+ */
+google.maps.addressValidation.USPSData.prototype.deliveryPointCheckDigit;
+
+/**
+ * Available only in the v=beta channel: https://goo.gle/3oAthT3.
+ * The 2-digit delivery point code.
+ * @type {string|null}
+ */
+google.maps.addressValidation.USPSData.prototype.deliveryPointCode;
+
+/**
+ * Available only in the v=beta channel: https://goo.gle/3oAthT3.
+ * Indicates if the address is a CMRA (Commercial Mail Receiving Agency)--a
+ * private business receiving mail for clients. Returns a single character.
+ * @type {string|null}
+ */
+google.maps.addressValidation.USPSData.prototype.dpvCMRA;
+
+/**
+ * Available only in the v=beta channel: https://goo.gle/3oAthT3.
+ * The possible values for DPV confirmation. Returns a single character or
+ * returns no value.
+ * @type {string|null}
+ */
+google.maps.addressValidation.USPSData.prototype.dpvConfirmation;
+
+/**
+ * Available only in the v=beta channel: https://goo.gle/3oAthT3.
+ * Flag indicates addresses where USPS cannot knock on a door to deliver mail.
+ * Returns a single character.
+ * @type {string|null}
+ */
+google.maps.addressValidation.USPSData.prototype.dpvDoorNotAccessible;
+
+/**
+ * Available only in the v=beta channel: https://goo.gle/3oAthT3.
+ * Flag indicates mail is delivered to a single receptable at a site. Returns a
+ * single character.
+ * @type {string|null}
+ */
+google.maps.addressValidation.USPSData.prototype.dpvDrop;
+
+/**
+ * Available only in the v=beta channel: https://goo.gle/3oAthT3.
+ * Indicates that more than one DPV return code is valid for the address.
+ * Returns a single character.
+ * @type {string|null}
+ */
+google.maps.addressValidation.USPSData.prototype.dpvEnhancedDeliveryCode;
+
+/**
+ * Available only in the v=beta channel: https://goo.gle/3oAthT3.
+ * The footnotes from delivery point validation. Multiple footnotes may be
+ * strung together in the same string.
+ * @type {string|null}
+ */
+google.maps.addressValidation.USPSData.prototype.dpvFootnote;
+
+/**
+ * Available only in the v=beta channel: https://goo.gle/3oAthT3.
+ * Flag indicates mail delivery is not performed every day of the week. Returns
+ * a single character.
+ * @type {string|null}
+ */
+google.maps.addressValidation.USPSData.prototype.dpvNonDeliveryDays;
+
+/**
+ * Available only in the v=beta channel: https://goo.gle/3oAthT3.
+ * Integer identifying non-delivery days. It can be interrogated using bit
+ * flags: 0x40 – Sunday is a non-delivery day 0x20 – Monday is a non-delivery
+ * day 0x10 – Tuesday is a non-delivery day 0x08 – Wednesday is a non-delivery
+ * day 0x04 – Thursday is a non-delivery day 0x02 – Friday is a non-delivery day
+ * 0x01 – Saturday is a non-delivery day
+ * @type {number|null}
+ */
+google.maps.addressValidation.USPSData.prototype.dpvNonDeliveryDaysValues;
+
+/**
+ * Available only in the v=beta channel: https://goo.gle/3oAthT3.
+ * Flag indicates door is accessible, but package will not be left due to
+ * security concerns. Returns a single character.
+ * @type {string|null}
+ */
+google.maps.addressValidation.USPSData.prototype.dpvNoSecureLocation;
+
+/**
+ * Available only in the v=beta channel: https://goo.gle/3oAthT3.
+ * Indicates whether the address is a no stat address or an active address.
+ * No stat addresses are ones which are not continuously occupied or addresses
+ * that the USPS does not service. Returns a single character.
+ * @type {string|null}
+ */
+google.maps.addressValidation.USPSData.prototype.dpvNoStat;
+
+/**
+ * Available only in the v=beta channel: https://goo.gle/3oAthT3.
+ * Indicates the NoStat type. Returns a reason code as int.
+ * @type {number|null}
+ */
+google.maps.addressValidation.USPSData.prototype.dpvNoStatReasonCode;
+
+/**
+ * Available only in the v=beta channel: https://goo.gle/3oAthT3.
+ * Indicates the address was matched to PBSA record. Returns a single character.
+ * @type {string|null}
+ */
+google.maps.addressValidation.USPSData.prototype.dpvPBSA;
+
+/**
+ * Available only in the v=beta channel: https://goo.gle/3oAthT3.
+ * Indicates that mail is not delivered to the street address. Returns a single
+ * character.
+ * @type {string|null}
+ */
+google.maps.addressValidation.USPSData.prototype.dpvThrowback;
+
+/**
+ * Available only in the v=beta channel: https://goo.gle/3oAthT3.
+ * Indicates whether the address is vacant. Returns a single character.
+ * @type {string|null}
+ */
+google.maps.addressValidation.USPSData.prototype.dpvVacant;
+
+/**
+ * Available only in the v=beta channel: https://goo.gle/3oAthT3.
+ * eLOT Ascending/Descending Flag (A/D).
+ * @type {string|null}
+ */
+google.maps.addressValidation.USPSData.prototype.elotFlag;
+
+/**
+ * Available only in the v=beta channel: https://goo.gle/3oAthT3.
+ * Enhanced Line of Travel (eLOT) number.
+ * @type {string|null}
+ */
+google.maps.addressValidation.USPSData.prototype.elotNumber;
+
+/**
+ * Available only in the v=beta channel: https://goo.gle/3oAthT3.
+ * Error message for USPS data retrieval. This is populated when USPS processing
+ * is suspended because of the detection of artificially created addresses.
+ * @type {string|null}
+ */
+google.maps.addressValidation.USPSData.prototype.errorMessage;
+
+/**
+ * Available only in the v=beta channel: https://goo.gle/3oAthT3.
+ * FIPS county code.
+ * @type {string|null}
+ */
+google.maps.addressValidation.USPSData.prototype.fipsCountyCode;
+
+/**
+ * Available only in the v=beta channel: https://goo.gle/3oAthT3.
+ * Indicator that a default address was found, but more specific addresses
+ * exist.
+ * @type {boolean}
+ */
+google.maps.addressValidation.USPSData.prototype.hasDefaultAddress;
+
+/**
+ * Available only in the v=beta channel: https://goo.gle/3oAthT3.
+ * The delivery address is matchable, but the EWS file indicates that an exact
+ * match will be available soon.
+ * @type {boolean}
+ */
+google.maps.addressValidation.USPSData.prototype.hasNoEWSMatch;
+
+/**
+ * Available only in the v=beta channel: https://goo.gle/3oAthT3.
+ * LACSLink indicator.
+ * @type {string|null}
+ */
+google.maps.addressValidation.USPSData.prototype.lacsLinkIndicator;
+
+/**
+ * Available only in the v=beta channel: https://goo.gle/3oAthT3.
+ * LACSLink return code.
+ * @type {string|null}
+ */
+google.maps.addressValidation.USPSData.prototype.lacsLinkReturnCode;
+
+/**
+ * Available only in the v=beta channel: https://goo.gle/3oAthT3.
+ * PMB (Private Mail Box) unit designator.
+ * @type {string|null}
+ */
+google.maps.addressValidation.USPSData.prototype.pmbDesignator;
+
+/**
+ * Available only in the v=beta channel: https://goo.gle/3oAthT3.
+ * PMB (Private Mail Box) number.
+ * @type {string|null}
+ */
+google.maps.addressValidation.USPSData.prototype.pmbNumber;
+
+/**
+ * Available only in the v=beta channel: https://goo.gle/3oAthT3.
+ * PO Box only postal code.
+ * @type {boolean}
+ */
+google.maps.addressValidation.USPSData.prototype.poBoxOnlyPostalCode;
+
+/**
+ * Available only in the v=beta channel: https://goo.gle/3oAthT3.
+ * Main post office city.
+ * @type {string|null}
+ */
+google.maps.addressValidation.USPSData.prototype.postOfficeCity;
+
+/**
+ * Available only in the v=beta channel: https://goo.gle/3oAthT3.
+ * Main post office state.
+ * @type {string|null}
+ */
+google.maps.addressValidation.USPSData.prototype.postOfficeState;
+
+/**
+ * Available only in the v=beta channel: https://goo.gle/3oAthT3.
+ * USPS standardized address.
+ * @type {!google.maps.addressValidation.USPSAddress|null}
+ */
+google.maps.addressValidation.USPSData.prototype.standardizedAddress;
+
+/**
+ * Available only in the v=beta channel: https://goo.gle/3oAthT3.
+ * Footnotes from matching a street or highrise record to suite information. If
+ * business name match is found, the secondary number is returned.
+ * @type {string|null}
+ */
+google.maps.addressValidation.USPSData.prototype.suiteLinkFootnote;
+
+/**
+ * Available only in the v=beta channel: https://goo.gle/3oAthT3.
+ *
+ * Represents the post-processed address for the supplied address.
+ *
+ * Access by calling `const {Verdict} = await
+ * google.maps.importLibrary("addressValidation")`. See
+ * https://developers.google.com/maps/documentation/javascript/libraries.
+ * @constructor
+ */
+google.maps.addressValidation.Verdict = function() {};
+
+/**
+ * Available only in the v=beta channel: https://goo.gle/3oAthT3.
+ * The address is considered complete if there are no unresolved tokens, no
+ * unexpected or missing address components. If unset, indicates that the value
+ * is <code>false</code>. See {@link
+ * google.maps.addressValidation.Address.missingComponentTypes}, {@link
+ * google.maps.addressValidation.Address.unresolvedTokens} or {@link
+ * google.maps.addressValidation.AddressComponent.unexpected} fields for more
+ * details.
+ * @type {boolean}
+ */
+google.maps.addressValidation.Verdict.prototype.addressComplete;
+
+/**
+ * Available only in the v=beta channel: https://goo.gle/3oAthT3.
+ * Information about the granularity of the {@link
+ * google.maps.addressValidation.Geocode}. This can be understood as the
+ * semantic meaning of how coarse or fine the geocoded location is.
+ * @type {!google.maps.addressValidation.Granularity|null}
+ */
+google.maps.addressValidation.Verdict.prototype.geocodeGranularity;
+
+/**
+ * Available only in the v=beta channel: https://goo.gle/3oAthT3.
+ * At least one address component was inferred (i.e. added) that wasn&#39;t in
+ * the input, see {@link google.maps.addressValidation.AddressComponent} for
+ * details.
+ * @type {boolean}
+ */
+google.maps.addressValidation.Verdict.prototype.hasInferredComponents;
+
+/**
+ * Available only in the v=beta channel: https://goo.gle/3oAthT3.
+ * At least one address component was replaced - see {@link
+ * google.maps.addressValidation.AddressComponent} for details.
+ * @type {boolean|null}
+ */
+google.maps.addressValidation.Verdict.prototype.hasReplacedComponents;
+
+/**
+ * Available only in the v=beta channel: https://goo.gle/3oAthT3.
+ * At least one address component cannot be categorized or validated, see {@link
+ * google.maps.addressValidation.AddressComponent} for details.
+ * @type {boolean}
+ */
+google.maps.addressValidation.Verdict.prototype.hasUnconfirmedComponents;
+
+/**
+ * Available only in the v=beta channel: https://goo.gle/3oAthT3.
+ * The granularity of the <strong>input</strong> address. This is the result of
+ * parsing the input address and does not give any validation signals. For
+ * validation signals, refer to <code>validationGranularity</code>.
+ * @type {!google.maps.addressValidation.Granularity|null}
+ */
+google.maps.addressValidation.Verdict.prototype.inputGranularity;
+
+/**
+ * Available only in the v=beta channel: https://goo.gle/3oAthT3.
+ * The granularity level that the API can fully <strong>validate</strong> the
+ * address to. For example, a <code>validationGranularity</code> of
+ * <code>PREMISE</code> indicates all address components at the level of
+ * <code>PREMISE</code> and broader can be validated.
+ * @type {!google.maps.addressValidation.Granularity|null}
+ */
+google.maps.addressValidation.Verdict.prototype.validationGranularity;
 
 /**
  * @const
@@ -15193,446 +16220,10 @@ google.maps.journeySharing.WaypointType = {
 /**
  * @const
  */
-google.maps.localContext = {};
-
-/**
- * Available only in the v=beta channel: https://goo.gle/3oAthT3.
- *
- * Shows a Local Context experience with a {@link google.maps.Map}.
- *
- * Access by calling `const {LocalContextMapView} = await
- * google.maps.importLibrary("localContext")`. See
- * https://developers.google.com/maps/documentation/javascript/libraries.
- * @param {!google.maps.localContext.LocalContextMapViewOptions} options
- * @implements {google.maps.localContext.LocalContextMapViewOptions}
- * @constructor
- * @deprecated Local Context is deprecated, and no longer recommended for new
- *     websites. The feature will continue to work, and 12 months notice will be
- *     given before support is discontinued. If you are interested in building a
- *     Local Context-like experience yourself, we suggest that you check out the
- *     &quot;Neighborhood Discovery&quot; solution in <a
- *     href="https://mapsplatform.google.com/resources/quick-builder/">Quick
- *     Builder</a> or use the <a
- *     href="https://developers.google.com/maps/documentation/javascript/places">Places
- *     Library</a>, Maps JavaScript API. <a
- *     href="https://developers.google.com/maps/documentation/javascript/examples#places">Code
- *     samples</a> and <a
- *     href="https://codelabs.developers.google.com/?product=googlemapsplatform&text=places">codelabs</a>
- *     for the Places Library can help you.
- */
-google.maps.localContext.LocalContextMapView = function(options) {};
-
-/**
- * See {@link
- * google.maps.localContext.LocalContextMapViewOptions.directionsOptions}.
- * @type {google.maps.localContext.MapDirectionsOptions|!google.maps.localContext.MapDirectionsOptionsLiteral|null|undefined}
- */
-google.maps.localContext.LocalContextMapView.prototype.directionsOptions;
-
-/**
- * This Field is read-only. The DOM Element backing the view.
- * @type {!HTMLElement|!SVGElement|null|undefined}
- */
-google.maps.localContext.LocalContextMapView.prototype.element;
-
-/**
- * Is set to <code>true</code> before {@link
- * google.maps.localContext.LocalContextMapView} begins changing the bounds of
- * the inner {@link google.maps.Map}, and set to <code>false</code> after {@link
- * google.maps.localContext.LocalContextMapView} finishes changing the bounds of
- * the inner {@link google.maps.Map}. (Not set when layout mode changes happen
- * due to responsive resizing.)
- * @type {boolean}
- */
-google.maps.localContext.LocalContextMapView.prototype.isTransitioningMapBounds;
-
-/**
- * See {@link google.maps.localContext.LocalContextMapViewOptions.locationBias}.
- * Changing this property on the <code>LocalContextMapView</code> may trigger a
- * new search.
- * @type {google.maps.places.LocationBias|null|undefined}
- */
-google.maps.localContext.LocalContextMapView.prototype.locationBias;
-
-/**
- * See {@link
- * google.maps.localContext.LocalContextMapViewOptions.locationRestriction}.
- * Changing this property on the <code>LocalContextMapView</code> may trigger a
- * new search.
- * @type {google.maps.places.LocationRestriction|null|undefined}
- */
-google.maps.localContext.LocalContextMapView.prototype.locationRestriction;
-
-/**
- * See {@link
- * google.maps.localContext.LocalContextMapViewOptions.maxPlaceCount}. Changing
- * this property on the <code>LocalContextMapView</code> may trigger a new
- * search.
- * @type {number}
- */
-google.maps.localContext.LocalContextMapView.prototype.maxPlaceCount;
-
-/**
- * See {@link
- * google.maps.localContext.LocalContextMapViewOptions.placeTypePreferences}.
- * Changing this property on the <code>LocalContextMapView</code> may trigger a
- * new search. <code>Iterable&lt;string|PlaceTypePreference&gt;</code> is also
- * accepted.
- * @type {!Array<!google.maps.localContext.PlaceTypePreference>}
- */
-google.maps.localContext.LocalContextMapView.prototype.placeTypePreferences;
-
-/**
- * Adds the given listener function to the given event name.
- * @param {string} eventName
- * @param {!Function} handler
- * @return {!google.maps.MapsEventListener}
- */
-google.maps.localContext.LocalContextMapView.prototype.addListener = function(
-    eventName, handler) {};
-
-/**
- * Hides the place details.
- * @return {undefined}
- */
-google.maps.localContext.LocalContextMapView.prototype.hidePlaceDetailsView =
-    function() {};
-
-/**
- * Searches for places to show the user based on the current
- * <code>maxPlaceCount</code>, <code>placeTypePreferences</code>,
- * <code>locationRestriction</code>, and <code>locationBias</code>.
- * @return {undefined}
- */
-google.maps.localContext.LocalContextMapView.prototype.search = function() {};
-
-/**
- * Available only in the v=beta channel: https://goo.gle/3oAthT3.
- *
- * Options for constructing a {@link
- * google.maps.localContext.LocalContextMapView}, or accessing an
- * existing {@link google.maps.localContext.LocalContextMapView}.
- * @record
- */
-google.maps.localContext.LocalContextMapViewOptions = function() {};
-
-/**
- * Options for customizing directions. If not set, directions and distance will
- * be disabled.
- * @type {google.maps.localContext.MapDirectionsOptions|!google.maps.localContext.MapDirectionsOptionsLiteral|null|undefined}
- */
-google.maps.localContext.LocalContextMapViewOptions.prototype.directionsOptions;
-
-/**
- * This Field is read-only. The DOM Element backing the view.
- * @type {!HTMLElement|!SVGElement|null|undefined}
- */
-google.maps.localContext.LocalContextMapViewOptions.prototype.element;
-
-/**
- * A soft boundary or hint to use when searching for places.
- * @default <code>null</code>
- * @type {google.maps.places.LocationBias|null|undefined}
- */
-google.maps.localContext.LocalContextMapViewOptions.prototype.locationBias;
-
-/**
- * Bounds to constrain search results. If not specified, results will be
- * constrained to the map viewport.
- * @type {google.maps.places.LocationRestriction|null|undefined}
- */
-google.maps.localContext.LocalContextMapViewOptions.prototype
-    .locationRestriction;
-
-/**
- * An already instantiated {@link google.maps.Map} instance. If passed in, the
- * map will be moved into the LocalContextMapView&#39;s DOM, and will
- * <strong>not</strong> be re-styled. The element associated with the Map may
- * also have styles and classes applied to it by the
- * <code>LocalContextMapView</code>.
- * @type {google.maps.Map|null|undefined}
- */
-google.maps.localContext.LocalContextMapViewOptions.prototype.map;
-
-/**
- * The maximum number of places to show. When this parameter is 0, the Local
- * Context Library does not load places. [0,24]
- * @type {number}
- */
-google.maps.localContext.LocalContextMapViewOptions.prototype.maxPlaceCount;
-
-/**
- * Configure the place marker icon based on the icon state. Invoked whenever the
- * input to the callback changes. Pass a function to dynamically override the
- * default setup when the LocalContextMapView draws the place marker. Errors and
- * invalid configurations may be determined asynchronously, and will be ignored
- * (defaults will be used, and errors will be logged to the console).
- * @type {(function({isSelected:boolean, isHighlighted:boolean}):
- *     (google.maps.localContext.PinOptions|null|undefined))|google.maps.localContext.PinOptions|null|undefined}
- */
-google.maps.localContext.LocalContextMapViewOptions.prototype.pinOptionsSetup;
-
-/**
- * Overrides the setup of the place chooser view. Pass a function to dynamically
- * override the default setup when the LocalContextMapView might change its
- * layout due to resizing. Errors and invalid configurations may be determined
- * asynchronously, and will be ignored (defaults will be used instead, and
- * errors will be logged to the console). Errors detected at construction will
- * cause errors to be thrown synchronously.
- * @type {(function({defaultLayoutMode:!google.maps.localContext.PlaceChooserLayoutMode,
- *     defaultPosition:?google.maps.localContext.PlaceChooserPosition}):
- *     (google.maps.localContext.PlaceChooserViewSetupOptions|null|undefined))|google.maps.localContext.PlaceChooserViewSetupOptions|null|undefined}
- */
-google.maps.localContext.LocalContextMapViewOptions.prototype
-    .placeChooserViewSetup;
-
-/**
- * Overrides the setup of the place details view. Pass a function to dynamically
- * override the default setup when the LocalContextMapView might change its
- * layout due to resizing. Errors and invalid configurations may be determined
- * asynchronously, and will be ignored (defaults will be used, and errors will
- * be logged to the console). Errors detected at construction will cause errors
- * to be thrown synchronously.
- * @type {(function({defaultLayoutMode:!google.maps.localContext.PlaceDetailsLayoutMode,
- *     defaultPosition:?google.maps.localContext.PlaceDetailsPosition}):
- *     (google.maps.localContext.PlaceDetailsViewSetupOptions|null|undefined))|google.maps.localContext.PlaceDetailsViewSetupOptions|null|undefined}
- */
-google.maps.localContext.LocalContextMapViewOptions.prototype
-    .placeDetailsViewSetup;
-
-/**
- * The types of places to search for (up to 10). The type
- * <code>Iterable&lt;string|PlaceTypePreference&gt;</code> is also accepted, but
- * is only supported in browsers which natively support JavaScript Symbols.
- * @type {!Array<!google.maps.localContext.PlaceTypePreference>}
- */
-google.maps.localContext.LocalContextMapViewOptions.prototype
-    .placeTypePreferences;
-
-/**
- * Available only in the v=beta channel: https://goo.gle/3oAthT3.
- *
- * Provides settings for directions with a {@link
- * google.maps.localContext.LocalContextMapView}.
- *
- * Access by calling `const {MapDirectionsOptions} = await
- * google.maps.importLibrary("localContext")`. See
- * https://developers.google.com/maps/documentation/javascript/libraries.
- * @implements {google.maps.localContext.MapDirectionsOptionsLiteral}
- * @constructor
- */
-google.maps.localContext.MapDirectionsOptions = function() {};
-
-/**
- * Adds the given listener function to the given event name.
- * @param {string} eventName
- * @param {!Function} handler
- * @return {!google.maps.MapsEventListener}
- */
-google.maps.localContext.MapDirectionsOptions.prototype.addListener = function(
-    eventName, handler) {};
-
-/**
- * Available only in the v=beta channel: https://goo.gle/3oAthT3.
- *
- * Object literals are accepted in place of {@link
- * google.maps.localContext.MapDirectionsOptions} objects, as a convenience, in
- * many places. These are converted to {@link
- * google.maps.localContext.MapDirectionsOptions} objects when the Maps API
- * encounters them.
- * @record
- */
-google.maps.localContext.MapDirectionsOptionsLiteral = function() {};
-
-/**
- * Origin for directions and distance.
- * @type {!google.maps.LatLng|!google.maps.LatLngLiteral}
- */
-google.maps.localContext.MapDirectionsOptionsLiteral.prototype.origin;
-
-/**
- * Available only in the v=beta channel: https://goo.gle/3oAthT3.
- *
- * Options for customizing a pin marker.
- * @record
- */
-google.maps.localContext.PinOptions = function() {};
-
-/**
- * The color of the icon&#39;s shape, can be any valid CSS color.
- * @type {string|null|undefined}
- */
-google.maps.localContext.PinOptions.prototype.background;
-
-/**
- * The color of the icon&#39;s glyph, can be any valid CSS color.
- * @type {string|null|undefined}
- */
-google.maps.localContext.PinOptions.prototype.glyphColor;
-
-/**
- * The scale of the icon. The value is absolute, not relative to the default
- * sizes in each state.
- * @type {number|null|undefined}
- */
-google.maps.localContext.PinOptions.prototype.scale;
-
-/**
- * Available only in the v=beta channel: https://goo.gle/3oAthT3.
- *
- * Layout modes for the place chooser.
- *
- * Access by calling `const {PlaceChooserLayoutMode} = await
- * google.maps.importLibrary("localContext")`. See
- * https://developers.google.com/maps/documentation/javascript/libraries.
- * @enum {string}
- */
-google.maps.localContext.PlaceChooserLayoutMode = {
-  /**
-   * Place chooser is hidden.
-   */
-  HIDDEN: 'HIDDEN',
-  /**
-   * Place chooser is shown as a sheet.
-   */
-  SHEET: 'SHEET',
-};
-
-/**
- * Available only in the v=beta channel: https://goo.gle/3oAthT3.
- *
- * Display positions for the place chooser.
- *
- * Access by calling `const {PlaceChooserPosition} = await
- * google.maps.importLibrary("localContext")`. See
- * https://developers.google.com/maps/documentation/javascript/libraries.
- * @enum {string}
- */
-google.maps.localContext.PlaceChooserPosition = {
-  /**
-   * Place chooser is displayed on a line below the map extending to the end of
-   * the container.
-   */
-  BLOCK_END: 'BLOCK_END',
-  /**
-   * Place chooser is displayed inline with the map at the end of the line. (In
-   * a left-to-right language this means that the place chooser is to the right
-   * of the map.)
-   */
-  INLINE_END: 'INLINE_END',
-  /**
-   * Place chooser is displayed inline with the map at the start of the line.
-   * (In a left-to-right language this means that the place chooser is to the
-   * left of the map.)
-   */
-  INLINE_START: 'INLINE_START',
-};
-
-/**
- * Setup options for the place chooser. Read more about <a
- * href="https://developers.google.com/maps/documentation/javascript/local-context/set-options#setting_layout_and_visibility">setting
- * layout and visibility</a>.
- * @record
- */
-google.maps.localContext.PlaceChooserViewSetupOptions = function() {};
-
-/**
- * @type {google.maps.localContext.PlaceChooserLayoutMode|null|undefined}
- */
-google.maps.localContext.PlaceChooserViewSetupOptions.prototype.layoutMode;
-
-/**
- * Ignored when <code>layoutMode:HIDDEN</code>. If not passed, a position will
- * be determined automatically based on the <code>layoutMode</code>.
- * @type {google.maps.localContext.PlaceChooserPosition|null|undefined}
- */
-google.maps.localContext.PlaceChooserViewSetupOptions.prototype.position;
-
-/**
- * Available only in the v=beta channel: https://goo.gle/3oAthT3.
- *
- * Layout modes for the place details.
- *
- * Access by calling `const {PlaceDetailsLayoutMode} = await
- * google.maps.importLibrary("localContext")`. See
- * https://developers.google.com/maps/documentation/javascript/libraries.
- * @enum {string}
- */
-google.maps.localContext.PlaceDetailsLayoutMode = {
-  /**
-   * Place details is displayed in an {@link google.maps.InfoWindow}.
-   */
-  INFO_WINDOW: 'INFO_WINDOW',
-  /**
-   * Place details is displayed in a sheet.
-   */
-  SHEET: 'SHEET',
-};
-
-/**
- * Available only in the v=beta channel: https://goo.gle/3oAthT3.
- *
- * Display positions for the place details.
- *
- * Access by calling `const {PlaceDetailsPosition} = await
- * google.maps.importLibrary("localContext")`. See
- * https://developers.google.com/maps/documentation/javascript/libraries.
- * @enum {string}
- */
-google.maps.localContext.PlaceDetailsPosition = {
-  /**
-   * Place details is displayed inline with the map at the end of the line. (In
-   * a left-to-right language this means that the place details is to the right
-   * of the map.)
-   */
-  INLINE_END: 'INLINE_END',
-  /**
-   * Place details is displayed inline with the map at the start of the line.
-   * (In a left-to-right language this means that the place details is to the
-   * left of the map.)
-   */
-  INLINE_START: 'INLINE_START',
-};
-
-/**
- * Setup options for the place details. Read more about <a
- * href="https://developers.google.com/maps/documentation/javascript/local-context/set-options#setting_layout_and_visibility">setting
- * layout and visibility</a>.
- * @record
- */
-google.maps.localContext.PlaceDetailsViewSetupOptions = function() {};
-
-/**
- * @type {boolean|undefined}
- */
-google.maps.localContext.PlaceDetailsViewSetupOptions.prototype.hidesOnMapClick;
-
-/**
- * @type {google.maps.localContext.PlaceDetailsLayoutMode|null|undefined}
- */
-google.maps.localContext.PlaceDetailsViewSetupOptions.prototype.layoutMode;
-
-/**
- * Ignored when <code>layoutMode:INFO_WINDOW</code>. If not passed, a position
- * will be determined automatically based on the <code>layoutMode</code>.
- * @type {google.maps.localContext.PlaceDetailsPosition|null|undefined}
- */
-google.maps.localContext.PlaceDetailsViewSetupOptions.prototype.position;
-
-/**
- * Available only in the v=beta channel: https://goo.gle/3oAthT3.
- *
- * @typedef {{type:string, weight:(number|undefined)}}
- */
-google.maps.localContext.PlaceTypePreference;
-
-/**
- * @const
- */
 google.maps.maps3d = {};
 
 /**
- * Available only in the v=alpha channel: https://goo.gle/js-alpha-channel.
+ * Available only in the v=beta channel: https://goo.gle/3oAthT3.
  *
  * Specifies how altitude components in the coordinates are interpreted.
  *
@@ -15672,7 +16263,7 @@ google.maps.maps3d.AltitudeMode = {
 };
 
 /**
- * Available only in the v=alpha channel: https://goo.gle/js-alpha-channel.
+ * Available only in the v=beta channel: https://goo.gle/3oAthT3.
  *
  * CameraOptions object used to define the properties that can be set on a
  * camera object. The camera object can be anything that has a camera position,
@@ -15712,7 +16303,7 @@ google.maps.maps3d.CameraOptions.prototype.roll;
 google.maps.maps3d.CameraOptions.prototype.tilt;
 
 /**
- * Available only in the v=alpha channel: https://goo.gle/js-alpha-channel.
+ * Available only in the v=beta channel: https://goo.gle/3oAthT3.
  *
  * Customization options for the FlyCameraAround Animation.
  * @record
@@ -15744,7 +16335,7 @@ google.maps.maps3d.FlyAroundAnimationOptions.prototype.durationMillis;
 google.maps.maps3d.FlyAroundAnimationOptions.prototype.rounds;
 
 /**
- * Available only in the v=alpha channel: https://goo.gle/js-alpha-channel.
+ * Available only in the v=beta channel: https://goo.gle/3oAthT3.
  *
  * Customization options for the FlyCameraTo Animation.
  * @record
@@ -15765,7 +16356,7 @@ google.maps.maps3d.FlyToAnimationOptions.prototype.durationMillis;
 google.maps.maps3d.FlyToAnimationOptions.prototype.endCamera;
 
 /**
- * Available only in the v=alpha channel: https://goo.gle/js-alpha-channel.
+ * Available only in the v=beta channel: https://goo.gle/3oAthT3.
  *
  * This event is created from clicking a Map3DElement.
  *
@@ -15788,9 +16379,10 @@ google.maps.maps3d.LocationClickEvent = function() {};
 google.maps.maps3d.LocationClickEvent.prototype.position;
 
 /**
- * Available only in the v=alpha channel: https://goo.gle/js-alpha-channel.
+ * Available only in the v=beta channel: https://goo.gle/3oAthT3.
  *
- * Map3DElement is an HTML interface for the 3D Map view.
+ * Map3DElement is an HTML interface for the 3D Map view. Note that the
+ * <code>mode</code> must be set for the 3D Map to start rendering.
  *
  * Access by calling `const {Map3DElement} = await
  * google.maps.importLibrary("maps3d")`. See
@@ -15824,13 +16416,6 @@ google.maps.maps3d.Map3DElement.prototype.bounds;
  * @type {!google.maps.LatLngAltitude|!google.maps.LatLngAltitudeLiteral|null|undefined}
  */
 google.maps.maps3d.Map3DElement.prototype.center;
-
-/**
- * When <code>true</code>, default map labels aren&#39;t rendered.
- * @default <code>false</code>
- * @type {boolean|null|undefined}
- */
-google.maps.maps3d.Map3DElement.prototype.defaultLabelsDisabled;
 
 /**
  * When <code>true</code>, all default UI buttons are disabled. Does not disable
@@ -15904,6 +16489,13 @@ google.maps.maps3d.Map3DElement.prototype.minHeading;
 google.maps.maps3d.Map3DElement.prototype.minTilt;
 
 /**
+ * Specifies a mode the map should be rendered in. If not set, the map won&#39;t
+ * be rendered.
+ * @type {!google.maps.maps3d.MapMode|null|undefined}
+ */
+google.maps.maps3d.Map3DElement.prototype.mode;
+
+/**
  * The distance from camera to the center of the map, in meters.
  * @type {number|null|undefined}
  */
@@ -15964,7 +16556,7 @@ google.maps.maps3d.Map3DElement.prototype.flyCameraTo = function(options) {};
 google.maps.maps3d.Map3DElement.prototype.stopCameraAnimation = function() {};
 
 /**
- * Available only in the v=alpha channel: https://goo.gle/js-alpha-channel.
+ * Available only in the v=beta channel: https://goo.gle/3oAthT3.
  *
  * Map3DElementOptions object used to define the properties that can be set on a
  * Map3DElement.
@@ -15983,12 +16575,6 @@ google.maps.maps3d.Map3DElementOptions.prototype.bounds;
  * @type {!google.maps.LatLngAltitude|!google.maps.LatLngAltitudeLiteral|null|undefined}
  */
 google.maps.maps3d.Map3DElementOptions.prototype.center;
-
-/**
- * See {@link google.maps.maps3d.Map3DElement.defaultLabelsDisabled}.
- * @type {boolean|null|undefined}
- */
-google.maps.maps3d.Map3DElementOptions.prototype.defaultLabelsDisabled;
 
 /**
  * See {@link google.maps.maps3d.Map3DElement.defaultUIDisabled}.
@@ -16039,6 +16625,12 @@ google.maps.maps3d.Map3DElementOptions.prototype.minHeading;
 google.maps.maps3d.Map3DElementOptions.prototype.minTilt;
 
 /**
+ * See {@link google.maps.maps3d.Map3DElement.mode}.
+ * @type {!google.maps.maps3d.MapMode|null|undefined}
+ */
+google.maps.maps3d.Map3DElementOptions.prototype.mode;
+
+/**
  * See {@link google.maps.maps3d.Map3DElement.range}.
  * @type {number|null|undefined}
  */
@@ -16057,7 +16649,30 @@ google.maps.maps3d.Map3DElementOptions.prototype.roll;
 google.maps.maps3d.Map3DElementOptions.prototype.tilt;
 
 /**
- * Available only in the v=alpha channel: https://goo.gle/js-alpha-channel.
+ * Available only in the v=beta channel: https://goo.gle/3oAthT3.
+ *
+ * Specifies a mode the map should be rendered in.
+ *
+ * Access by calling `const {MapMode} = await
+ * google.maps.importLibrary("maps3d")`. See
+ * https://developers.google.com/maps/documentation/javascript/libraries.
+ * @enum {string}
+ */
+google.maps.maps3d.MapMode = {
+  /**
+   * This map mode displays a transparent layer of major streets on satellite,
+   * or photorealistic imagery.
+   */
+  HYBRID: 'HYBRID',
+  /**
+   * This map mode displays satellite, or photorealistic imagery where
+   * available.
+   */
+  SATELLITE: 'SATELLITE',
+};
+
+/**
+ * Available only in the v=beta channel: https://goo.gle/3oAthT3.
  *
  * Shows a position on a 3D map. Note that the <code>position</code> must be set
  * for the <code>Marker3DElement</code> to display.
@@ -16135,7 +16750,7 @@ google.maps.maps3d.Marker3DElement.prototype.zIndex;
 
 
 /**
- * Available only in the v=alpha channel: https://goo.gle/js-alpha-channel.
+ * Available only in the v=beta channel: https://goo.gle/3oAthT3.
  *
  * Marker3DElementOptions object used to define the properties that can be set
  * on a Marker3DElement.
@@ -16192,7 +16807,7 @@ google.maps.maps3d.Marker3DElementOptions.prototype.sizePreserved;
 google.maps.maps3d.Marker3DElementOptions.prototype.zIndex;
 
 /**
- * Available only in the v=alpha channel: https://goo.gle/js-alpha-channel.
+ * Available only in the v=beta channel: https://goo.gle/3oAthT3.
  *
  * Shows a position on a 3D map. Note that the <code>position</code> must be set
  * for the <code>Marker3DInteractiveElement</code> to display. Unlike
@@ -16209,10 +16824,24 @@ google.maps.maps3d.Marker3DElementOptions.prototype.zIndex;
  */
 google.maps.maps3d.Marker3DInteractiveElement = function(options) {};
 
+/**
+ * When set, the popover element will be open on this marker&#39;s click.
+ * @type {!google.maps.maps3d.PopoverElement|null|undefined}
+ */
+google.maps.maps3d.Marker3DInteractiveElement.prototype.gmpPopoverTargetElement;
+
+/**
+ * Rollover text. If provided, an accessibility text (e.g. for use with screen
+ * readers) will be added to the <code>Marker3DInteractiveElement</code> with
+ * the provided value.
+ * @type {string}
+ */
+google.maps.maps3d.Marker3DInteractiveElement.prototype.title;
+
 
 
 /**
- * Available only in the v=alpha channel: https://goo.gle/js-alpha-channel.
+ * Available only in the v=beta channel: https://goo.gle/3oAthT3.
  *
  * Marker3DInteractiveElementOptions object used to define the properties that
  * can be set on a Marker3DInteractiveElement.
@@ -16222,7 +16851,21 @@ google.maps.maps3d.Marker3DInteractiveElement = function(options) {};
 google.maps.maps3d.Marker3DInteractiveElementOptions = function() {};
 
 /**
- * Available only in the v=alpha channel: https://goo.gle/js-alpha-channel.
+ * See {@link
+ * google.maps.maps3d.Marker3DInteractiveElement.gmpPopoverTargetElement}.
+ * @type {!google.maps.maps3d.PopoverElement|null|undefined}
+ */
+google.maps.maps3d.Marker3DInteractiveElementOptions.prototype
+    .gmpPopoverTargetElement;
+
+/**
+ * See {@link google.maps.maps3d.Marker3DInteractiveElement.title}.
+ * @type {string|undefined}
+ */
+google.maps.maps3d.Marker3DInteractiveElementOptions.prototype.title;
+
+/**
+ * Available only in the v=beta channel: https://goo.gle/3oAthT3.
  *
  * A 3D model which allows the rendering of gLTF models. Note that the
  * <code>position</code> and the <code>src</code> must be set for the
@@ -16285,7 +16928,7 @@ google.maps.maps3d.Model3DElement.prototype.src;
 
 
 /**
- * Available only in the v=alpha channel: https://goo.gle/js-alpha-channel.
+ * Available only in the v=beta channel: https://goo.gle/3oAthT3.
  *
  * Model3DElementOptions object used to define the properties that can be set on
  * a Model3DElement.
@@ -16324,9 +16967,45 @@ google.maps.maps3d.Model3DElementOptions.prototype.scale;
 google.maps.maps3d.Model3DElementOptions.prototype.src;
 
 /**
- * Available only in the v=alpha channel: https://goo.gle/js-alpha-channel.
+ * Available only in the v=beta channel: https://goo.gle/3oAthT3.
  *
- * This event is created from clicking a Map3DElement.
+ * A 3D model which allows the rendering of gLTF models. Note that the
+ * <code>position</code> and the <code>src</code> must be set for the
+ * <code>Model3DElement</code> to display. <br /><br /> Core properties of the
+ * <a href="https://www.khronos.org/gltf/pbr">gLTF PBR</a> should be supported.
+ * No extensions or extension properties are currently supported. <br /><br />
+ * Unlike <code>Model3DElement</code>, <code>Model3DInteractiveElement</code>
+ * receives a <code>gmp-click</code> event.
+ *
+ * Access by calling `const {Model3DInteractiveElement} = await
+ * google.maps.importLibrary("maps3d")`. See
+ * https://developers.google.com/maps/documentation/javascript/libraries.
+ * @param {!google.maps.maps3d.Model3DElementOptions=} options
+ * @implements {google.maps.maps3d.Model3DInteractiveElementOptions}
+ * @extends {google.maps.maps3d.Model3DElement}
+ * @constructor
+ */
+google.maps.maps3d.Model3DInteractiveElement = function(options) {};
+
+
+
+/**
+ * Available only in the v=beta channel: https://goo.gle/3oAthT3.
+ *
+ * Model3DInteractiveElementOptions object used to define the properties that
+ * can be set on a Model3DInteractiveElement.
+ * @extends {google.maps.maps3d.Model3DElementOptions}
+ * @record
+ */
+google.maps.maps3d.Model3DInteractiveElementOptions = function() {};
+
+/**
+ * Available only in the v=beta channel: https://goo.gle/3oAthT3.
+ *
+ * This event is created from clicking on a place icon on a
+ * <code>Map3DElement</code>. To prevent the default popover from showing up,
+ * call the <code>preventDefault()</code> method on this event to prevent it
+ * being handled by the <code>Map3DElement</code>.
  *
  * Access by calling `const {PlaceClickEvent} = await
  * google.maps.importLibrary("maps3d")`. See
@@ -16353,7 +17032,7 @@ google.maps.maps3d.PlaceClickEvent.prototype.placeId;
 google.maps.maps3d.PlaceClickEvent.prototype.fetchPlace = function() {};
 
 /**
- * Available only in the v=alpha channel: https://goo.gle/js-alpha-channel.
+ * Available only in the v=beta channel: https://goo.gle/3oAthT3.
  *
  * A 3D polygon (like a 3D polyline) defines a series of connected coordinates
  * in an ordered sequence. Additionally, polygons form a closed loop and define
@@ -16371,7 +17050,7 @@ google.maps.maps3d.Polygon3DElement = function(options) {};
 
 /**
  * Specifies how altitude components in the coordinates are interpreted.
- * @default {@link google.maps.maps3d.AltitudeMode.ABSOLUTE}
+ * @default {@link google.maps.maps3d.AltitudeMode.CLAMP_TO_GROUND}
  * @type {!google.maps.maps3d.AltitudeMode|null|undefined}
  */
 google.maps.maps3d.Polygon3DElement.prototype.altitudeMode;
@@ -16444,7 +17123,7 @@ google.maps.maps3d.Polygon3DElement.prototype.zIndex;
 
 
 /**
- * Available only in the v=alpha channel: https://goo.gle/js-alpha-channel.
+ * Available only in the v=beta channel: https://goo.gle/3oAthT3.
  *
  * Polygon3DElementOptions object used to define the properties that can be set
  * on a Polygon3DElement.
@@ -16513,7 +17192,38 @@ google.maps.maps3d.Polygon3DElementOptions.prototype.strokeWidth;
 google.maps.maps3d.Polygon3DElementOptions.prototype.zIndex;
 
 /**
- * Available only in the v=alpha channel: https://goo.gle/js-alpha-channel.
+ * Available only in the v=beta channel: https://goo.gle/3oAthT3.
+ *
+ * A 3D polygon (like a 3D polyline) defines a series of connected coordinates
+ * in an ordered sequence. Additionally, polygons form a closed loop and define
+ * a filled region. Unlike <code>Polygon3DElement</code>,
+ * <code>Polygon3DInteractiveElement</code> receives a <code>gmp-click</code>
+ * event.
+ *
+ * Access by calling `const {Polygon3DInteractiveElement} = await
+ * google.maps.importLibrary("maps3d")`. See
+ * https://developers.google.com/maps/documentation/javascript/libraries.
+ * @param {!google.maps.maps3d.Polygon3DElementOptions=} options
+ * @implements {google.maps.maps3d.Polygon3DInteractiveElementOptions}
+ * @extends {google.maps.maps3d.Polygon3DElement}
+ * @constructor
+ */
+google.maps.maps3d.Polygon3DInteractiveElement = function(options) {};
+
+
+
+/**
+ * Available only in the v=beta channel: https://goo.gle/3oAthT3.
+ *
+ * Polygon3DInteractiveElementOptions object used to define the properties that
+ * can be set on a Polygon3DInteractiveElement.
+ * @extends {google.maps.maps3d.Polygon3DElementOptions}
+ * @record
+ */
+google.maps.maps3d.Polygon3DInteractiveElementOptions = function() {};
+
+/**
+ * Available only in the v=beta channel: https://goo.gle/3oAthT3.
  *
  * A 3D polyline is a linear overlay of connected line segments on a 3D map.
  *
@@ -16529,7 +17239,7 @@ google.maps.maps3d.Polyline3DElement = function(options) {};
 
 /**
  * Specifies how altitude components in the coordinates are interpreted.
- * @default {@link google.maps.maps3d.AltitudeMode.ABSOLUTE}
+ * @default {@link google.maps.maps3d.AltitudeMode.CLAMP_TO_GROUND}
  * @type {!google.maps.maps3d.AltitudeMode|null|undefined}
  */
 google.maps.maps3d.Polyline3DElement.prototype.altitudeMode;
@@ -16601,7 +17311,7 @@ google.maps.maps3d.Polyline3DElement.prototype.zIndex;
 
 
 /**
- * Available only in the v=alpha channel: https://goo.gle/js-alpha-channel.
+ * Available only in the v=beta channel: https://goo.gle/3oAthT3.
  *
  * Polyline3DElementOptions object used to define the properties that can be set
  * on a Polyline3DElement.
@@ -16670,7 +17380,121 @@ google.maps.maps3d.Polyline3DElementOptions.prototype.strokeWidth;
 google.maps.maps3d.Polyline3DElementOptions.prototype.zIndex;
 
 /**
- * Available only in the v=alpha channel: https://goo.gle/js-alpha-channel.
+ * Available only in the v=beta channel: https://goo.gle/3oAthT3.
+ *
+ * A 3D polyline is a linear overlay of connected line segments on a 3D map.
+ * Unlike <code>Polyline3DElement</code>,
+ * <code>Polyline3DInteractiveElement</code> receives a <code>gmp-click</code>
+ * event.
+ *
+ * Access by calling `const {Polyline3DInteractiveElement} = await
+ * google.maps.importLibrary("maps3d")`. See
+ * https://developers.google.com/maps/documentation/javascript/libraries.
+ * @param {!google.maps.maps3d.Polyline3DElementOptions=} options
+ * @implements {google.maps.maps3d.Polyline3DInteractiveElementOptions}
+ * @extends {google.maps.maps3d.Polyline3DElement}
+ * @constructor
+ */
+google.maps.maps3d.Polyline3DInteractiveElement = function(options) {};
+
+
+
+/**
+ * Available only in the v=beta channel: https://goo.gle/3oAthT3.
+ *
+ * Polyline3DInteractiveElementOptions object used to define the properties that
+ * can be set on a Polyline3DInteractiveElement.
+ * @extends {google.maps.maps3d.Polyline3DElementOptions}
+ * @record
+ */
+google.maps.maps3d.Polyline3DInteractiveElementOptions = function() {};
+
+/**
+ * Available only in the v=beta channel: https://goo.gle/3oAthT3.
+ *
+ * A custom HTML element that renders a popover. It looks like a bubble and is
+ * often connected to a marker.
+ *
+ * Access by calling `const {PopoverElement} = await
+ * google.maps.importLibrary("maps3d")`. See
+ * https://developers.google.com/maps/documentation/javascript/libraries.
+ * @param {!google.maps.maps3d.PopoverElementOptions=} options
+ * @implements {google.maps.maps3d.PopoverElementOptions}
+ * @extends {HTMLElement}
+ * @constructor
+ */
+google.maps.maps3d.PopoverElement = function(options) {};
+
+/**
+ * Specifies how the altitude component of the position is interpreted.
+ * @default {@link google.maps.maps3d.AltitudeMode.CLAMP_TO_GROUND}
+ * @type {!google.maps.maps3d.AltitudeMode|null|undefined}
+ */
+google.maps.maps3d.PopoverElement.prototype.altitudeMode;
+
+/**
+ * Specifies whether this popover should be &quot;light dismissed&quot; or not.
+ * The &quot;light dismiss&quot; behavior is similar to setting the
+ * <code>popover=&quot;auto&quot;</code> attribute which is part of the browser
+ * <a
+ * href="https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/popover">Popover
+ * API</a>.
+ * @default <code>false</code>
+ * @type {boolean|null|undefined}
+ */
+google.maps.maps3d.PopoverElement.prototype.lightDismissDisabled;
+
+/**
+ * Specifies whether this popover should be open or not.
+ * @default <code>false</code>
+ * @type {boolean|null|undefined}
+ */
+google.maps.maps3d.PopoverElement.prototype.open;
+
+/**
+ * The position at which to display this popover. If the popover is anchored to
+ * an interactive marker, the marker&#39;s position will be used instead.
+ * @type {!google.maps.LatLngLiteral|!google.maps.LatLngAltitudeLiteral|!google.maps.maps3d.Marker3DInteractiveElement|string|null|undefined}
+ */
+google.maps.maps3d.PopoverElement.prototype.positionAnchor;
+
+
+
+/**
+ * Available only in the v=beta channel: https://goo.gle/3oAthT3.
+ *
+ * PopoverElementOptions object used to define the properties that can be set on
+ * a PopoverElement.
+ * @record
+ */
+google.maps.maps3d.PopoverElementOptions = function() {};
+
+/**
+ * See {@link google.maps.maps3d.PopoverElement.altitudeMode}.
+ * @type {!google.maps.maps3d.AltitudeMode|null|undefined}
+ */
+google.maps.maps3d.PopoverElementOptions.prototype.altitudeMode;
+
+/**
+ * See {@link google.maps.maps3d.PopoverElement.lightDismissDisabled}.
+ * @type {boolean|null|undefined}
+ */
+google.maps.maps3d.PopoverElementOptions.prototype.lightDismissDisabled;
+
+/**
+ * See {@link google.maps.maps3d.PopoverElement.open}.
+ * @type {boolean|null|undefined}
+ */
+google.maps.maps3d.PopoverElementOptions.prototype.open;
+
+/**
+ * See {@link google.maps.maps3d.PopoverElement.positionAnchor}.
+ * @type {!google.maps.LatLngLiteral|!google.maps.LatLngAltitudeLiteral|string|!google.maps.maps3d.Marker3DInteractiveElement|null|undefined}
+ */
+google.maps.maps3d.PopoverElementOptions.prototype.positionAnchor;
+
+/**
+ * Available only in the v=beta channel: https://goo.gle/3oAthT3.
  *
  * This event is created from monitoring a steady state of
  * <code>Map3DElement</code>. This event bubbles up through the DOM tree.
@@ -16711,10 +17535,7 @@ google.maps.marker.AdvancedMarkerClickEvent = function() {};
 
 /**
  * Shows a position on a map. Note that the <code>position</code> must be set
- * for the <code>AdvancedMarkerElement</code> to display.<br> <br>
- * <strong>Note:</strong> Usage as a Web Component (e.g. using the custom
- * <code>&lt;gmp-advanced-marker&gt;</code> HTML element, is only available in
- * the <code>v=beta</code> channel).
+ * for the <code>AdvancedMarkerElement</code> to display.
  *
  * Access by calling `const {AdvancedMarkerElement} = await
  * google.maps.importLibrary("marker")`. See
@@ -16734,19 +17555,6 @@ google.maps.marker.AdvancedMarkerElement = function(options) {};
 google.maps.marker.AdvancedMarkerElement.prototype.collisionBehavior;
 
 /**
- * See {@link google.maps.marker.AdvancedMarkerElementOptions.content}.
- * @type {!Node|null|undefined}
- */
-google.maps.marker.AdvancedMarkerElement.prototype.content;
-
-/**
- * This field is read-only. The DOM Element backing the view.
- * @type {!HTMLElement}
- */
-google.maps.marker.AdvancedMarkerElement.prototype.element;
-
-/**
- * Available only in the v=beta channel: https://goo.gle/3oAthT3.
  * See {@link google.maps.marker.AdvancedMarkerElementOptions.gmpClickable}.
  * @type {boolean|null|undefined}
  */
@@ -16781,6 +17589,22 @@ google.maps.marker.AdvancedMarkerElement.prototype.title;
  * @type {number|null|undefined}
  */
 google.maps.marker.AdvancedMarkerElement.prototype.zIndex;
+
+/**
+ * This field is read-only. The DOM Element backing the view.
+ * @type {!HTMLElement}
+ * @deprecated Use the AdvancedMarkerElement directly.
+ */
+google.maps.marker.AdvancedMarkerElement.prototype.element;
+
+/**
+ * See {@link google.maps.marker.AdvancedMarkerElementOptions.content}.
+ * @type {!Node|null|undefined}
+ * @deprecated Use <a
+ *     href="https://developer.mozilla.org/docs/Web/API/Element/children">.children</a>
+ *     instead.
+ */
+google.maps.marker.AdvancedMarkerElement.prototype.content;
 
 
 
@@ -17098,6 +17922,32 @@ google.maps.places.Attribution.prototype.providerURI;
 /**
  * Available only in the v=beta channel: https://goo.gle/3oAthT3.
  *
+ * Color options for Google Maps attribution text. Attribution may be customized
+ * to use any of these colors.
+ *
+ * Access by calling `const {AttributionColor} = await
+ * google.maps.importLibrary("places")`. See
+ * https://developers.google.com/maps/documentation/javascript/libraries.
+ * @enum {string}
+ */
+google.maps.places.AttributionColor = {
+  /**
+   * Black attribution text.
+   */
+  BLACK: 'BLACK',
+  /**
+   * Gray attribution text.
+   */
+  GRAY: 'GRAY',
+  /**
+   * White attribution text.
+   */
+  WHITE: 'WHITE',
+};
+
+/**
+ * Available only in the v=beta channel: https://goo.gle/3oAthT3.
+ *
  *
  * Access by calling `const {AuthorAttribution} = await
  * google.maps.importLibrary("places")`. See
@@ -17138,6 +17988,20 @@ google.maps.places.AuthorAttribution.prototype.uri;
  * @param {?google.maps.places.AutocompleteOptions=} opts Options.
  * @extends {google.maps.MVCObject}
  * @constructor
+ * @deprecated As of March 1st, 2025, google.maps.places.Autocomplete is not
+ *     available to new customers. Please use {@link
+ *     google.maps.places.PlaceAutocompleteElement} instead. At this time,
+ *     google.maps.places.Autocomplete is not scheduled to be discontinued,
+ *     but {@link google.maps.places.PlaceAutocompleteElement} is recommended
+ *     over google.maps.places.Autocomplete. While
+ *     google.maps.places.Autocomplete will continue to receive bug fixes for
+ *     any major regressions, existing bugs in google.maps.places.Autocomplete
+ *     will not be addressed. At least 12 months notice will be given before
+ *     support is discontinued. Please see <a
+ *     href="https://developers.google.com/maps/legacy">https://developers.google.com/maps/legacy</a>
+ *     for additional details and <a
+ *     href="https://developers.google.com/maps/documentation/javascript/places-migration-overview">https://developers.google.com/maps/documentation/javascript/places-migration-overview</a>
+ *     for the migration guide.
  */
 google.maps.places.Autocomplete = function(inputField, opts) {};
 
@@ -17432,11 +18296,18 @@ google.maps.places.AutocompleteRequest.prototype.region;
  * longer valid; your app must generate a fresh token for each session. If the
  * <code>sessionToken</code> parameter is omitted, or if you reuse a session
  * token, the session is charged as if no session token was provided (each
- * request is billed separately). <br/><br/> We recommend the following
- * guidelines: <ul><li>Use session tokens for all Place Autocomplete calls.</li>
- * <li>Generate a fresh token for each session.</li> <li>Be sure to pass a
- * unique session token for each new session. Using the same token for more than
- * one session will result in each request being billed individually.</li> </ul>
+ * request is billed separately). <br/><br/> When a session token is provided in
+ * the request to {@link
+ * google.maps.places.AutocompleteSuggestion.fetchAutocompleteSuggestions}, the
+ * same token will automatically be included in the first call to fetchFields on
+ * a {@link google.maps.places.Place} returned by calling {@link
+ * google.maps.places.PlacePrediction.toPlace} on one of the resulting {@link
+ * google.maps.places.AutocompleteSuggestion}s. <br/><br/> We recommend the
+ * following guidelines: <ul><li>Use session tokens for all Place Autocomplete
+ * calls.</li> <li>Generate a fresh token for each session.</li> <li>Be sure to
+ * pass a unique session token for each new session. Using the same token for
+ * more than one session will result in each request being billed
+ * individually.</li> </ul>
  * @type {!google.maps.places.AutocompleteSessionToken|undefined}
  */
 google.maps.places.AutocompleteRequest.prototype.sessionToken;
@@ -17462,6 +18333,20 @@ google.maps.places.AutocompleteResponse.prototype.predictions;
  * google.maps.importLibrary("places")`. See
  * https://developers.google.com/maps/documentation/javascript/libraries.
  * @constructor
+ * @deprecated As of March 1st, 2025, google.maps.places.AutocompleteService is
+ *     not available to new customers. Please use {@link
+ *     google.maps.places.AutocompleteSuggestion} instead. At this time,
+ *     google.maps.places.AutocompleteService is not scheduled to be
+ *     discontinued, but {@link google.maps.places.AutocompleteSuggestion} is
+ *     recommended over google.maps.places.AutocompleteService. While
+ *     google.maps.places.AutocompleteService will continue to receive bug fixes
+ *     for any major regressions, existing bugs in
+ *     google.maps.places.AutocompleteService will not be addressed. At least 12
+ *     months notice will be given before support is discontinued. Please see <a
+ *     href="https://developers.google.com/maps/legacy">https://developers.google.com/maps/legacy</a>
+ *     for additional details and <a
+ *     href="https://developers.google.com/maps/documentation/javascript/places-migration-overview">https://developers.google.com/maps/documentation/javascript/places-migration-overview</a>
+ *     for the migration guide.
  */
 google.maps.places.AutocompleteService = function() {};
 
@@ -17515,13 +18400,25 @@ google.maps.places.AutocompleteSuggestion = function() {};
 
 /**
  * Contains the human-readable name for the returned result. For establishment
- * results, this is usually the business name and address.
+ * results, this is usually the business name and address. <br/><br/> If
+ * a {@link google.maps.places.AutocompleteRequest.sessionToken} was provided in
+ * the AutocompleteRequest used to fetch this AutocompleteSuggestion, the same
+ * token will automatically be included when calling {@link
+ * google.maps.places.Place.fetchFields} for the first time on the {@link
+ * google.maps.places.Place} returned by a call to {@link
+ * google.maps.places.PlacePrediction.toPlace}.
  * @type {!google.maps.places.PlacePrediction|null}
  */
 google.maps.places.AutocompleteSuggestion.prototype.placePrediction;
 
 /**
- * Fetches a list of AutocompleteSuggestions.
+ * Fetches a list of AutocompleteSuggestions. <br/><br/> If a {@link
+ * google.maps.places.AutocompleteRequest.sessionToken} is provided in the
+ * request, then that session token will automatically be included when
+ * calling {@link google.maps.places.Place.fetchFields} for the first time, on
+ * each {@link google.maps.places.Place} returned by {@link
+ * google.maps.places.PlacePrediction.toPlace} on the resulting {@link
+ * google.maps.places.PlacePrediction}s.
  * @param {!google.maps.places.AutocompleteRequest} autocompleteRequest
  * @return {!Promise<!{suggestions:!Array<!google.maps.places.AutocompleteSuggestion>}>}
  */
@@ -17792,6 +18689,10 @@ google.maps.places.EVConnectorType = {
    */
   J1772: 'J1772',
   /**
+   * The North American Charging System (NACS), standardized as SAE J3400.
+   */
+  NACS: 'NACS',
+  /**
    * Other connector types.
    */
   OTHER: 'OTHER',
@@ -18027,6 +18928,14 @@ google.maps.places.FuelType = {
    * Diesel fuel.
    */
   DIESEL: 'DIESEL',
+  /**
+   * Diesel plus fuel.
+   */
+  DIESEL_PLUS: 'DIESEL_PLUS',
+  /**
+   * E 100.
+   */
+  E100: 'E100',
   /**
    * E 80.
    */
@@ -18389,6 +19298,7 @@ google.maps.places.PhotoOptions.prototype.maxWidth;
  * google.maps.importLibrary("places")`. See
  * https://developers.google.com/maps/documentation/javascript/libraries.
  * @param {!google.maps.places.PlaceOptions} options
+ * @implements {google.maps.places.PlaceOptions}
  * @constructor
  */
 google.maps.places.Place = function(options) {};
@@ -18628,6 +19538,11 @@ google.maps.places.Place.prototype.photos;
 google.maps.places.Place.prototype.plusCode;
 
 /**
+ * @type {!google.maps.places.PostalAddress|null|undefined}
+ */
+google.maps.places.Place.prototype.postalAddress;
+
+/**
  * The price level of the Place. This property can return any of the following
  * values <ul style="list-style-type: none;"> <li><code>Free</code></li>
  * <li><code>Inexpensive</code></li> <li><code>Moderate</code></li>
@@ -18635,6 +19550,13 @@ google.maps.places.Place.prototype.plusCode;
  * @type {!google.maps.places.PriceLevel|null|undefined}
  */
 google.maps.places.Place.prototype.priceLevel;
+
+/**
+ * The price range for this Place. <code>endPrice</code> could be unset, which
+ * indicates a range without upper bound (e.g. &quot;More than $100&quot;).
+ * @type {!google.maps.places.PriceRange|null|undefined}
+ */
+google.maps.places.Place.prototype.priceRange;
 
 /**
  * The location&#39;s primary type. <code>null</code> if there is no type.
@@ -18823,20 +19745,20 @@ google.maps.places.Place.prototype.hasWiFi;
 /**
  * Text query based place search.
  * @param {!google.maps.places.SearchByTextRequest} request
- * @return {!Promise<{places:!Array<!google.maps.places.Place>}>}
+ * @return {!Promise<!{places:!Array<!google.maps.places.Place>}>}
  */
 google.maps.places.Place.searchByText = function(request) {};
 
 /**
  * Search for nearby places.
  * @param {!google.maps.places.SearchNearbyRequest} request
- * @return {!Promise<{places:!Array<!google.maps.places.Place>}>}
+ * @return {!Promise<!{places:!Array<!google.maps.places.Place>}>}
  */
 google.maps.places.Place.searchNearby = function(request) {};
 
 /**
  * @param {!google.maps.places.FetchFieldsRequest} options
- * @return {!Promise<{place:!google.maps.places.Place}>}
+ * @return {!Promise<!{place:!google.maps.places.Place}>}
  */
 google.maps.places.Place.prototype.fetchFields = function(options) {};
 
@@ -18861,10 +19783,91 @@ google.maps.places.Place.prototype.getNextOpeningTime = function(date) {};
 google.maps.places.Place.prototype.isOpen = function(date) {};
 
 /**
- * @return {!Object} a JSON object with all the requested Place properties.
- * @override
+ * @return {Object} a JSON object with all the requested Place properties.
  */
 google.maps.places.Place.prototype.toJSON = function() {};
+
+/**
+ * Available only in the v=beta channel: https://goo.gle/3oAthT3.
+ *
+ * Configures a Place Details Compact element to show a wheelchair icon if the
+ * place has an accessible entrance. Append this element as a child of a {@link
+ * google.maps.places.PlaceContentConfigElement} to use it.
+ *
+ * Access by calling `const {PlaceAccessibleEntranceIconElement} = await
+ * google.maps.importLibrary("places")`. See
+ * https://developers.google.com/maps/documentation/javascript/libraries.
+ * @param {!google.maps.places.PlaceAccessibleEntranceIconElementOptions=}
+ *     options
+ * @implements {google.maps.places.PlaceAccessibleEntranceIconElementOptions}
+ * @extends {HTMLElement}
+ * @constructor
+ */
+google.maps.places.PlaceAccessibleEntranceIconElement = function(options) {};
+
+
+
+/**
+ * Available only in the v=beta channel: https://goo.gle/3oAthT3.
+ *
+ * Options for <code>PlaceAccessibleEntranceIconElement</code>.
+ * @record
+ */
+google.maps.places.PlaceAccessibleEntranceIconElementOptions = function() {};
+
+/**
+ * Available only in the v=beta channel: https://goo.gle/3oAthT3.
+ *
+ * Configures a Place Details Compact element to show a place&#39;s address.
+ * Append this element as a child of a {@link
+ * google.maps.places.PlaceContentConfigElement} to use it.
+ *
+ * Access by calling `const {PlaceAddressElement} = await
+ * google.maps.importLibrary("places")`. See
+ * https://developers.google.com/maps/documentation/javascript/libraries.
+ * @param {!google.maps.places.PlaceAddressElementOptions=} options
+ * @implements {google.maps.places.PlaceAddressElementOptions}
+ * @extends {HTMLElement}
+ * @constructor
+ */
+google.maps.places.PlaceAddressElement = function(options) {};
+
+
+
+/**
+ * Available only in the v=beta channel: https://goo.gle/3oAthT3.
+ *
+ * Options for <code>PlaceAddressElement</code>.
+ * @record
+ */
+google.maps.places.PlaceAddressElementOptions = function() {};
+
+/**
+ * Available only in the v=beta channel: https://goo.gle/3oAthT3.
+ *
+ * Configures a Place Details Compact element to show all available content.
+ * Append this element as a child of a {@link
+ * google.maps.places.PlaceDetailsCompactElement} to use it.
+ *
+ * Access by calling `const {PlaceAllContentElement} = await
+ * google.maps.importLibrary("places")`. See
+ * https://developers.google.com/maps/documentation/javascript/libraries.
+ * @param {!google.maps.places.PlaceAllContentElementOptions=} options
+ * @implements {google.maps.places.PlaceAllContentElementOptions}
+ * @extends {HTMLElement}
+ * @constructor
+ */
+google.maps.places.PlaceAllContentElement = function(options) {};
+
+
+
+/**
+ * Available only in the v=beta channel: https://goo.gle/3oAthT3.
+ *
+ * Options for <code>PlaceAllContentElement</code>.
+ * @record
+ */
+google.maps.places.PlaceAllContentElementOptions = function() {};
 
 /**
  * Defines information about an aspect of the place that users have reviewed.
@@ -18890,8 +19893,70 @@ google.maps.places.PlaceAspectRating.prototype.type;
 /**
  * Available only in the v=beta channel: https://goo.gle/3oAthT3.
  *
+ * Allows customization of the Google Maps attribution text in a Place Details
+ * Compact element. Append this element as a child of a {@link
+ * google.maps.places.PlaceContentConfigElement} to use it. If this element is
+ * omitted, attribution will still be shown with default colors.
+ *
+ * Access by calling `const {PlaceAttributionElement} = await
+ * google.maps.importLibrary("places")`. See
+ * https://developers.google.com/maps/documentation/javascript/libraries.
+ * @param {!google.maps.places.PlaceAttributionElementOptions=} options
+ * @implements {google.maps.places.PlaceAttributionElementOptions}
+ * @extends {HTMLElement}
+ * @constructor
+ */
+google.maps.places.PlaceAttributionElement = function(options) {};
+
+/**
+ * The color of the Google Maps attribution in dark mode.
+ * @default <code>AttributionColor.WHITE</code>
+ * @type {!google.maps.places.AttributionColor|null|undefined}
+ */
+google.maps.places.PlaceAttributionElement.prototype.darkSchemeColor;
+
+/**
+ * The color of the Google Maps attribution in light mode.
+ * @default <code>AttributionColor.GRAY</code>
+ * @type {!google.maps.places.AttributionColor|null|undefined}
+ */
+google.maps.places.PlaceAttributionElement.prototype.lightSchemeColor;
+
+
+
+/**
+ * Available only in the v=beta channel: https://goo.gle/3oAthT3.
+ *
+ * Options for <code>PlaceAttributionElement</code>.
+ * @record
+ */
+google.maps.places.PlaceAttributionElementOptions = function() {};
+
+/**
+ * See {@link google.maps.places.PlaceAttributionElement.darkSchemeColor}.
+ * @type {!google.maps.places.AttributionColor|null|undefined}
+ */
+google.maps.places.PlaceAttributionElementOptions.prototype.darkSchemeColor;
+
+/**
+ * See {@link google.maps.places.PlaceAttributionElement.lightSchemeColor}.
+ * @type {!google.maps.places.AttributionColor|null|undefined}
+ */
+google.maps.places.PlaceAttributionElementOptions.prototype.lightSchemeColor;
+
+/**
  * PlaceAutocompleteElement is an <code>HTMLElement</code> subclass which
- * provides a UI component for the Places Autocomplete API.
+ * provides a UI component for the Places Autocomplete API. <br/><br/>
+ * PlaceAutocompleteElement automatically uses {@link
+ * google.maps.places.AutocompleteSessionToken}s internally to group the query
+ * and selection phases of a user&#39;s autocomplete search. <br/><br/> The
+ * first call to {@link google.maps.places.Place.fetchFields} on a {@link
+ * google.maps.places.Place} returned by {@link
+ * google.maps.places.PlacePrediction.toPlace} will automatically include the
+ * session token used to fetch the <code>PlacePrediction</code>. <br/><br/> See
+ * <a
+ * href="https://developers.google.com/maps/documentation/places/web-service/place-session-tokens">https://developers.google.com/maps/documentation/places/web-service/place-session-tokens</a>
+ * for more details on how sessions work.
  *
  * Access by calling `const {PlaceAutocompleteElement} = await
  * google.maps.importLibrary("places")`. See
@@ -18904,7 +19969,6 @@ google.maps.places.PlaceAspectRating.prototype.type;
 google.maps.places.PlaceAutocompleteElement = function(options) {};
 
 /**
- * Available only in the v=alpha channel: https://goo.gle/js-alpha-channel.
  * Included primary <a
  * href="https://developers.google.com/maps/documentation/places/javascript/place-types">Place
  * type</a> (for example, &quot;restaurant&quot; or &quot;gas_station&quot;).
@@ -18916,7 +19980,6 @@ google.maps.places.PlaceAutocompleteElement = function(options) {};
 google.maps.places.PlaceAutocompleteElement.prototype.includedPrimaryTypes;
 
 /**
- * Available only in the v=alpha channel: https://goo.gle/js-alpha-channel.
  * Only include results in the specified regions, specified as up to 15 CLDR
  * two-character region codes. An empty set will not restrict the results. If
  * both <code>locationRestriction</code> and <code>includedRegionCodes</code>
@@ -18949,7 +20012,6 @@ google.maps.places.PlaceAutocompleteElement.prototype.locationRestriction;
 google.maps.places.PlaceAutocompleteElement.prototype.name;
 
 /**
- * Available only in the v=alpha channel: https://goo.gle/js-alpha-channel.
  * The origin from which to calculate distance. If not specified, distance is
  * not calculated. The altitude, if given, is not used in the calculation.
  * @type {!google.maps.LatLng|!google.maps.LatLngLiteral|!google.maps.LatLngAltitude|!google.maps.LatLngAltitudeLiteral|null|undefined}
@@ -18981,64 +20043,21 @@ google.maps.places.PlaceAutocompleteElement.prototype.requestedLanguage;
 google.maps.places.PlaceAutocompleteElement.prototype.requestedRegion;
 
 /**
- * Available only in the v=alpha channel: https://goo.gle/js-alpha-channel.
  * The unit system used to display distances. If not specified, the unit system
  * is determined by requestedRegion.
  * @type {!google.maps.UnitSystem|null|undefined}
  */
 google.maps.places.PlaceAutocompleteElement.prototype.unitSystem;
 
-/**
- * Available only in the v=beta channel: https://goo.gle/3oAthT3.
- * The component restrictions. Component restrictions are used to restrict
- * predictions to only those within the parent component. For example, the
- * country.
- * @type {!google.maps.places.ComponentRestrictions|null}
- * @deprecated This property will continue to function in the beta channel, but
- *     will not be made available in alpha or at release. For migration
- *     purposes, specify both this property and <code>includeRegionCodes</code>.
- */
-google.maps.places.PlaceAutocompleteElement.prototype.componentRestrictions;
-
-/**
- * Available only in the v=beta channel: https://goo.gle/3oAthT3.
- * The types of predictions to be returned. For supported types, see the <a
- * href="https://developers.google.com/maps/documentation/javascript/places-autocomplete#constrain-place-types">
- * developer&#39;s guide</a>. If no types are specified, all types will be
- * returned.
- * @type {!Array<string>|null}
- * @deprecated This property will continue to function in the beta channel, but
- *     will not be made available in alpha or at release. For migration
- *     purposes, specify both this property and
- *     <code>includedPrimaryTypes</code>.
- */
-google.maps.places.PlaceAutocompleteElement.prototype.types;
-
 
 
 /**
- * Available only in the v=alpha channel: https://goo.gle/js-alpha-channel.
- *
  * Options for constructing a PlaceAutocompleteElement. For the description of
  * each property, refer to the property of the same name in the
  * PlaceAutocompleteElement class.
  * @record
  */
 google.maps.places.PlaceAutocompleteElementOptions = function() {};
-
-/**
- * Available only in the v=alpha channel: https://goo.gle/js-alpha-channel.
- * @type {!Array<string>|null|undefined}
- */
-google.maps.places.PlaceAutocompleteElementOptions.prototype
-    .includedPrimaryTypes;
-
-/**
- * Available only in the v=alpha channel: https://goo.gle/js-alpha-channel.
- * @type {!Array<string>|null|undefined}
- */
-google.maps.places.PlaceAutocompleteElementOptions.prototype
-    .includedRegionCodes;
 
 /**
  * @type {!google.maps.places.LocationBias|null|undefined}
@@ -19057,68 +20076,9 @@ google.maps.places.PlaceAutocompleteElementOptions.prototype
 google.maps.places.PlaceAutocompleteElementOptions.prototype.name;
 
 /**
- * Available only in the v=alpha channel: https://goo.gle/js-alpha-channel.
- * @type {!google.maps.LatLng|!google.maps.LatLngLiteral|!google.maps.LatLngAltitude|!google.maps.LatLngAltitudeLiteral|null|undefined}
- */
-google.maps.places.PlaceAutocompleteElementOptions.prototype.origin;
-
-/**
  * @type {string|null|undefined}
  */
 google.maps.places.PlaceAutocompleteElementOptions.prototype.requestedLanguage;
-
-/**
- * Available only in the v=alpha channel: https://goo.gle/js-alpha-channel.
- * @type {!google.maps.UnitSystem|null|undefined}
- */
-google.maps.places.PlaceAutocompleteElementOptions.prototype.unitSystem;
-
-/**
- * Available only in the v=beta channel: https://goo.gle/3oAthT3.
- * @type {!google.maps.places.ComponentRestrictions|null|undefined}
- * @deprecated This property will continue to function in the beta channel, but
- *     will not be made available in alpha or at release. For migration
- *     purposes, specify both this property and
- *     <code>includedRegionCodes</code>.
- */
-google.maps.places.PlaceAutocompleteElementOptions.prototype
-    .componentRestrictions;
-
-/**
- * Available only in the v=beta channel: https://goo.gle/3oAthT3.
- * @type {!Array<string>|null|undefined}
- * @deprecated This property will continue to function in the beta channel, but
- *     will not be made available in alpha or at release. For migration
- *     purposes, specify both this property and
- *     <code>includedPrimaryTypes</code>.
- */
-google.maps.places.PlaceAutocompleteElementOptions.prototype.types;
-
-/**
- * Available only in the v=beta channel: https://goo.gle/3oAthT3.
- *
- * This event is created after the user selects a place with the Place
- * Autocomplete Element. Access the selection with <code>event.place</code>.
- *
- * Access by calling `const {PlaceAutocompletePlaceSelectEvent} = await
- * google.maps.importLibrary("places")`. See
- * https://developers.google.com/maps/documentation/javascript/libraries.
- * @extends {Event}
- * @constructor
- * @deprecated The <code>gmp-placeselect</code> event will continue to trigger
- *     in the beta channel, but will not trigger in alpha or at release. For
- *     migration purposes, continue to listen to the
- *     <code>gmp-placeselect</code> event, but also add an event listener for
- *     the <code>gmp-select</code> event, which returns a
- *     <code>PlacePredictionSelectEvent</code> object.
- */
-google.maps.places.PlaceAutocompletePlaceSelectEvent = function() {};
-
-/**
- * Available only in the v=beta channel: https://goo.gle/3oAthT3.
- * @type {!google.maps.places.Place}
- */
-google.maps.places.PlaceAutocompletePlaceSelectEvent.prototype.place;
 
 /**
  * Available only in the v=beta channel: https://goo.gle/3oAthT3.
@@ -19139,6 +20099,224 @@ google.maps.places.PlaceAutocompletePlaceSelectEvent.prototype.place;
  *     object.
  */
 google.maps.places.PlaceAutocompleteRequestErrorEvent = function() {};
+
+/**
+ * Available only in the v=beta channel: https://goo.gle/3oAthT3.
+ *
+ * Configures the content to be shown by a Place Details Compact element. Append
+ * this element as a child of a {@link
+ * google.maps.places.PlaceDetailsCompactElement} to use it. Append any of the
+ * following elements to the <code>PlaceContentConfigElement</code> to show the
+ * corresponding content: <br> {@link
+ * google.maps.places.PlaceMediaElement}, {@link
+ * google.maps.places.PlaceAddressElement}, {@link
+ * google.maps.places.PlaceRatingElement}, {@link
+ * google.maps.places.PlaceTypeElement}, {@link
+ * google.maps.places.PlacePriceElement}, {@link
+ * google.maps.places.PlaceAccessibleEntranceIconElement}, {@link
+ * google.maps.places.PlaceOpenNowStatusElement}, {@link
+ * google.maps.places.PlaceAttributionElement} <br> The order of the children
+ * does not matter; the element renders content in a standard order which is not
+ * customizable.
+ *
+ * Access by calling `const {PlaceContentConfigElement} = await
+ * google.maps.importLibrary("places")`. See
+ * https://developers.google.com/maps/documentation/javascript/libraries.
+ * @param {!google.maps.places.PlaceContentConfigElementOptions=} options
+ * @implements {google.maps.places.PlaceContentConfigElementOptions}
+ * @extends {HTMLElement}
+ * @constructor
+ */
+google.maps.places.PlaceContentConfigElement = function(options) {};
+
+
+
+/**
+ * Available only in the v=beta channel: https://goo.gle/3oAthT3.
+ *
+ * Options for <code>PlaceContentConfigElement</code>.
+ * @record
+ */
+google.maps.places.PlaceContentConfigElementOptions = function() {};
+
+/**
+ * Available only in the v=alpha channel: https://goo.gle/js-alpha-channel.
+ *
+ * A widget that uses the context token to display a contextual view of the
+ * Grounding with Google Maps response.
+ *
+ * Access by calling `const {PlaceContextualElement} = await
+ * google.maps.importLibrary("places")`. See
+ * https://developers.google.com/maps/documentation/javascript/libraries.
+ * @implements {google.maps.places.PlaceContextualElementOptions}
+ * @extends {HTMLElement}
+ * @constructor
+ */
+google.maps.places.PlaceContextualElement = function() {};
+
+/**
+ * The context token.
+ * @type {string|null|undefined}
+ */
+google.maps.places.PlaceContextualElement.prototype.contextToken;
+
+
+
+/**
+ * Available only in the v=alpha channel: https://goo.gle/js-alpha-channel.
+ *
+ * Options for <code>PlaceContextualElement</code>.
+ * @record
+ */
+google.maps.places.PlaceContextualElementOptions = function() {};
+
+/**
+ * The context token provided by the Grounding with Google Maps response.
+ * @type {string|null|undefined}
+ */
+google.maps.places.PlaceContextualElementOptions.prototype.contextToken;
+
+/**
+ * Available only in the v=alpha channel: https://goo.gle/js-alpha-channel.
+ *
+ * An HTML element that configures options for the Place Contextual
+ * Element&#39;s list view.
+ *
+ * Access by calling `const {PlaceContextualListConfigElement} = await
+ * google.maps.importLibrary("places")`. See
+ * https://developers.google.com/maps/documentation/javascript/libraries.
+ * @implements {google.maps.places.PlaceContextualListConfigElementOptions}
+ * @extends {HTMLElement}
+ * @constructor
+ */
+google.maps.places.PlaceContextualListConfigElement = function() {};
+
+/**
+ * The layout.
+ * @type {!google.maps.places.PlaceContextualListLayout|null|undefined}
+ */
+google.maps.places.PlaceContextualListConfigElement.prototype.layout;
+
+/**
+ * Whether the map is hidden.
+ * @type {boolean|null|undefined}
+ */
+google.maps.places.PlaceContextualListConfigElement.prototype.mapHidden;
+
+
+
+/**
+ * Available only in the v=alpha channel: https://goo.gle/js-alpha-channel.
+ *
+ * Options for PlaceContextualListConfigElement.
+ * @record
+ */
+google.maps.places.PlaceContextualListConfigElementOptions = function() {};
+
+/**
+ * The layout. Default is {@link
+ * google.maps.places.PlaceContextualListLayout.VERTICAL}.
+ * @type {!google.maps.places.PlaceContextualListLayout|null|undefined}
+ */
+google.maps.places.PlaceContextualListConfigElementOptions.prototype.layout;
+
+/**
+ * Whether the map is hidden. Default is to show the map (value false).
+ * @type {boolean|null|undefined}
+ */
+google.maps.places.PlaceContextualListConfigElementOptions.prototype.mapHidden;
+
+/**
+ * Available only in the v=alpha channel: https://goo.gle/js-alpha-channel.
+ *
+ * The list of layouts that the Place Contextual Element supports for the list
+ * view.
+ *
+ * Access by calling `const {PlaceContextualListLayout} = await
+ * google.maps.importLibrary("places")`. See
+ * https://developers.google.com/maps/documentation/javascript/libraries.
+ * @enum {string}
+ */
+google.maps.places.PlaceContextualListLayout = {
+  /**
+   * Compact list layout: list items are rendered as links across a single line,
+   * with overflows in a dropdown list.
+   */
+  COMPACT: 'COMPACT',
+  /**
+   * Vertical list layout: list items are rendered as cards in a vertical list.
+   */
+  VERTICAL: 'VERTICAL',
+};
+
+/**
+ * Available only in the v=beta channel: https://goo.gle/3oAthT3.
+ *
+ * Displays details for a place in a compact layout. Append a {@link
+ * google.maps.places.PlaceDetailsPlaceRequestElement} to specify the place to
+ * be rendered. Append a {@link
+ * google.maps.places.PlaceContentConfigElement}, {@link
+ * google.maps.places.PlaceStandardContentElement}, or {@link
+ * google.maps.places.PlaceAllContentElement} to specify which content to
+ * render. <br><br> To use this element, enable the <a
+ * href="https://console.cloud.google.com/marketplace/product/google/placewidgets.googleapis.com"
+ * >Places UI Kit API</a> for your project in the Google Cloud console.
+ *
+ * Access by calling `const {PlaceDetailsCompactElement} = await
+ * google.maps.importLibrary("places")`. See
+ * https://developers.google.com/maps/documentation/javascript/libraries.
+ * @param {!google.maps.places.PlaceDetailsCompactElementOptions=} options
+ * @implements {google.maps.places.PlaceDetailsCompactElementOptions}
+ * @extends {HTMLElement}
+ * @constructor
+ */
+google.maps.places.PlaceDetailsCompactElement = function(options) {};
+
+/**
+ * The orientation variant (vertical or horizontal) of the element.
+ * @default <code>PlaceDetailsOrientation.VERTICAL</code>
+ * @type {!google.maps.places.PlaceDetailsOrientation|null|undefined}
+ */
+google.maps.places.PlaceDetailsCompactElement.prototype.orientation;
+
+/**
+ * Read only. Place object containing the ID, location, and viewport of the
+ * currently rendered place.
+ * @type {!google.maps.places.Place|undefined}
+ */
+google.maps.places.PlaceDetailsCompactElement.prototype.place;
+
+/**
+ * If true, truncates the place name and address to fit on one line instead of
+ * wrapping.
+ * @default <code>false</code>
+ * @type {boolean}
+ */
+google.maps.places.PlaceDetailsCompactElement.prototype.truncationPreferred;
+
+
+
+/**
+ * Available only in the v=beta channel: https://goo.gle/3oAthT3.
+ *
+ * Options for <code>PlaceDetailsCompactElement</code>.
+ * @record
+ */
+google.maps.places.PlaceDetailsCompactElementOptions = function() {};
+
+/**
+ * See {@link google.maps.places.PlaceDetailsCompactElement.orientation}.
+ * @type {!google.maps.places.PlaceDetailsOrientation|null|undefined}
+ */
+google.maps.places.PlaceDetailsCompactElementOptions.prototype.orientation;
+
+/**
+ * See {@link
+ * google.maps.places.PlaceDetailsCompactElement.truncationPreferred}.
+ * @type {boolean|null|undefined}
+ */
+google.maps.places.PlaceDetailsCompactElementOptions.prototype
+    .truncationPreferred;
 
 /**
  * Available only in the v=alpha channel: https://goo.gle/js-alpha-channel.
@@ -19211,6 +20389,70 @@ google.maps.places.PlaceDetailsElementOptions = function() {};
  * @type {!google.maps.places.PlaceDetailsSize|null|undefined}
  */
 google.maps.places.PlaceDetailsElementOptions.prototype.size;
+
+/**
+ * Available only in the v=beta channel: https://goo.gle/3oAthT3.
+ *
+ * Orientation variants for {@link
+ * google.maps.places.PlaceDetailsCompactElement}.
+ *
+ * Access by calling `const {PlaceDetailsOrientation} = await
+ * google.maps.importLibrary("places")`. See
+ * https://developers.google.com/maps/documentation/javascript/libraries.
+ * @enum {string}
+ */
+google.maps.places.PlaceDetailsOrientation = {
+  /**
+   * Horizontal orientation.
+   */
+  HORIZONTAL: 'HORIZONTAL',
+  /**
+   * Vertical orientation.
+   */
+  VERTICAL: 'VERTICAL',
+};
+
+/**
+ * Available only in the v=beta channel: https://goo.gle/3oAthT3.
+ *
+ * Configures a Place Details Compact element to load data based on a place
+ * object, ID, or resource name. Append this element as a child of a {@link
+ * google.maps.places.PlaceDetailsCompactElement} to load data for the specified
+ * place.
+ *
+ * Access by calling `const {PlaceDetailsPlaceRequestElement} = await
+ * google.maps.importLibrary("places")`. See
+ * https://developers.google.com/maps/documentation/javascript/libraries.
+ * @param {!google.maps.places.PlaceDetailsPlaceRequestElementOptions=} options
+ * @implements {google.maps.places.PlaceDetailsPlaceRequestElementOptions}
+ * @extends {HTMLElement}
+ * @constructor
+ */
+google.maps.places.PlaceDetailsPlaceRequestElement = function(options) {};
+
+/**
+ * The place object, ID, or resource name to render details for in the Place
+ * Details Compact element. This property reflects to the attribute as a
+ * resource name.
+ * @type {!google.maps.places.Place|null}
+ */
+google.maps.places.PlaceDetailsPlaceRequestElement.prototype.place;
+
+
+
+/**
+ * Available only in the v=beta channel: https://goo.gle/3oAthT3.
+ *
+ * Options for <code>PlaceDetailsPlaceRequestElement</code>.
+ * @record
+ */
+google.maps.places.PlaceDetailsPlaceRequestElementOptions = function() {};
+
+/**
+ * See {@link google.maps.places.PlaceDetailsPlaceRequestElement.place}
+ * @type {!google.maps.places.Place|string|null|undefined}
+ */
+google.maps.places.PlaceDetailsPlaceRequestElementOptions.prototype.place;
 
 /**
  * A Place details query to be sent to the <code>PlacesService</code>.
@@ -19420,6 +20662,74 @@ google.maps.places.PlaceListPlaceSelectEvent.prototype.index;
  * @type {!google.maps.places.Place}
  */
 google.maps.places.PlaceListPlaceSelectEvent.prototype.place;
+
+/**
+ * Available only in the v=beta channel: https://goo.gle/3oAthT3.
+ *
+ * Configures a Place Details Compact element to show a place&#39;s media, such
+ * as photos. Append this element as a child of a {@link
+ * google.maps.places.PlaceContentConfigElement} to use it.
+ *
+ * Access by calling `const {PlaceMediaElement} = await
+ * google.maps.importLibrary("places")`. See
+ * https://developers.google.com/maps/documentation/javascript/libraries.
+ * @param {!google.maps.places.PlaceMediaElementOptions=} options
+ * @implements {google.maps.places.PlaceMediaElementOptions}
+ * @extends {HTMLElement}
+ * @constructor
+ */
+google.maps.places.PlaceMediaElement = function(options) {};
+
+/**
+ * Whether to enable or disable the media lightbox, in cases where both options
+ * are supported.
+ * @default <code>false</code>
+ * @type {boolean|null|undefined}
+ */
+google.maps.places.PlaceMediaElement.prototype.lightboxPreferred;
+
+
+
+/**
+ * Available only in the v=beta channel: https://goo.gle/3oAthT3.
+ *
+ * Options for <code>PlaceMediaElement</code>.
+ * @record
+ */
+google.maps.places.PlaceMediaElementOptions = function() {};
+
+/**
+ * See {@link google.maps.places.PlaceMediaElement.lightboxPreferred}.
+ * @type {boolean|null|undefined}
+ */
+google.maps.places.PlaceMediaElementOptions.prototype.lightboxPreferred;
+
+/**
+ * Available only in the v=beta channel: https://goo.gle/3oAthT3.
+ *
+ * Configures a Place Details Compact element to show the current open or closed
+ * status of a place. Append this element as a child of a {@link
+ * google.maps.places.PlaceContentConfigElement} to use it.
+ *
+ * Access by calling `const {PlaceOpenNowStatusElement} = await
+ * google.maps.importLibrary("places")`. See
+ * https://developers.google.com/maps/documentation/javascript/libraries.
+ * @param {!google.maps.places.PlaceOpenNowStatusElementOptions=} options
+ * @implements {google.maps.places.PlaceOpenNowStatusElementOptions}
+ * @extends {HTMLElement}
+ * @constructor
+ */
+google.maps.places.PlaceOpenNowStatusElement = function(options) {};
+
+
+
+/**
+ * Available only in the v=beta channel: https://goo.gle/3oAthT3.
+ *
+ * Options for <code>PlaceOpenNowStatusElement</code>.
+ * @record
+ */
+google.maps.places.PlaceOpenNowStatusElementOptions = function() {};
 
 /**
  * Defines information about the opening hours of a Place.
@@ -19691,19 +21001,39 @@ google.maps.places.PlacePrediction.prototype.text;
 google.maps.places.PlacePrediction.prototype.types;
 
 /**
- * Returns a Place representation of this PlacePrediction. A subsequent call
- * to {@link google.maps.places.Place.fetchFields} is required to get full Place
- * details.
+ * Available only in the v=beta channel: https://goo.gle/3oAthT3.
+ * Sends an Address Validation request associated with this autocomplete session
+ * (internally populating the request with the autocomplete session token). No
+ * place information from the PlacePrediction is included automatically - this
+ * is a convenience method to help with autocomplete session management.
+ * @param {!google.maps.addressValidation.AddressValidationRequest} request
+ * @return {undefined}
+ */
+google.maps.places.PlacePrediction.prototype.fetchAddressValidation = function(
+    request) {};
+
+/**
+ * Returns a {@link google.maps.places.Place} representation of this
+ * PlacePrediction. A subsequent call to {@link
+ * google.maps.places.Place.fetchFields} is required to get full Place details.
+ * <br/><br/> If a {@link google.maps.places.AutocompleteRequest.sessionToken}
+ * was provided in the {@link google.maps.places.AutocompleteRequest} used to
+ * fetch this PlacePrediction, the same token will automatically be included
+ * when calling fetchFields. <br/><br/> Alternatively, when using {@link
+ * google.maps.places.PlaceAutocompleteElement} the first call to {@link
+ * google.maps.places.Place.fetchFields} on a {@link google.maps.places.Place}
+ * returned by {@link google.maps.places.PlacePrediction.toPlace} will
+ * automatically include the session token.
  * @return {!google.maps.places.Place}
  */
 google.maps.places.PlacePrediction.prototype.toPlace = function() {};
 
 /**
- * Available only in the v=alpha channel: https://goo.gle/js-alpha-channel.
- *
  * This event is created after the user selects a prediction item with the
  * PlaceAutocompleteElement. Access the selection with
- * <code>event.placePrediction</code>.
+ * <code>event.placePrediction</code>. <br/><br/> Convert placePrediction to
+ * a {@link google.maps.places.Place} by calling {@link
+ * google.maps.places.PlacePrediction.toPlace}.
  *
  * Access by calling `const {PlacePredictionSelectEvent} = await
  * google.maps.importLibrary("places")`. See
@@ -19714,9 +21044,65 @@ google.maps.places.PlacePrediction.prototype.toPlace = function() {};
 google.maps.places.PlacePredictionSelectEvent = function() {};
 
 /**
+ * Convert this to a {@link google.maps.places.Place} by calling {@link
+ * google.maps.places.PlacePrediction.toPlace}.
  * @type {!google.maps.places.PlacePrediction}
  */
 google.maps.places.PlacePredictionSelectEvent.prototype.placePrediction;
+
+/**
+ * Available only in the v=beta channel: https://goo.gle/3oAthT3.
+ *
+ * Configures a Place Details Compact element to show a place&#39;s price level
+ * or price range. Append this element as a child of a {@link
+ * google.maps.places.PlaceContentConfigElement} to use it.
+ *
+ * Access by calling `const {PlacePriceElement} = await
+ * google.maps.importLibrary("places")`. See
+ * https://developers.google.com/maps/documentation/javascript/libraries.
+ * @param {!google.maps.places.PlacePriceElementOptions=} options
+ * @implements {google.maps.places.PlacePriceElementOptions}
+ * @extends {HTMLElement}
+ * @constructor
+ */
+google.maps.places.PlacePriceElement = function(options) {};
+
+
+
+/**
+ * Available only in the v=beta channel: https://goo.gle/3oAthT3.
+ *
+ * Options for <code>PlacePriceElement</code>.
+ * @record
+ */
+google.maps.places.PlacePriceElementOptions = function() {};
+
+/**
+ * Available only in the v=beta channel: https://goo.gle/3oAthT3.
+ *
+ * Configures a Place Details Compact element to show a place&#39;s rating.
+ * Append this element as a child of a {@link
+ * google.maps.places.PlaceContentConfigElement} to use it.
+ *
+ * Access by calling `const {PlaceRatingElement} = await
+ * google.maps.importLibrary("places")`. See
+ * https://developers.google.com/maps/documentation/javascript/libraries.
+ * @param {!google.maps.places.PlaceRatingElementOptions=} options
+ * @implements {google.maps.places.PlaceRatingElementOptions}
+ * @extends {HTMLElement}
+ * @constructor
+ */
+google.maps.places.PlaceRatingElement = function(options) {};
+
+
+
+/**
+ * Available only in the v=beta channel: https://goo.gle/3oAthT3.
+ *
+ * Options for <code>PlaceRatingElement</code>.
+ * @record
+ */
+google.maps.places.PlaceRatingElementOptions = function() {};
 
 /**
  * Defines information about a Place.
@@ -20137,6 +21523,61 @@ google.maps.places.PlaceSearchRequest.prototype.type;
 google.maps.places.PlaceSearchRequest.prototype.name;
 
 /**
+ * Available only in the v=beta channel: https://goo.gle/3oAthT3.
+ *
+ * Configures a Place Details Compact element to show a standard set of content
+ * (media, rating, type, price, accessible entrance icon, and open now status).
+ * Append this element as a child of a {@link
+ * google.maps.places.PlaceDetailsCompactElement} to use it.
+ *
+ * Access by calling `const {PlaceStandardContentElement} = await
+ * google.maps.importLibrary("places")`. See
+ * https://developers.google.com/maps/documentation/javascript/libraries.
+ * @param {!google.maps.places.PlaceStandardContentElementOptions=} options
+ * @implements {google.maps.places.PlaceStandardContentElementOptions}
+ * @extends {HTMLElement}
+ * @constructor
+ */
+google.maps.places.PlaceStandardContentElement = function(options) {};
+
+
+
+/**
+ * Available only in the v=beta channel: https://goo.gle/3oAthT3.
+ *
+ * Options for <code>PlaceStandardContentElement</code>.
+ * @record
+ */
+google.maps.places.PlaceStandardContentElementOptions = function() {};
+
+/**
+ * Available only in the v=beta channel: https://goo.gle/3oAthT3.
+ *
+ * Configures a Place Details Compact element to show a place&#39;s type. Append
+ * this element as a child of a {@link
+ * google.maps.places.PlaceContentConfigElement} to use it.
+ *
+ * Access by calling `const {PlaceTypeElement} = await
+ * google.maps.importLibrary("places")`. See
+ * https://developers.google.com/maps/documentation/javascript/libraries.
+ * @param {!google.maps.places.PlaceTypeElementOptions=} options
+ * @implements {google.maps.places.PlaceTypeElementOptions}
+ * @extends {HTMLElement}
+ * @constructor
+ */
+google.maps.places.PlaceTypeElement = function(options) {};
+
+
+
+/**
+ * Available only in the v=beta channel: https://goo.gle/3oAthT3.
+ *
+ * Options for <code>PlaceTypeElement</code>.
+ * @record
+ */
+google.maps.places.PlaceTypeElementOptions = function() {};
+
+/**
  * Contains methods related to searching for places and retrieving details about
  * a place.
  *
@@ -20305,6 +21746,151 @@ google.maps.places.PlusCode.prototype.compoundCode;
 google.maps.places.PlusCode.prototype.globalCode;
 
 /**
+ * Represents a postal address (e.g. for a postal service to deliver items to).
+ * Note: PostalAddress is used by the JavaScript API to instantiate objects that
+ * represent data returned by the Web Service.
+ *
+ * Access by calling `const {PostalAddress} = await
+ * google.maps.importLibrary("places")`. See
+ * https://developers.google.com/maps/documentation/javascript/libraries.
+ * @implements {google.maps.places.PostalAddressLiteral}
+ * @constructor
+ */
+google.maps.places.PostalAddress = function() {};
+
+/**
+ * Unstructured address lines describing the lower levels of an address.
+ * @type {!Array<string>}
+ */
+google.maps.places.PostalAddress.prototype.addressLines;
+
+/**
+ * The highest administrative subdivision which is used for postal addresses of
+ * a country or region.
+ * @type {string|null}
+ */
+google.maps.places.PostalAddress.prototype.administrativeArea;
+
+/**
+ * BCP-47 language code of the contents of this address. Examples:
+ * &quot;zh-Hant&quot;, &quot;ja&quot;, &quot;ja-Latn&quot;, &quot;en&quot;.
+ * @type {string|null}
+ */
+google.maps.places.PostalAddress.prototype.languageCode;
+
+/**
+ * Generally refers to the city/town portion of the address.
+ * @type {string|null}
+ */
+google.maps.places.PostalAddress.prototype.locality;
+
+/**
+ * The name of the organization at the address.
+ * @type {string|null}
+ */
+google.maps.places.PostalAddress.prototype.organization;
+
+/**
+ * Postal code of the address.
+ * @type {string|null}
+ */
+google.maps.places.PostalAddress.prototype.postalCode;
+
+/**
+ * The recipient at the address.
+ * @type {!Array<string>}
+ */
+google.maps.places.PostalAddress.prototype.recipients;
+
+/**
+ * CLDR region code of the country/region of the address. Example:
+ * &quot;CH&quot; for Switzerland. See <a
+ * href="https://cldr.unicode.org/">https://cldr.unicode.org/</a> and <a
+ * href="https://www.unicode.org/cldr/charts/30/supplemental/territory_information.html">https://www.unicode.org/cldr/charts/30/supplemental/territory_information.html</a>
+ * for details.
+ * @type {string}
+ */
+google.maps.places.PostalAddress.prototype.regionCode;
+
+/**
+ * Sorting code of the address.
+ * @type {string|null}
+ */
+google.maps.places.PostalAddress.prototype.sortingCode;
+
+/**
+ * Sublocality of the address such as neighborhoods, boroughs, or districts.
+ * @type {string|null}
+ */
+google.maps.places.PostalAddress.prototype.sublocality;
+
+/**
+ * Data for hydrating a PostalAddress.
+ * @record
+ */
+google.maps.places.PostalAddressLiteral = function() {};
+
+/**
+ * See {@link google.maps.places.PostalAddress.addressLines}.
+ * @type {!Iterable<string>|undefined}
+ */
+google.maps.places.PostalAddressLiteral.prototype.addressLines;
+
+/**
+ * See {@link google.maps.places.PostalAddress.administrativeArea}.
+ * @type {string|null|undefined}
+ */
+google.maps.places.PostalAddressLiteral.prototype.administrativeArea;
+
+/**
+ * See {@link google.maps.places.PostalAddress.languageCode}.
+ * @type {string|null|undefined}
+ */
+google.maps.places.PostalAddressLiteral.prototype.languageCode;
+
+/**
+ * See {@link google.maps.places.PostalAddress.locality}.
+ * @type {string|null|undefined}
+ */
+google.maps.places.PostalAddressLiteral.prototype.locality;
+
+/**
+ * See {@link google.maps.places.PostalAddress.organization}.
+ * @type {string|null|undefined}
+ */
+google.maps.places.PostalAddressLiteral.prototype.organization;
+
+/**
+ * See {@link google.maps.places.PostalAddress.postalCode}.
+ * @type {string|null|undefined}
+ */
+google.maps.places.PostalAddressLiteral.prototype.postalCode;
+
+/**
+ * See {@link google.maps.places.PostalAddress.recipients}.
+ * @type {!Iterable<string>|undefined}
+ */
+google.maps.places.PostalAddressLiteral.prototype.recipients;
+
+/**
+ * See {@link google.maps.places.PostalAddress.regionCode}.
+ * @type {string}
+ */
+google.maps.places.PostalAddressLiteral.prototype.regionCode;
+
+/**
+ * See {@link google.maps.places.PostalAddress.sortingCode}.
+ * @type {string|null|undefined}
+ */
+google.maps.places.PostalAddressLiteral.prototype.sortingCode;
+
+/**
+ * See {@link google.maps.places.PostalAddress.sublocality}.
+ * @type {string|null|undefined}
+ */
+google.maps.places.PostalAddressLiteral.prototype.sublocality;
+
+/**
  * Represents a prediction substring.
  * @record
  */
@@ -20358,6 +21944,32 @@ google.maps.places.PriceLevel = {
   MODERATE: 'MODERATE',
   VERY_EXPENSIVE: 'VERY_EXPENSIVE',
 };
+
+/**
+ * The price range associated with a Place. <code>endPrice</code> could be
+ * unset, which indicates a range without upper bound (e.g. &quot;More than
+ * $100&quot;).
+ *
+ * Access by calling `const {PriceRange} = await
+ * google.maps.importLibrary("places")`. See
+ * https://developers.google.com/maps/documentation/javascript/libraries.
+ * @constructor
+ */
+google.maps.places.PriceRange = function() {};
+
+/**
+ * The upper end of the price range (inclusive). Price should be lower than this
+ * amount.
+ * @type {!google.maps.places.Money|null}
+ */
+google.maps.places.PriceRange.prototype.endPrice;
+
+/**
+ * The low end of the price range (inclusive). Price should be at or above this
+ * amount.
+ * @type {!google.maps.places.Money}
+ */
+google.maps.places.PriceRange.prototype.startPrice;
 
 /**
  * Represents a single Query Autocomplete prediction.
@@ -20526,6 +22138,13 @@ google.maps.places.Review.prototype.textLanguageCode;
  * @param {(!google.maps.places.SearchBoxOptions|null)=} opts
  * @extends {google.maps.MVCObject}
  * @constructor
+ * @deprecated As of March 1st, 2025, google.maps.places.SearchBox is not
+ *     available to new customers. At this time, google.maps.places.SearchBox is
+ *     not scheduled to be discontinued and will continue to receive bug fixes
+ *     for any major regressions. At least 12 months notice will be given before
+ *     support is discontinued. Please see <a
+ *     href="https://developers.google.com/maps/legacy">https://developers.google.com/maps/legacy</a>
+ *     for additional details.
  */
 google.maps.places.SearchBox = function(inputField, opts) {};
 
@@ -20596,8 +22215,9 @@ google.maps.places.SearchByTextRequest = function() {};
 google.maps.places.SearchByTextRequest.prototype.evSearchOptions;
 
 /**
- * Required for {@link google.maps.places.Place.searchByText}. Fields to be
- * included in the response, <a
+ * Required when you use this request with {@link
+ * google.maps.places.Place.searchByText}. Fields to be included in the
+ * response, <a
  * href="https://developers.google.com/maps/billing/understanding-cost-of-use#places-product">which
  * will be billed for</a>. If <code>[&#39;*&#39;]</code> is passed in, all
  * available fields will be returned and billed for (this is not recommended for
@@ -20692,7 +22312,9 @@ google.maps.places.SearchByTextRequest.prototype.rankPreference;
 google.maps.places.SearchByTextRequest.prototype.region;
 
 /**
- * Required. The text query for textual search.
+ * Required when you do not use {@link
+ * google.maps.places.SearchByTextRequest.query}. The text query for textual
+ * search.
  * @type {string|undefined}
  */
 google.maps.places.SearchByTextRequest.prototype.textQuery;
@@ -20770,8 +22392,9 @@ google.maps.places.SearchNearbyRequest.prototype.excludedPrimaryTypes;
 google.maps.places.SearchNearbyRequest.prototype.excludedTypes;
 
 /**
- * Required for {@link google.maps.places.Place.searchNearby}. Fields to be
- * included in the response, <a
+ * Required when you use this request with {@link
+ * google.maps.places.Place.searchNearby}. Fields to be included in the
+ * response, <a
  * href="https://developers.google.com/maps/billing/understanding-cost-of-use#places-product">which
  * will be billed for</a>. If <code>[&#39;*&#39;]</code> is passed in, all
  * available fields will be returned and billed for (this is not recommended for
