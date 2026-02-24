@@ -19,7 +19,6 @@ package com.google.debugging.sourcemap;
 import static com.google.common.base.Preconditions.checkState;
 
 import com.google.common.base.Preconditions;
-import com.google.common.collect.Iterables;
 import com.google.debugging.sourcemap.Base64VLQ.CharIterator;
 import com.google.debugging.sourcemap.proto.Mapping.OriginalMapping;
 import com.google.debugging.sourcemap.proto.Mapping.OriginalMapping.Precision;
@@ -46,7 +45,8 @@ public final class SourceMapConsumerV3 implements SourceMapConsumer, SourceMappi
   private int lineCount;
   private @Nullable String file;
   // Slots in the lines list will be null if the line does not have any entries.
-  private @Nullable ArrayList<ArrayList<Entry>> lines = null;
+  private @Nullable ArrayList<Entry[]> lines = null;
+
   /** originalFile path ==> original line ==> target mappings */
   private Map<String, Map<Integer, Collection<OriginalMapping>>>
       reverseSourceMapping;
@@ -161,16 +161,16 @@ public final class SourceMapConsumerV3 implements SourceMapConsumer, SourceMappi
       return getPreviousMapping(lineNumber);
     }
 
-    ArrayList<Entry> entries = lines.get(lineNumber);
+    Entry[] entries = lines.get(lineNumber);
     // No empty lists.
-    checkState(!entries.isEmpty());
-    if (entries.get(0).getGeneratedColumn() > column) {
+    checkState(entries.length > 0);
+    if (entries[0].getGeneratedColumn() > column) {
       return getPreviousMapping(lineNumber);
     }
 
-    int index = search(entries, column, 0, entries.size() - 1);
+    int index = search(entries, column, 0, entries.length - 1);
     Preconditions.checkState(index >= 0, "unexpected:%s", index);
-    return getOriginalMappingForEntry(entries.get(index), Precision.EXACT);
+    return getOriginalMappingForEntry(entries[index], Precision.EXACT);
   }
 
   @Override
@@ -291,7 +291,7 @@ public final class SourceMapConsumerV3 implements SourceMapConsumer, SourceMappi
       // The line is complete, store the result for the line,
       // null if the line is empty.
       if (!entries.isEmpty()) {
-        lines.add(entries);
+        lines.add(entries.toArray(new Entry[0]));
       } else {
         lines.add(null);
       }
@@ -397,11 +397,8 @@ public final class SourceMapConsumerV3 implements SourceMapConsumer, SourceMappi
     }
   }
 
-  /**
-   * Perform a binary search on the array to find a section that covers
-   * the target column.
-   */
-  private static int search(ArrayList<Entry> entries, int target, int start, int end) {
+  /** Perform a binary search on the array to find a section that covers the target column. */
+  private static int search(Entry[] entries, int target, int start, int end) {
     while (true) {
       int mid = ((end - start) / 2) + start;
       int compare = compareEntry(entries, mid, target);
@@ -423,11 +420,9 @@ public final class SourceMapConsumerV3 implements SourceMapConsumer, SourceMappi
     }
   }
 
-  /**
-   * Compare an array entry's column value to the target column value.
-   */
-  private static int compareEntry(ArrayList<Entry> entries, int entry, int target) {
-    return entries.get(entry).getGeneratedColumn() - target;
+  /** Compare an array entry's column value to the target column value. */
+  private static int compareEntry(Entry[] entries, int entry, int target) {
+    return entries[entry].getGeneratedColumn() - target;
   }
 
   /** Returns the mapping entry that proceeds the supplied line or null if no such entry exists. */
@@ -438,8 +433,8 @@ public final class SourceMapConsumerV3 implements SourceMapConsumer, SourceMappi
       }
       lineNumber--;
     } while (lines.get(lineNumber) == null);
-    ArrayList<Entry> entries = lines.get(lineNumber);
-    return getOriginalMappingForEntry(Iterables.getLast(entries), Precision.APPROXIMATE_LINE);
+    Entry[] entries = lines.get(lineNumber);
+    return getOriginalMappingForEntry(entries[entries.length - 1], Precision.APPROXIMATE_LINE);
   }
 
   /** Creates an "OriginalMapping" object for the given entry object. */
@@ -470,7 +465,7 @@ public final class SourceMapConsumerV3 implements SourceMapConsumer, SourceMappi
     reverseSourceMapping = new LinkedHashMap<>();
 
     for (int targetLine = 0; targetLine < lines.size(); targetLine++) {
-      ArrayList<Entry> entries = lines.get(targetLine);
+      Entry[] entries = lines.get(targetLine);
 
       if (entries != null) {
         for (Entry entry : entries) {
@@ -655,11 +650,11 @@ public final class SourceMapConsumerV3 implements SourceMapConsumer, SourceMappi
 
     final int lineCount = lines.size();
     for (int i = 0; i < lineCount; i++) {
-      ArrayList<Entry> line = lines.get(i);
+      Entry[] line = lines.get(i);
       if (line != null) {
-        final int entryCount = line.size();
+        final int entryCount = line.length;
         for (int j = 0; j < entryCount; j++) {
-          Entry entry = line.get(j);
+          Entry entry = line[j];
           if (pending) {
             FilePosition endPosition = new FilePosition(
                 i, entry.getGeneratedColumn());
