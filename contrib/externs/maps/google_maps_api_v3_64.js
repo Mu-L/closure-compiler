@@ -2074,8 +2074,6 @@ google.maps.DirectionsPolyline = function() {};
 google.maps.DirectionsPolyline.prototype.points;
 
 /**
- * Renders directions obtained from the <code><a
- * href="#DirectionsService">DirectionsService</a></code>.
  *
  * Access by calling `const {DirectionsRenderer} = await
  * google.maps.importLibrary("routes")`. See
@@ -2083,6 +2081,13 @@ google.maps.DirectionsPolyline.prototype.points;
  * @param {google.maps.DirectionsRendererOptions=} opts
  * @extends {google.maps.MVCObject}
  * @constructor
+ * @deprecated google.maps.DirectionsRenderer is deprecated as of February 25th,
+ *     2026. At this time, google.maps.DirectionsRenderer is not scheduled to be
+ *     discontinued and will continue to receive bug fixes for any major
+ *     regressions. At least 12 months notice will be given before support is
+ *     discontinued. Please see <a
+ *     href="https://developers.google.com/maps/legacy">https://developers.google.com/maps/legacy</a>
+ *     for additional details.
  */
 google.maps.DirectionsRenderer = function(opts) {};
 
@@ -2508,12 +2513,18 @@ google.maps.DirectionsRoute.prototype.warnings;
 google.maps.DirectionsRoute.prototype.waypoint_order;
 
 /**
- * A service for computing directions between two or more places.
  *
  * Access by calling `const {DirectionsService} = await
  * google.maps.importLibrary("routes")`. See
  * https://developers.google.com/maps/documentation/javascript/libraries.
  * @constructor
+ * @deprecated google.maps.DirectionsService is deprecated as of February 25th,
+ *     2026. At this time, google.maps.DirectionsService is not scheduled to be
+ *     discontinued and will continue to receive bug fixes for any major
+ *     regressions. At least 12 months notice will be given before support is
+ *     discontinued. Please see <a
+ *     href="https://developers.google.com/maps/legacy">https://developers.google.com/maps/legacy</a>
+ *     for additional details.
  */
 google.maps.DirectionsService = function() {};
 
@@ -2964,12 +2975,18 @@ google.maps.DistanceMatrixResponseRow = function() {};
 google.maps.DistanceMatrixResponseRow.prototype.elements;
 
 /**
- * A service for computing distances between multiple origins and destinations.
  *
  * Access by calling `const {DistanceMatrixService} = await
  * google.maps.importLibrary("routes")`. See
  * https://developers.google.com/maps/documentation/javascript/libraries.
  * @constructor
+ * @deprecated google.maps.DistanceMatrixService is deprecated as of February
+ *     25th, 2026. At this time, google.maps.DistanceMatrixService is not
+ *     scheduled to be discontinued and will continue to receive bug fixes for
+ *     any major regressions. At least 12 months notice will be given before
+ *     support is discontinued. Please see <a
+ *     href="https://developers.google.com/maps/legacy">https://developers.google.com/maps/legacy</a>
+ *     for additional details.
  */
 google.maps.DistanceMatrixService = function() {};
 
@@ -6799,6 +6816,12 @@ google.maps.Maps3DLibrary = function() {};
 google.maps.Maps3DLibrary.prototype.AltitudeMode;
 
 /**
+ * Available only in the v=beta channel: https://goo.gle/3oAthT3.
+ * @type {typeof google.maps.maps3d.FlattenerElement}
+ */
+google.maps.Maps3DLibrary.prototype.FlattenerElement;
+
+/**
  * @type {typeof google.maps.maps3d.GestureHandling}
  */
 google.maps.Maps3DLibrary.prototype.GestureHandling;
@@ -6827,6 +6850,18 @@ google.maps.Maps3DLibrary.prototype.Marker3DElement;
  * @type {typeof google.maps.maps3d.Marker3DInteractiveElement}
  */
 google.maps.Maps3DLibrary.prototype.Marker3DInteractiveElement;
+
+/**
+ * Available only in the v=beta channel: https://goo.gle/3oAthT3.
+ * @type {typeof google.maps.maps3d.MarkerElement}
+ */
+google.maps.Maps3DLibrary.prototype.MarkerElement;
+
+/**
+ * Available only in the v=beta channel: https://goo.gle/3oAthT3.
+ * @type {typeof google.maps.maps3d.MarkerInteractiveElement}
+ */
+google.maps.Maps3DLibrary.prototype.MarkerInteractiveElement;
 
 /**
  * @type {typeof google.maps.maps3d.Model3DElement}
@@ -16518,10 +16553,27 @@ google.maps.maps3d.AltitudeMode = {
 google.maps.maps3d.CameraOptions = function() {};
 
 /**
+ * Available only in the v=beta channel: https://goo.gle/3oAthT3.
+ * An enum specifying how to interpret the altitude value of the given
+ * <code>CameraOptions</code> object. This reuses the existing {@link
+ * google.maps.maps3d.AltitudeMode} enum.
+ * @default {@link google.maps.maps3d.AltitudeMode.ABSOLUTE}
+ * @type {!google.maps.maps3d.AltitudeMode|null|undefined}
+ */
+google.maps.maps3d.CameraOptions.prototype.altitudeMode;
+
+/**
  * See {@link google.maps.maps3d.Map3DElement.center}.
  * @type {!google.maps.LatLngAltitude|!google.maps.LatLngAltitudeLiteral|null|undefined}
  */
 google.maps.maps3d.CameraOptions.prototype.center;
+
+/**
+ * Available only in the v=beta channel: https://goo.gle/3oAthT3.
+ * See {@link google.maps.maps3d.Map3DElement.fov}.
+ * @type {number|null|undefined}
+ */
+google.maps.maps3d.CameraOptions.prototype.fov;
 
 /**
  * See {@link google.maps.maps3d.Map3DElement.heading}.
@@ -16546,6 +16598,63 @@ google.maps.maps3d.CameraOptions.prototype.roll;
  * @type {number|null|undefined}
  */
 google.maps.maps3d.CameraOptions.prototype.tilt;
+
+/**
+ * Available only in the v=beta channel: https://goo.gle/3oAthT3.
+ *
+ * A flattener element is used to flatten a specified area on the map.
+ *
+ * Access by calling `const {FlattenerElement} = await
+ * google.maps.importLibrary("maps3d")`. See
+ * https://developers.google.com/maps/documentation/javascript/libraries.
+ * @param {!google.maps.maps3d.FlattenerElementOptions=} options
+ * @implements {google.maps.maps3d.FlattenerElementOptions}
+ * @extends {HTMLElement}
+ * @constructor
+ */
+google.maps.maps3d.FlattenerElement = function(options) {};
+
+/**
+ * Available only in the v=beta channel: https://goo.gle/3oAthT3.
+ * The ordered sequence of coordinates that designates a closed loop. These
+ * paths define Exclusion Holes within the polygon&#39;s main path, which is the
+ * Flattening Zone. Areas within an innerPath are exempt from flattening.
+ * @type {!Iterable<!Iterable<!google.maps.LatLngAltitude|!google.maps.LatLngAltitudeLiteral|!google.maps.LatLngLiteral>>|null|undefined}
+ */
+google.maps.maps3d.FlattenerElement.prototype.innerPaths;
+
+/**
+ * Available only in the v=beta channel: https://goo.gle/3oAthT3.
+ * The ordered sequence of coordinates that designates a closed loop. This loop
+ * defines the Flattening Zone.
+ * @type {!Iterable<!google.maps.LatLngAltitude|!google.maps.LatLngAltitudeLiteral|!google.maps.LatLngLiteral>|null|undefined}
+ */
+google.maps.maps3d.FlattenerElement.prototype.path;
+
+
+
+/**
+ * Available only in the v=beta channel: https://goo.gle/3oAthT3.
+ *
+ * FlattenerElementOptions object used to define the properties that can be set
+ * on a FlattenerElement.
+ * @record
+ */
+google.maps.maps3d.FlattenerElementOptions = function() {};
+
+/**
+ * Available only in the v=beta channel: https://goo.gle/3oAthT3.
+ * See {@link google.maps.maps3d.FlattenerElement.innerPaths}.
+ * @type {!Iterable<!Iterable<!google.maps.LatLngAltitude|!google.maps.LatLngAltitudeLiteral>|!Iterable<!google.maps.LatLngLiteral>>|null|undefined}
+ */
+google.maps.maps3d.FlattenerElementOptions.prototype.innerPaths;
+
+/**
+ * Available only in the v=beta channel: https://goo.gle/3oAthT3.
+ * See {@link google.maps.maps3d.FlattenerElement.path}.
+ * @type {!Iterable<!google.maps.LatLngAltitude|!google.maps.LatLngAltitudeLiteral|!google.maps.LatLngLiteral>|null|undefined}
+ */
+google.maps.maps3d.FlattenerElementOptions.prototype.path;
 
 /**
  * Customization options for the FlyCameraAround Animation.
@@ -16681,6 +16790,19 @@ google.maps.maps3d.Map3DElement = function(options) {};
 google.maps.maps3d.Map3DElement.prototype.bounds;
 
 /**
+ * Available only in the v=beta channel: https://goo.gle/3oAthT3.
+ * The position of the camera given as a LatLngAltitude. Will be derived if
+ * omitted. If <code>center</code> is omitted but <code>cameraPosition</code> is
+ * specified, <code>center</code> will derive from <code>cameraPosition.</code>
+ * If both are updated in the same run loop, <code>cameraPosition</code> will be
+ * favored. The fields <code>cameraPosition</code> and <code>center</code> can
+ * be one-to-one-derived from each other in context of the given shared heading,
+ * range, roll, and tilt.
+ * @type {!google.maps.LatLngAltitude|!google.maps.LatLngAltitudeLiteral|null|undefined}
+ */
+google.maps.maps3d.Map3DElement.prototype.cameraPosition;
+
+/**
  * The center of the map given as a LatLngAltitude, where altitude is in meters
  * above ground level. Note that this is not necessarily where the camera is
  * located, as the <code>range</code> field affects the camera&#39;s distance
@@ -16704,6 +16826,15 @@ google.maps.maps3d.Map3DElement.prototype.defaultUIHidden;
  * @type {string|null|undefined}
  */
 google.maps.maps3d.Map3DElement.prototype.description;
+
+/**
+ * Available only in the v=beta channel: https://goo.gle/3oAthT3.
+ * Specifies the vertical field of view in degrees. Valid values range from 5.0
+ * to 80.0. Higher values increase the visible area but may introduce
+ * perspective distortion. Default: 35.0.
+ * @type {number|null|undefined}
+ */
+google.maps.maps3d.Map3DElement.prototype.fov;
 
 /**
  * Controls cooperative gesture handling. When set to <code>COOPERATIVE</code>,
@@ -16906,6 +17037,13 @@ google.maps.maps3d.Map3DElementOptions = function() {};
 google.maps.maps3d.Map3DElementOptions.prototype.bounds;
 
 /**
+ * Available only in the v=beta channel: https://goo.gle/3oAthT3.
+ * See {@link google.maps.maps3d.Map3DElement.cameraPosition}.
+ * @type {!google.maps.LatLngAltitude|!google.maps.LatLngAltitudeLiteral|null|undefined}
+ */
+google.maps.maps3d.Map3DElementOptions.prototype.cameraPosition;
+
+/**
  * See {@link google.maps.maps3d.Map3DElement.center}.
  * @type {!google.maps.LatLngAltitude|!google.maps.LatLngAltitudeLiteral|null|undefined}
  */
@@ -16922,6 +17060,13 @@ google.maps.maps3d.Map3DElementOptions.prototype.defaultUIHidden;
  * @type {string|null|undefined}
  */
 google.maps.maps3d.Map3DElementOptions.prototype.description;
+
+/**
+ * Available only in the v=beta channel: https://goo.gle/3oAthT3.
+ * See {@link google.maps.maps3d.Map3DElement.fov}.
+ * @type {number|null|undefined}
+ */
+google.maps.maps3d.Map3DElementOptions.prototype.fov;
 
 /**
  * See {@link google.maps.maps3d.Map3DElement.gestureHandling}.
@@ -17079,6 +17224,13 @@ google.maps.maps3d.Marker3DElement.prototype.altitudeMode;
 google.maps.maps3d.Marker3DElement.prototype.collisionBehavior;
 
 /**
+ * Available only in the v=beta channel: https://goo.gle/3oAthT3.
+ * The collision priority used for collision detection.
+ * @type {number|null|undefined}
+ */
+google.maps.maps3d.Marker3DElement.prototype.collisionPriority;
+
+/**
  * Specifies whether this marker should be drawn or not when it&#39;s occluded.
  * The marker can be occluded by map geometry (e.g. buildings).
  * @default <code>false</code>
@@ -17143,6 +17295,13 @@ google.maps.maps3d.Marker3DElementOptions.prototype.altitudeMode;
  * @type {!google.maps.CollisionBehavior|null|undefined}
  */
 google.maps.maps3d.Marker3DElementOptions.prototype.collisionBehavior;
+
+/**
+ * Available only in the v=beta channel: https://goo.gle/3oAthT3.
+ * See {@link google.maps.maps3d.Marker3DElement.collisionPriority}.
+ * @type {number|null|undefined}
+ */
+google.maps.maps3d.Marker3DElementOptions.prototype.collisionPriority;
 
 /**
  * See {@link google.maps.maps3d.Marker3DElement.drawsWhenOccluded}.
@@ -17233,6 +17392,199 @@ google.maps.maps3d.Marker3DInteractiveElementOptions.prototype
  * @type {string|undefined}
  */
 google.maps.maps3d.Marker3DInteractiveElementOptions.prototype.title;
+
+/**
+ * Available only in the v=beta channel: https://goo.gle/3oAthT3.
+ *
+ * Shows a position on a 3D map. Note that the <code>position</code> must be set
+ * for the <code>MarkerElement</code> to display.
+ *
+ * Access by calling `const {MarkerElement} = await
+ * google.maps.importLibrary("maps3d")`. See
+ * https://developers.google.com/maps/documentation/javascript/libraries.
+ * @param {!google.maps.maps3d.MarkerElementOptions=} options
+ * @implements {google.maps.maps3d.MarkerElementOptions}
+ * @extends {HTMLElement}
+ * @constructor
+ */
+google.maps.maps3d.MarkerElement = function(options) {};
+
+/**
+ * Available only in the v=beta channel: https://goo.gle/3oAthT3.
+ * Specifies how the altitude component of the position is interpreted.
+ * @default {@link google.maps.maps3d.AltitudeMode.CLAMP_TO_GROUND}
+ * @type {!google.maps.maps3d.AltitudeMode|null|undefined}
+ */
+google.maps.maps3d.MarkerElement.prototype.altitudeMode;
+
+/**
+ * Available only in the v=beta channel: https://goo.gle/3oAthT3.
+ * A <a
+ * href="https://developer.mozilla.org/en-US/docs/Web/CSS/length-percentage">CSS
+ * length-percentage</a> value which is used to offset the anchor point from the
+ * top left corner of the marker. This is useful when using a visual which has
+ * an anchor point that is different from the typical bottom center point of the
+ * default marker.
+ * @default -50%
+ * @type {string|null|undefined}
+ */
+google.maps.maps3d.MarkerElement.prototype.anchorLeft;
+
+/**
+ * Available only in the v=beta channel: https://goo.gle/3oAthT3.
+ * A <a
+ * href="https://developer.mozilla.org/en-US/docs/Web/CSS/length-percentage">CSS
+ * length-percentage</a> value which is used to offset the anchor point from the
+ * top left corner of the marker. This is useful when using a visual which has
+ * an anchor point that is different from the typical bottom center point of the
+ * default marker.
+ * @default -100%
+ * @type {string|null|undefined}
+ */
+google.maps.maps3d.MarkerElement.prototype.anchorTop;
+
+/**
+ * Available only in the v=beta channel: https://goo.gle/3oAthT3.
+ * An enumeration specifying how a MarkerElement should behave when it collides
+ * with another <code>MarkerElement</code>, <code>Marker3DElement</code>, or
+ * with the basemap labels.
+ * @default {@link google.maps.CollisionBehavior.REQUIRED}
+ * @type {!google.maps.CollisionBehavior|null|undefined}
+ */
+google.maps.maps3d.MarkerElement.prototype.collisionBehavior;
+
+/**
+ * Available only in the v=beta channel: https://goo.gle/3oAthT3.
+ * A number which is used to help determine relative priority between {@link
+ * google.maps.CollisionBehavior.OPTIONAL_AND_HIDES_LOWER_PRIORITY} markers
+ * (including {@link google.maps.maps3d.Marker3DElement} ). A higher
+ * <code>collisionPriority</code> value indicates higher priority.
+ * @type {number|null|undefined}
+ */
+google.maps.maps3d.MarkerElement.prototype.collisionPriority;
+
+/**
+ * Available only in the v=beta channel: https://goo.gle/3oAthT3.
+ * The location of the tip of the marker. Altitude is ignored in certain modes
+ * and thus optional.
+ * @type {!google.maps.LatLngLiteral|!google.maps.LatLngAltitude|!google.maps.LatLngAltitudeLiteral|null|undefined}
+ */
+google.maps.maps3d.MarkerElement.prototype.position;
+
+/**
+ * Available only in the v=beta channel: https://goo.gle/3oAthT3.
+ * Rollover text. If provided, an accessibility text (e.g. for use with screen
+ * readers) will be added to the <code>MarkerElement</code> with the provided
+ * value.
+ * @type {string}
+ */
+google.maps.maps3d.MarkerElement.prototype.title;
+
+
+
+/**
+ * Available only in the v=beta channel: https://goo.gle/3oAthT3.
+ *
+ * MarkerElementOptions object used to define the properties that can be set on
+ * a MarkerElement.
+ * @record
+ */
+google.maps.maps3d.MarkerElementOptions = function() {};
+
+/**
+ * Available only in the v=beta channel: https://goo.gle/3oAthT3.
+ * See {@link google.maps.maps3d.MarkerElement.altitudeMode}.
+ * @type {!google.maps.maps3d.AltitudeMode|null|undefined}
+ */
+google.maps.maps3d.MarkerElementOptions.prototype.altitudeMode;
+
+/**
+ * Available only in the v=beta channel: https://goo.gle/3oAthT3.
+ * See {@link google.maps.maps3d.MarkerElement.anchorLeft}.
+ * @type {string|null|undefined}
+ */
+google.maps.maps3d.MarkerElementOptions.prototype.anchorLeft;
+
+/**
+ * Available only in the v=beta channel: https://goo.gle/3oAthT3.
+ * See {@link google.maps.maps3d.MarkerElement.anchorTop}.
+ * @type {string|null|undefined}
+ */
+google.maps.maps3d.MarkerElementOptions.prototype.anchorTop;
+
+/**
+ * Available only in the v=beta channel: https://goo.gle/3oAthT3.
+ * See {@link google.maps.maps3d.MarkerElement.collisionBehavior}.
+ * @type {!google.maps.CollisionBehavior|null|undefined}
+ */
+google.maps.maps3d.MarkerElementOptions.prototype.collisionBehavior;
+
+/**
+ * Available only in the v=beta channel: https://goo.gle/3oAthT3.
+ * See {@link google.maps.maps3d.MarkerElement.collisionPriority}.
+ * @type {number|null|undefined}
+ */
+google.maps.maps3d.MarkerElementOptions.prototype.collisionPriority;
+
+/**
+ * Available only in the v=beta channel: https://goo.gle/3oAthT3.
+ * See {@link google.maps.maps3d.MarkerElement.position}.
+ * @type {!google.maps.LatLngLiteral|!google.maps.LatLngAltitude|!google.maps.LatLngAltitudeLiteral|null|undefined}
+ */
+google.maps.maps3d.MarkerElementOptions.prototype.position;
+
+/**
+ * Available only in the v=beta channel: https://goo.gle/3oAthT3.
+ * See {@link google.maps.maps3d.MarkerElement.title}.
+ * @type {string|undefined}
+ */
+google.maps.maps3d.MarkerElementOptions.prototype.title;
+
+/**
+ * Available only in the v=beta channel: https://goo.gle/3oAthT3.
+ *
+ * Shows a position on a 3D map. Note that the <code>position</code> must be set
+ * for the <code>MarkerInteractiveElement</code> to display. Unlike
+ * <code>MarkerElement</code>, <code>MarkerInteractiveElement</code> receives a
+ * <code>gmp-click</code> event.
+ *
+ * Access by calling `const {MarkerInteractiveElement} = await
+ * google.maps.importLibrary("maps3d")`. See
+ * https://developers.google.com/maps/documentation/javascript/libraries.
+ * @param {!google.maps.maps3d.MarkerInteractiveElementOptions=} options
+ * @implements {google.maps.maps3d.MarkerInteractiveElementOptions}
+ * @extends {google.maps.maps3d.MarkerElement}
+ * @constructor
+ */
+google.maps.maps3d.MarkerInteractiveElement = function(options) {};
+
+/**
+ * Available only in the v=beta channel: https://goo.gle/3oAthT3.
+ * When set, the popover element will be open on this marker&#39;s click.
+ * @type {!google.maps.maps3d.PopoverElement|null|undefined}
+ */
+google.maps.maps3d.MarkerInteractiveElement.prototype.gmpPopoverTargetElement;
+
+
+
+/**
+ * Available only in the v=beta channel: https://goo.gle/3oAthT3.
+ *
+ * MarkerInteractiveElementOptions object used to define the properties that can
+ * be set on a MarkerInteractiveElement.
+ * @extends {google.maps.maps3d.MarkerElementOptions}
+ * @record
+ */
+google.maps.maps3d.MarkerInteractiveElementOptions = function() {};
+
+/**
+ * Available only in the v=beta channel: https://goo.gle/3oAthT3.
+ * See {@link
+ * google.maps.maps3d.MarkerInteractiveElement.gmpPopoverTargetElement}.
+ * @type {!google.maps.maps3d.PopoverElement|null|undefined}
+ */
+google.maps.maps3d.MarkerInteractiveElementOptions.prototype
+    .gmpPopoverTargetElement;
 
 /**
  * A 3D model which allows the rendering of gLTF models. Note that the
@@ -17832,7 +18184,7 @@ google.maps.maps3d.PopoverElement.prototype.open;
 /**
  * The position at which to display this popover. If the popover is anchored to
  * an interactive marker, the marker&#39;s position will be used instead.
- * @type {!google.maps.LatLngLiteral|!google.maps.LatLngAltitudeLiteral|!google.maps.maps3d.Marker3DInteractiveElement|string|null|undefined}
+ * @type {!google.maps.LatLngLiteral|!google.maps.LatLngAltitudeLiteral|!google.maps.maps3d.Marker3DInteractiveElement|!google.maps.maps3d.MarkerInteractiveElement|string|null|undefined}
  */
 google.maps.maps3d.PopoverElement.prototype.positionAnchor;
 
