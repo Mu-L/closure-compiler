@@ -1948,7 +1948,6 @@ public final class ParserTest extends BaseJSTypeTestCase {
     Node yNode = xNode.getNext();
 
     assertThat(xNode.getTrailingNonJSDocCommentString()).contains("/* first */");
-    ;
     assertThat(yNode.getNonJSDocCommentString()).isEmpty();
   }
 
