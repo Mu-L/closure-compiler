@@ -56,7 +56,7 @@ public final class CheckRequiresSorted implements NodeTraversal.Callback {
     COLLECT_ONLY,
     /** Additionally report a warning. */
     COLLECT_AND_REPORT
-  };
+  }
 
   /** Primitives that may be called in an import statement. */
   enum ImportPrimitive {
