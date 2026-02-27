@@ -23,6 +23,7 @@ import com.google.common.base.Joiner;
 import com.google.javascript.jscomp.NodeTraversal.AbstractPostOrderCallback;
 import com.google.javascript.rhino.IR;
 import com.google.javascript.rhino.Node;
+import com.google.javascript.rhino.Node.AncestorIterable;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
@@ -416,8 +417,18 @@ class ReplaceCssNames implements CompilerPass {
     @Nullable String getCssClosureClassesMemberName() {
       checkNotNull(
           cssClosureClassesQualifiedName, "Not a css closure file classes object: %s", callNode);
-      String memberName = callNode.getParent().getString();
-      return cssClosureClassesQualifiedName + "." + memberName;
+      // We support 2 structures getCssName() calls in Sass-generated files:
+      // 1. { Foo: goog.getCssName('foo') }
+      // 2. { Foo: expression ? … : goog.getCssName('foo') }
+      // Traversing our ancestry allows us to find the `Foo` string key in both cases.
+      AncestorIterable ancestors = callNode.getAncestors();
+      for (Node ancestor : ancestors) {
+        if (ancestor.isStringKey()) {
+          return cssClosureClassesQualifiedName + "." + ancestor.getString();
+        }
+      }
+      throw new IllegalStateException(
+          String.format("No css closure classes member name found: %s", callNode));
     }
 
     @Nullable String getCssClassName() {
