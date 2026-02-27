@@ -507,7 +507,6 @@ public final class SerializeAndDeserializeAstTest extends CompilerTestCase {
         }());
         """;
     String sourceMappingURLComment = "//# sourceMappingURL=" + BASE64_PREFIX + ENCODED_SOURCE_MAP;
-    ;
     String code = sourceMapTestCode + "\n" + sourceMappingURLComment;
 
     Result result = testAndReturnResult(srcs(code), expected(code));
@@ -549,7 +548,6 @@ public final class SerializeAndDeserializeAstTest extends CompilerTestCase {
         }());
         """;
     String sourceMappingURLComment = "//# sourceMappingURL=" + BASE64_PREFIX + ENCODED_SOURCE_MAP;
-    ;
     String code = sourceMapTestCode + "\n" + sourceMappingURLComment;
 
     Result result = testAndReturnResult(srcs(code), expected(code));
@@ -570,7 +568,6 @@ public final class SerializeAndDeserializeAstTest extends CompilerTestCase {
         }());
         """;
     String sourceMappingURLComment = "//# sourceMappingURL=" + BASE64_PREFIX + ENCODED_SOURCE_MAP;
-    ;
     String code = sourceMapTestCode + "\n" + sourceMappingURLComment;
 
     Result result = testAndReturnResult(srcs(code), expected(code));
